@@ -35,7 +35,7 @@
 
       <small>
         HUM não tem valor monetário.
-        Se algum dia tiver, será escolha tua.
+        A wallet é apenas um registo de presença.
       </small>
     </div>
 
@@ -65,19 +65,11 @@
   <section id="tasks" class="space hidden">
     <div class="space-card">
       <h2>Tarefas humanas</h2>
-
-      <ul id="taskList">
-        <li>✔️ Entrar hoje</li>
-        <li>⏳ Permanecer 5 minutos</li>
-        <li>✍️ Escrever uma nota humana</li>
-        <li>🕊️ Voltar depois de uma pausa</li>
-      </ul>
-
+      <ul id="taskList"></ul>
       <small>
-        As tarefas não são obrigatórias.
-        A presença conta mesmo sem cumprir nada.
+        As tarefas mudam todos os dias.
+        Não são obrigatórias.
       </small>
-
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -86,17 +78,11 @@
   <section id="invites" class="space hidden">
     <div class="space-card">
       <h2>Convites humanos</h2>
-
-      <input id="inviteName" placeholder="nome do humano"/>
-      <button id="createInvite">Criar convite</button>
-
-      <ul id="inviteList"></ul>
-
+      <button id="createInvite">Convidar humano</button>
       <small>
-        Convites não dão dinheiro.
-        Criam presença partilhada.
+        Convites criam presença partilhada.
+        Não dão dinheiro.
       </small>
-
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -105,14 +91,12 @@
   <section id="wallet" class="space hidden">
     <div class="space-card">
       <h2>Wallet</h2>
-      <p>Estado: <b>não monetizada</b></p>
-      <p>Saldo: 0.00000 HUM</p>
-
+      <p>Estado: <b>ativa (não monetizada)</b></p>
+      <p>Saldo: <span id="walletHum">0.00000</span> HUM</p>
       <small>
         HUM não é um token.
         Não existe trading.
       </small>
-
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -123,12 +107,10 @@
       <h2>Perfil humano</h2>
       <input id="userName" placeholder="o teu nome"/>
       <textarea id="userNote" placeholder="nota humana (opcional)"></textarea>
-
       <small>
         O perfil é opcional.
-        Nada é público por defeito.
+        Nada é público.
       </small>
-
       <button class="close">Fechar</button>
     </div>
   </section>
