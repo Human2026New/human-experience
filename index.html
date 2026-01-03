@@ -46,16 +46,34 @@
   <section id="walletSpace" class="space hidden">
     <div class="space-card">
       <h2>Wallet HUMAN</h2>
+
       <p class="hint">
-        HUM não é moeda.
-        É um rasto de continuidade.
+        Esta wallet é local.
+        Nada é enviado.
       </p>
 
       <div class="big" id="walletBalance">0.00000 HUM</div>
 
+      <div class="row">
+        <span>Estado</span>
+        <b id="walletStatus">local</b>
+      </div>
+
+      <div class="row">
+        <span>Chain</span>
+        <b id="walletChain">—</b>
+      </div>
+
+      <div class="row">
+        <span>Endereço</span>
+        <b id="walletAddress">—</b>
+      </div>
+
+      <button id="prepareWallet">Preparar ligação futura</button>
+
       <small>
-        Esta wallet poderá ligar-se no futuro,
-        mas nunca te vai obrigar a nada.
+        Preparar não liga nada.
+        Apenas cria um identificador interno.
       </small>
 
       <button class="closeSpace">Fechar</button>
@@ -84,7 +102,6 @@
       </p>
 
       <ul id="inviteList"></ul>
-
       <small id="inviteCount"></small>
 
       <button class="closeSpace">Fechar</button>
