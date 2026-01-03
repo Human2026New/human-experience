@@ -1,4 +1,9 @@
-console.log("HUMAN — metas humanas ativas");
+console.log("HUMAN — persistência ativa");
+
+const tg = window.Telegram?.WebApp;
+if (tg) tg.ready();
+
+const BACKEND = "https://human-backend-ywuf.onrender.com";
 
 const startBtn = document.getElementById("startBtn");
 const info = document.getElementById("info");
@@ -14,79 +19,86 @@ let startTime = null;
 let lastTick = null;
 
 let hum = 0;
-let state = "neutro";
+let totalTime = 0;
 
-let presenceUnlocked = false;
-let calmUnlocked = false;
-let stabilityUnlocked = false;
+let presence = 0;
+let calm = 0;
+let stable = 0;
 
 const BASE_RATE = 0.000006;
 const MAX_RATE = 0.00002;
 
+async function loadState() {
+  const res = await fetch(`${BACKEND}/api/status`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      initData: tg?.initData || "web"
+    })
+  });
+  const d = await res.json();
+
+  hum = d.hum;
+  totalTime = d.total_time;
+  presence = d.presence;
+  calm = d.calm;
+  stable = d.stable;
+}
+
+async function saveState() {
+  fetch(`${BACKEND}/api/update`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      initData: tg?.initData || "web",
+      hum,
+      total_time: totalTime,
+      presence,
+      calm,
+      stable
+    })
+  });
+}
+
 function humanRate(seconds) {
   let r = BASE_RATE * Math.log(seconds + 2);
-  if (stabilityUnlocked) r *= 1.15;
-
-  const noise = (Math.random() - 0.5) * r * 0.25;
-  r += noise;
-
+  if (stable) r *= 1.15;
+  r += (Math.random() - 0.5) * r * 0.25;
   return Math.min(MAX_RATE, Math.max(BASE_RATE * 0.4, r));
 }
 
-function updateVisual(rate) {
-  const scale = 1 + (rate / MAX_RATE) * 0.08;
-  sphere.style.transform = `scale(${scale})`;
-}
-
-function updateState(seconds) {
-  // META 1 — presença
-  if (seconds >= 300 && !presenceUnlocked) {
-    presenceUnlocked = true;
-    state = "presente";
-  }
-
-  // META 2 — calma
-  if (seconds >= 120 && !calmUnlocked) {
-    calmUnlocked = true;
-    state = "calmo";
-    document.body.classList.add("state-calm");
-  }
-
-  // META 3 — estabilidade
-  if (seconds >= 600 && !stabilityUnlocked) {
-    stabilityUnlocked = true;
-    state = "estável";
-    document.body.classList.add("state-stable");
-  }
-
-  stateEl.innerText = state;
-}
-
-startBtn.addEventListener("click", () => {
+startBtn.addEventListener("click", async () => {
   if (started) return;
   started = true;
+
+  await loadState();
 
   startBtn.style.display = "none";
   info.style.display = "none";
   core.classList.remove("hidden");
-  setTimeout(() => core.classList.add("show"), 50);
+  core.classList.add("show");
 
   startTime = Date.now();
   lastTick = startTime;
 
   setInterval(() => {
     const now = Date.now();
-    const seconds = Math.floor((now - startTime) / 1000);
     const delta = (now - lastTick) / 1000;
     lastTick = now;
 
-    const rate = humanRate(seconds);
+    totalTime += delta;
+
+    const rate = humanRate(totalTime);
     hum += rate * delta;
 
-    timeEl.innerText = seconds + "s";
-    humEl.innerText = hum.toFixed(5);
+    if (totalTime > 300) presence = 1;
+    if (totalTime > 120) calm = 1;
+    if (totalTime > 600) stable = 1;
 
-    updateVisual(rate);
-    updateState(seconds);
-  }, 1000);
+    timeEl.innerText = Math.floor(totalTime) + "s";
+    humEl.innerText = hum.toFixed(5);
+    stateEl.innerText = stable ? "estável" : calm ? "calmo" : presence ? "presente" : "neutro";
+
+    saveState();
+  }, 2000);
 });
