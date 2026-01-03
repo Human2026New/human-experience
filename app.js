@@ -233,3 +233,26 @@ function save() {
 
 /* ---------- INIT ---------- */
 updateUI();
+
+/* ---------- MENU OPEN / CLOSE ---------- */
+
+// abrir janelas
+document.querySelectorAll(".menu button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const target = btn.dataset.open;
+    const section = document.getElementById(target);
+    if (section) {
+      section.classList.remove("hidden");
+    }
+  });
+});
+
+// fechar janelas
+document.querySelectorAll(".close").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document
+      .querySelectorAll(".space")
+      .forEach(s => s.classList.add("hidden"));
+  });
+});
+
