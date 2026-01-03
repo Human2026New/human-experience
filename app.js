@@ -1,14 +1,12 @@
-/* =========================================================
+/* =========================
    HUMAN — app.js (final)
-   Presença humana ao longo do tempo
-   ========================================================= */
+   ========================= */
 
-const STORAGE_KEY = "human_app_v1";
-
-/* ---------- CONFIGURAÇÃO ---------- */
+const STORAGE_KEY = "human_app_v2";
 const DONATION_ADDRESS =
   "UQC_QK4Kwcw68zJYKGYMKRhrWNAK7lYmniEgV-Kq9kCLkzlf";
 
+/* ---------- TASK POOL ---------- */
 const TASK_POOL = [
   { text: "Entrar com presença", type: "enter", hum: 0.001 },
   { text: "Ficar 3 minutos", type: "time3", hum: 0.0015 },
@@ -35,9 +33,10 @@ if (saved) {
   } catch {}
 }
 
-/* ---------- ELEMENTOS ---------- */
+/* ---------- HELPERS ---------- */
 const $ = id => document.getElementById(id);
 
+/* ---------- ELEMENTS ---------- */
 const enterBtn = $("enterBtn");
 const dashboard = $("dashboard");
 const humValue = $("humValue");
@@ -48,11 +47,16 @@ const taskList = $("taskList");
 const presenceCount = $("presenceCount");
 const tonValue = $("tonValue");
 
-/* ---------- PRESENÇA (ANÓNIMA) ---------- */
+/* ---------- PRESENÇA ---------- */
 const presenceBase = Math.floor(Math.random() * 3) + 1;
 
 /* ---------- ENTER ---------- */
+let loopStarted = false;
+
 enterBtn.onclick = () => {
+  if (loopStarted) return;
+  loopStarted = true;
+
   state.started = true;
   enterBtn.style.display = "none";
   dashboard.classList.remove("hidden");
@@ -63,12 +67,10 @@ enterBtn.onclick = () => {
   save();
 };
 
-/* ---------- LOOP PRINCIPAL ---------- */
+/* ---------- LOOP ---------- */
 function startLoop() {
   setInterval(() => {
     state.time++;
-
-    /* mineração simbólica contínua */
     state.hum += 0.00002;
 
     if (state.time >= 300) {
@@ -81,7 +83,7 @@ function startLoop() {
   }, 1000);
 }
 
-/* ---------- TAREFAS ---------- */
+/* ---------- TASKS ---------- */
 function generateDailyTasks() {
   const d = today();
   if (state.taskDay === d) return;
@@ -106,7 +108,6 @@ function generateDailyTasks() {
 function checkTasks() {
   state.tasks.forEach(t => {
     if (t.done) return;
-
     if (t.type === "enter") completeTask(t);
     if (t.type === "time3" && state.time >= 180) completeTask(t);
     if (t.type === "time7" && state.time >= 420) completeTask(t);
@@ -153,6 +154,16 @@ function calculatePresence() {
   );
 }
 
+/* ---------- CONVITES (CORRETO NO TELEGRAM) ---------- */
+const inviteBtn = $("createInvite");
+if (inviteBtn && window.Telegram && Telegram.WebApp) {
+  inviteBtn.onclick = () => {
+    Telegram.WebApp.openTelegramLink(
+      "https://t.me/share/url?url=https://t.me/human_proto_bot&text=Estou%20num%20espaço%20chamado%20HUMAN.%20Não%20promete%20nada.%20Só%20presença."
+    );
+  };
+}
+
 /* ---------- DOAÇÃO ---------- */
 function initDonation() {
   const qr = $("tonQr");
@@ -178,38 +189,7 @@ function initDonation() {
   }
 }
 
-/* ---------- CONVITES ---------- */
-const inviteBtn = $("createInvite");
-if (inviteBtn) {
-  inviteBtn.onclick = () => {
-    if (window.Telegram && Telegram.WebApp) {
-      Telegram.WebApp.share({
-        text:
-          "Estou num espaço chamado HUMAN. Não promete nada. Só presença."
-      });
-    }
-  };
-}
-
-/* ---------- MODAIS ---------- */
-document.querySelectorAll(".menu button").forEach(btn => {
-  btn.onclick = () => {
-    document
-      .getElementById(btn.dataset.open)
-      .classList.remove("hidden");
-  };
-});
-
-document.querySelectorAll(".close").forEach(btn => {
-  btn.onclick = () => {
-    document
-      .querySelectorAll(".space")
-      .forEach(s => s.classList.add("hidden"));
-  };
-});
-
 /* ---------- TON CONNECT ---------- */
-/* Assume que o manifestUrl já está correto e online */
 if (window.TON_CONNECT_UI) {
   const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl:
@@ -219,27 +199,26 @@ if (window.TON_CONNECT_UI) {
 
   tonConnectUI.onStatusChange(wallet => {
     if (!wallet) {
+      $("tonAddress").textContent = "não ligada";
+      $("tonBalance").textContent = "0";
       if (tonValue) tonValue.textContent = "0 TON";
-      const addr = $("tonAddress");
-      const bal = $("tonBalance");
-      if (addr) addr.textContent = "não ligada";
-      if (bal) bal.textContent = "0";
       return;
     }
 
     const address = wallet.account.address;
-    const addr = $("tonAddress");
-    if (addr) addr.textContent = address;
+    $("tonAddress").textContent = address;
 
     fetch(
       `https://toncenter.com/api/v2/getAddressBalance?address=${address}`
     )
       .then(r => r.json())
       .then(d => {
+        if (!d.result) return;
         const ton = (d.result / 1e9).toFixed(4);
-        if ($("tonBalance")) $("tonBalance").textContent = ton;
+        $("tonBalance").textContent = ton;
         if (tonValue) tonValue.textContent = ton + " TON";
-      });
+      })
+      .catch(() => {});
   });
 }
 
