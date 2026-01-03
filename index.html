@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HUMAN</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- TON CONNECT UI -->
   <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
@@ -24,15 +22,13 @@
   <!-- DASHBOARD -->
   <section id="dashboard" class="hidden">
 
-    <!-- WALLET OVERVIEW -->
     <div class="card big">
       <h2>HUM total (wallet)</h2>
-
       <div class="hum-value" id="humValue">0.00000 HUM</div>
 
       <div class="values">
-        <span>€ 0.00</span>
-        <span>$ 0.00</span>
+        <span>€ 0</span>
+        <span>$ 0</span>
         <span>0 BTC</span>
         <span id="tonValue">0 TON</span>
       </div>
@@ -41,15 +37,11 @@
         <span id="presenceCount">–</span> humanos presentes agora
       </div>
 
-      <small class="presence-note">presença sentida neste momento</small>
-
-      <small>
-        HUM não tem valor monetário.  
-        TON é externo e opcional.
+      <small class="presence-note">
+        HUM não tem valor monetário. TON é externo e opcional.
       </small>
     </div>
 
-    <!-- MENU -->
     <div class="menu">
       <button data-open="stats">📊 Estatísticas</button>
       <button data-open="tasks">🧭 Tarefas humanas</button>
@@ -59,7 +51,6 @@
       <button data-open="about">ℹ️ Sobre</button>
       <button data-open="profile">👤 Perfil</button>
     </div>
-
   </section>
 
   <!-- STATISTICS -->
@@ -78,7 +69,7 @@
     <div class="space-card">
       <h2>Tarefas humanas</h2>
       <ul id="taskList"></ul>
-      <small>As tarefas mudam todos os dias. Não são obrigatórias.</small>
+      <small>As tarefas mudam todos os dias.</small>
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -97,20 +88,11 @@
   <section id="wallet" class="space hidden">
     <div class="space-card">
       <h2>Wallet TON</h2>
-
       <div id="ton-connect"></div>
-
-      <p>Endereço TON:</p>
+      <p>Endereço:</p>
       <small id="tonAddress">não ligada</small>
-
-      <p style="margin-top:10px;">Saldo TON:</p>
+      <p>Saldo:</p>
       <b id="tonBalance">0</b> TON
-
-      <small style="display:block;margin-top:10px;">
-        HUM é interno.  
-        TON pertence à tua wallet.
-      </small>
-
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -119,22 +101,9 @@
   <section id="donation" class="space hidden">
     <div class="space-card">
       <h2>Apoiar o projeto</h2>
-
-      <p>Wallet TON do projeto:</p>
-      <small id="donationAddress">
-        UQC_QK4Kwcw68zJYKGYMKRhrWNAK7lYmniEgV-Kq9kCLkzlf
-      </small>
-
-      <img id="tonQr" alt="QR Code TON"/>
-
+      <img id="tonQr">
       <button id="openTonkeeper">Abrir Tonkeeper</button>
       <button id="copyDonation">Copiar endereço</button>
-
-      <small style="display:block;margin-top:10px;">
-        Doações são voluntárias.  
-        Não dão privilégios.
-      </small>
-
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -142,30 +111,9 @@
   <!-- ABOUT -->
   <section id="about" class="space hidden">
     <div class="space-card">
-      <h2>Sobre o projeto</h2>
-
-      <p>
-        HUMAN não é um token.  
-        Não promete retornos.  
-        Não mede valor financeiro.
-      </p>
-
-      <p>
-        É um espaço de presença contínua,  
-        onde o tempo conta mais do que cliques.
-      </p>
-
-      <p>
-        HUM é apenas um registo simbólico  
-        de estar, voltar e permanecer.
-      </p>
-
-      <small>
-        Projeto independente.  
-        Cresce devagar.  
-        Sem pressa.
-      </small>
-
+      <h2>Sobre</h2>
+      <p>HUMAN é um espaço de presença humana contínua.</p>
+      <small>Cresce devagar. Por escolha.</small>
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -174,9 +122,8 @@
   <section id="profile" class="space hidden">
     <div class="space-card">
       <h2>Perfil humano</h2>
-      <input id="userName" placeholder="o teu nome"/>
-      <textarea id="userNote" placeholder="nota humana (opcional)"></textarea>
-      <small>O perfil é opcional. Nada é público.</small>
+      <input placeholder="o teu nome">
+      <textarea placeholder="nota humana (opcional)"></textarea>
       <button class="close">Fechar</button>
     </div>
   </section>
