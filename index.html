@@ -10,7 +10,6 @@
 
 <div id="app">
 
-  <!-- HERO -->
   <section id="hero">
     <h1>HUMAN</h1>
     <p id="heroText">
@@ -21,12 +20,12 @@
 
   <button id="enterBtn">ENTRAR</button>
 
-  <!-- DASHBOARD -->
   <section id="dashboard" class="hidden">
 
-    <!-- ONBOARDING MESSAGE -->
+    <!-- ONBOARDING -->
     <section id="onboarding" class="card">
       <p id="onboardingText"></p>
+      <small id="unlockNote" class="unlock-note"></small>
     </section>
 
     <!-- IDENTIDADE -->
@@ -58,22 +57,17 @@
     <section id="walletCard" class="card hidden">
       <h2>Wallet HUMAN</h2>
       <div class="big" id="walletBalance">0.00000 HUM</div>
-      <small>
-        HUM não é moeda.
-        É rasto de continuidade.
-      </small>
+      <small>O valor cresce devagar e nunca desaparece.</small>
     </section>
 
     <!-- METAS -->
     <section id="goalsCard" class="card hidden">
       <h2>Presença no tempo</h2>
-
       <div class="goal">
         <span>7 dias</span>
         <div class="bar"><div id="goal7" class="fill"></div></div>
         <small id="goal7txt">0 / 7</small>
       </div>
-
       <div class="goal">
         <span>30 dias</span>
         <div class="bar"><div id="goal30" class="fill"></div></div>

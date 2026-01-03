@@ -1,4 +1,4 @@
-const STORAGE_KEY = "human_state_v14";
+const STORAGE_KEY = "human_state_v15";
 const BACKEND_URL = "https://human-backend-1.onrender.com";
 
 let state = {
@@ -7,7 +7,8 @@ let state = {
   hum: 0,
   rate: 0.00002,
   days: {},
-  checkins: {}
+  checkins: {},
+  lastUnlockDay: -1
 };
 
 const saved = localStorage.getItem(STORAGE_KEY);
@@ -17,8 +18,8 @@ if (saved) {
 
 const enterBtn = document.getElementById("enterBtn");
 const dashboard = document.getElementById("dashboard");
-
 const onboardingText = document.getElementById("onboardingText");
+const unlockNote = document.getElementById("unlockNote");
 
 const identityCard = document.getElementById("identityCard");
 const checkinCard  = document.getElementById("checkinCard");
@@ -58,7 +59,7 @@ actionButtons.forEach(btn => {
     const today = todayKey();
     if (state.checkins[today]) return;
     state.checkins[today] = btn.dataset.mood;
-    checkinStatus.textContent = `Hoje registado como: ${btn.dataset.mood}`;
+    checkinStatus.textContent = `Hoje foi: ${btn.dataset.mood}`;
     save();
   };
 });
@@ -83,15 +84,25 @@ function updateUI() {
   const days = Object.keys(state.days).length;
 
   onboardingText.textContent =
-    days === 0 ? "Este é apenas o início. Nada te é pedido." :
+    days === 0 ? "Nada é pedido agora." :
     days === 1 ? "Voltar já é suficiente." :
-    days === 2 ? "A continuidade começa a ganhar forma." :
-    days === 3 ? "O tempo começa a reconhecer-te." :
+    days === 2 ? "Algo começou a ganhar forma." :
+    days === 3 ? "O tempo começou a reconhecer-te." :
     days < 7   ? "Não precisas acelerar." :
                  "Agora já fazes parte do ritmo.";
 
-  identityCard.classList.remove("hidden");
+  // Desbloqueios animados (1x por dia)
+  if (days !== state.lastUnlockDay) {
+    unlockNote.textContent =
+      days === 1 ? "Um gesto consciente tornou-se possível." :
+      days === 2 ? "O rasto começa a ser visível." :
+      days === 3 ? "A continuidade abriu espaço." :
+      days === 5 ? "Outros humanos entram no espelho." :
+      "";
+    state.lastUnlockDay = days;
+  }
 
+  identityCard.classList.remove("hidden");
   if (days >= 1) checkinCard.classList.remove("hidden");
   if (days >= 2) walletCard.classList.remove("hidden");
   if (days >= 3) goalsCard.classList.remove("hidden");
