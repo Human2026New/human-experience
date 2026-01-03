@@ -1,8 +1,5 @@
-const STORAGE_KEY = "human_state_v18";
+const STORAGE_KEY = "human_state_v19";
 
-// --------------------
-// State
-// --------------------
 let state = {
   started: false,
   time: 0,
@@ -10,34 +7,23 @@ let state = {
   baseRate: 0.00002,
   days: {},
   userName: "",
-  invites: [],
-
-  // WALLET FUTURA
-  wallet: {
-    id: null,          // gerado localmente
-    chain: null,       // "evm" | "ton" | null
-    address: null,     // string | null
-    status: "local"    // local | ready | linked
-  }
+  invites: [] // { name, created, status }
 };
 
-// --------------------
-// Load local
-// --------------------
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
   try { state = { ...state, ...JSON.parse(saved) }; } catch {}
 }
 
-// --------------------
 // Elements
-// --------------------
 const enterBtn = document.getElementById("enterBtn");
 const home = document.getElementById("home");
 
 const daysCount = document.getElementById("daysCount");
 const stateText = document.getElementById("stateText");
 const humValue = document.getElementById("humValue");
+const humContainer = document.getElementById("humContainer");
+const bonusText = document.getElementById("bonusText");
 
 const walletSpace = document.getElementById("walletSpace");
 const inviteSpace = document.getElementById("inviteSpace");
@@ -46,10 +32,6 @@ const openWallet = document.getElementById("openWallet");
 const openInvites = document.getElementById("openInvites");
 
 const walletBalance = document.getElementById("walletBalance");
-const walletStatus = document.getElementById("walletStatus");
-const walletChain = document.getElementById("walletChain");
-const walletAddress = document.getElementById("walletAddress");
-const prepareWalletBtn = document.getElementById("prepareWallet");
 
 const userNameInput = document.getElementById("userName");
 const inviteNameInput = document.getElementById("inviteName");
@@ -57,9 +39,7 @@ const addInviteBtn = document.getElementById("addInvite");
 const inviteList = document.getElementById("inviteList");
 const inviteCount = document.getElementById("inviteCount");
 
-// --------------------
 // ENTER
-// --------------------
 enterBtn.onclick = () => {
   if (state.started) return;
   state.started = true;
@@ -70,102 +50,73 @@ enterBtn.onclick = () => {
   updateUI();
 };
 
-// --------------------
-// Loop humano
-// --------------------
+// Loop
 function startLoop() {
   setInterval(() => {
     state.time++;
-
-    const rate = getCurrentRate();
-    state.hum += rate;
-
+    state.hum += getCurrentRate();
     checkDay();
     updateUI();
     save();
   }, 1000);
 }
 
-// --------------------
-// Dia humano
-// --------------------
 function checkDay() {
   if (state.time < 300) return;
   const d = todayKey();
   if (!state.days[d]) state.days[d] = true;
 }
 
-// --------------------
-// Bónus por convites (do PASSO 11)
-// --------------------
+// Bónus simbólico
 function getCurrentRate() {
-  const inviteCount = state.invites.length;
-  const bonus = Math.min(inviteCount * 0.05, 0.30);
+  const activeFriends = state.invites.filter(i => i.status === "ativo").length;
+  const bonus = Math.min(activeFriends * 0.05, 0.30);
   return state.baseRate * (1 + bonus);
 }
 
-// --------------------
-// WALLET FUTURA
-// --------------------
-prepareWalletBtn.onclick = () => {
-  if (state.wallet.status !== "local") return;
-
-  state.wallet.id = crypto.randomUUID();
-  state.wallet.status = "ready";
-  state.wallet.chain = "undecided";
-  state.wallet.address = null;
-
-  save();
-  updateUI();
-};
-
-// --------------------
 // UI
-// --------------------
 function updateUI() {
   const days = Object.keys(state.days).length;
-  const rateBonusPercent = Math.min(state.invites.length * 5, 30);
+  const activeFriends = state.invites.filter(i => i.status === "ativo").length;
 
   daysCount.textContent = days;
 
-  stateText.textContent =
-    days >= 30 ? "consistência profunda" :
-    days >= 7 ? "consistência" :
-    "presença";
+  let symbolicState = "presença";
+  if (activeFriends >= 1) symbolicState = "presença partilhada";
+  if (activeFriends >= 3) symbolicState = "presença ampliada";
+
+  stateText.textContent = symbolicState;
 
   humValue.textContent = `${state.hum.toFixed(5)} HUM`;
   walletBalance.textContent = `${state.hum.toFixed(5)} HUM`;
 
-  // Wallet status
-  walletStatus.textContent = state.wallet.status;
-  walletChain.textContent = state.wallet.chain ?? "—";
-  walletAddress.textContent =
-    state.wallet.address
-      ? shorten(state.wallet.address)
-      : "—";
+  // Bónus visual
+  if (activeFriends > 0) {
+    humContainer.classList.add("bonus");
+    bonusText.textContent =
+      activeFriends === 1
+        ? "A tua presença está a ser partilhada."
+        : "A tua presença está a crescer com outros.";
+  } else {
+    humContainer.classList.remove("bonus");
+    bonusText.textContent = "";
+  }
 
   // Convites
   inviteList.innerHTML = "";
   state.invites.forEach(inv => {
     const li = document.createElement("li");
-    li.textContent = inv.name;
+    li.textContent = `${inv.name} — ${inv.status}`;
     inviteList.appendChild(li);
   });
 
   inviteCount.textContent =
-    `${state.invites.length} convite(s) • bónus +${rateBonusPercent}% HUM`;
+    `${state.invites.length} convite(s) • ${activeFriends} ativo(s)`;
 }
 
-// --------------------
 // Spaces
-// --------------------
-openWallet.onclick = () => {
-  walletSpace.classList.remove("hidden");
-};
-
-openInvites.onclick = () => {
-  inviteSpace.classList.remove("hidden");
-};
+openWallet.onclick = () => walletSpace.classList.remove("hidden");
+openInvites.onclick = () => inviteSpace.classList.remove("hidden");
 
 document.querySelectorAll(".closeSpace").forEach(btn => {
   btn.onclick = () => {
@@ -174,16 +125,15 @@ document.querySelectorAll(".closeSpace").forEach(btn => {
   };
 });
 
-// --------------------
 // Convites
-// --------------------
 addInviteBtn.onclick = () => {
   const name = inviteNameInput.value.trim();
   if (!name) return;
 
   state.invites.push({
     name,
-    created: new Date().toISOString()
+    created: new Date().toISOString(),
+    status: "convidado"
   });
 
   inviteNameInput.value = "";
@@ -191,23 +141,25 @@ addInviteBtn.onclick = () => {
   updateUI();
 };
 
-// --------------------
-// Nome do utilizador
-// --------------------
+// Simulação simples:
+// após 2 dias, convite passa a "ativo"
+setInterval(() => {
+  state.invites.forEach(inv => {
+    if (inv.status === "convidado") {
+      inv.status = "ativo";
+    }
+  });
+}, 60000);
+
+// Nome
 userNameInput.oninput = () => {
   state.userName = userNameInput.value.trim();
   save();
 };
 
-// --------------------
 // Utils
-// --------------------
 function todayKey() {
   return new Date().toISOString().slice(0,10);
-}
-
-function shorten(addr) {
-  return addr.slice(0, 6) + "..." + addr.slice(-4);
 }
 
 function save() {

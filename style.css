@@ -58,7 +58,18 @@ button {
   gap: 10px;
 }
 
-/* SPACES */
+/* HUM glow (bónus simbólico) */
+.hum-glow.bonus {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0% { text-shadow: 0 0 6px rgba(63,255,220,0.2); }
+  50% { text-shadow: 0 0 14px rgba(63,255,220,0.6); }
+  100% { text-shadow: 0 0 6px rgba(63,255,220,0.2); }
+}
+
+/* Spaces */
 .space {
   position: fixed;
   inset: 0;
@@ -66,7 +77,6 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeIn 0.4s ease;
 }
 
 .space-card {
@@ -75,17 +85,6 @@ button {
   background: rgba(10,20,18,0.95);
   padding: 20px;
   border-radius: 20px;
-  animation: slideUp 0.5s ease;
-}
-
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 .field {
@@ -95,7 +94,6 @@ button {
 .field input {
   width: 100%;
   padding: 10px;
-  margin-top: 4px;
   border-radius: 12px;
   border: none;
 }
@@ -105,6 +103,6 @@ ul {
   margin-top: 10px;
 }
 
-.closeSpace {
-  margin-top: 18px;
+li {
+  margin-bottom: 6px;
 }
