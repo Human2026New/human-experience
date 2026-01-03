@@ -1,9 +1,9 @@
-console.log("HUMAN — convites humanos ativos");
+console.log("HUMAN — wallet ativa");
 
 const tg = window.Telegram?.WebApp;
 if (tg) tg.ready();
 
-const BACKEND = "https://human-backend-XXXX.onrender.com";
+const BACKEND = "https://human-backend-ywuf.onrender.com";
 
 const startBtn = document.getElementById("startBtn");
 const info = document.getElementById("info");
@@ -13,32 +13,30 @@ const timeEl = document.getElementById("time");
 const humEl = document.getElementById("hum");
 const stateEl = document.getElementById("state");
 
-let hum=0, totalTime=0;
+let totalTime = 0;
+let hum = 0;
 let presence=0, calm=0, stable=0;
-let inviteCode=null, inviter=null;
 let started=false;
 
-async function load() {
-  const invite = new URLSearchParams(window.location.search).get("invite");
-  const r = await fetch(`${BACKEND}/api/status`,{
+async function loadWallet(){
+  const r = await fetch(`${BACKEND}/api/wallet`,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({initData:tg?.initData||"web", invite})
+    body:JSON.stringify({initData:tg?.initData||"web"})
   });
-  const d = await r.json();
-  hum=d.hum; totalTime=d.total_time;
-  presence=d.presence; calm=d.calm; stable=d.stable;
-  inviteCode=d.invite_code; inviter=d.inviter;
+  return await r.json();
 }
 
-async function save() {
+async function save(delta, reason){
   fetch(`${BACKEND}/api/update`,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({
       initData:tg?.initData||"web",
-      hum,total_time:totalTime,
-      presence,calm,stable
+      delta_hum: delta,
+      reason,
+      total_time: totalTime,
+      presence, calm, stable
     })
   });
 }
@@ -46,31 +44,25 @@ async function save() {
 startBtn.onclick = async ()=>{
   if(started) return;
   started=true;
-  await load();
+
   startBtn.style.display="none";
-  info.innerHTML = `
-    Teu código humano:<br><b>${inviteCode}</b><br>
-    Partilha com alguém consciente.
-  `;
+  info.innerText="Presença registada. HUM acumulado.";
   core.classList.remove("hidden");
-  let start=Date.now();
 
   setInterval(async ()=>{
     totalTime++;
-    hum+=0.000005+Math.random()*0.000002;
+    let rate = 0.000005 + Math.random()*0.000002;
+    hum += rate;
 
-    if(totalTime>180 && inviter){
-      await fetch(`${BACKEND}/api/invite/confirm`,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({initData:tg?.initData||"web"})
-      });
-      inviter=null;
-    }
+    if(totalTime>120) calm=1;
+    if(totalTime>300) presence=1;
+    if(totalTime>600) stable=1;
 
-    timeEl.innerText=totalTime+"s";
-    humEl.innerText=hum.toFixed(5);
-    stateEl.innerText= stable?"ligado":calm?"calmo":presence?"presente":"neutro";
-    save();
-  },2000);
+    await save(rate,"presence");
+
+    const w = await loadWallet();
+    humEl.innerText = w.hum.toFixed(5);
+    timeEl.innerText = totalTime+"s";
+    stateEl.innerText = stable?"estável":calm?"calmo":presence?"presente":"neutro";
+  },3000);
 };
