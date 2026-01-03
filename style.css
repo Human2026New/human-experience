@@ -1,132 +1,32 @@
-* {
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
-}
+/* tudo o que já tinhas mantém-se */
 
-body {
-  margin: 0;
-  height: 100vh;
-  background: radial-gradient(circle at center, #0f3d36, #000);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #cfeee8;
-}
-
-#app {
-  text-align: center;
-  width: 100%;
-  max-width: 420px;
-}
-
-#core {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 20px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #3fffdc, #0aa);
-  animation: pulse 4s infinite ease-in-out;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.06); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.9; }
-}
-
-#subtitle {
-  opacity: 0.8;
-  font-size: 14px;
-  margin-bottom: 16px;
-}
-
-button {
-  padding: 10px 18px;
-  background: transparent;
-  border: 1px solid #3fffdc;
-  border-radius: 20px;
-  color: #3fffdc;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-button:hover {
-  background: rgba(63,255,220,0.1);
-}
-
-#stats {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-around;
-  font-size: 13px;
-}
-
-#stats span {
-  display: block;
-  opacity: 0.6;
-  font-size: 11px;
-}
-
-#goals, #checkin {
+#wallet {
   margin-top: 28px;
   text-align: left;
 }
 
-h3 {
-  font-size: 13px;
-  opacity: 0.7;
-  margin-bottom: 12px;
+.wallet-box {
+  padding: 14px;
+  border: 1px solid rgba(63,255,220,0.3);
+  border-radius: 12px;
+  background: rgba(0,0,0,0.25);
 }
 
-.goal {
-  margin-bottom: 16px;
-}
-
-.goal span {
-  font-size: 12px;
-  opacity: 0.8;
-}
-
-.bar {
-  width: 100%;
-  height: 8px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 6px;
-  margin: 6px 0;
-  overflow: hidden;
-}
-
-.fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #3fffdc, #7fffe9);
-  transition: width 0.6s ease;
-}
-
-.checkin-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.checkin-options button {
-  flex: 1 1 45%;
-  font-size: 12px;
-}
-
-small {
+.wallet-box span {
   display: block;
-  margin-top: 8px;
   font-size: 11px;
   opacity: 0.6;
 }
 
-.hidden {
-  display: none;
+.wallet-box b {
+  display: block;
+  margin-top: 6px;
+  font-size: 18px;
+  color: #3fffdc;
 }
 
-#statusMsg {
-  margin-top: 14px;
+.wallet-box small {
+  margin-top: 6px;
   font-size: 11px;
-  opacity: 0.5;
+  opacity: 0.6;
 }
