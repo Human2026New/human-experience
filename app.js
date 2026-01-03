@@ -1,6 +1,6 @@
-const STORAGE_KEY = "human_dashboard_v2";
+const STORAGE_KEY = "human_dashboard_v3";
 
-/* ------------------ TASK POOL ------------------ */
+/* ---------- TASK POOL ---------- */
 const TASK_POOL = [
   { text: "Entrar com presença", type: "enter", hum: 0.001 },
   { text: "Ficar 3 minutos", type: "time3", hum: 0.0015 },
@@ -10,7 +10,7 @@ const TASK_POOL = [
   { text: "Abrir HUMAN sem fazer nada", type: "idle", hum: 0.001 }
 ];
 
-/* ------------------ STATE ------------------ */
+/* ---------- STATE ---------- */
 let state = {
   started: false,
   hum: 0,
@@ -20,12 +20,16 @@ let state = {
   taskDay: null
 };
 
+/* ---------- LOAD ---------- */
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
   try { state = { ...state, ...JSON.parse(saved) }; } catch {}
 }
 
-/* ------------------ ELEMENTS ------------------ */
+/* ---------- PRESENCE ---------- */
+let presenceBase = Math.floor(Math.random() * 3) + 1;
+
+/* ---------- ELEMENTS ---------- */
 const enterBtn = document.getElementById("enterBtn");
 const dashboard = document.getElementById("dashboard");
 const humValue = document.getElementById("humValue");
@@ -34,8 +38,9 @@ const daysCount = document.getElementById("daysCount");
 const timeSpent = document.getElementById("timeSpent");
 const stateText = document.getElementById("stateText");
 const taskList = document.getElementById("taskList");
+const presenceEl = document.getElementById("presenceCount");
 
-/* ------------------ ENTER ------------------ */
+/* ---------- ENTER ---------- */
 enterBtn.onclick = () => {
   state.started = true;
   enterBtn.style.display = "none";
@@ -46,7 +51,7 @@ enterBtn.onclick = () => {
   save();
 };
 
-/* ------------------ LOOP ------------------ */
+/* ---------- LOOP ---------- */
 function startLoop() {
   setInterval(() => {
     state.time++;
@@ -64,7 +69,7 @@ function startLoop() {
   }, 1000);
 }
 
-/* ------------------ TASKS ------------------ */
+/* ---------- TASKS ---------- */
 function generateDailyTasks() {
   const d = today();
   if (state.taskDay === d) return;
@@ -99,7 +104,18 @@ function completeTask(task) {
   state.hum += task.hum;
 }
 
-/* ------------------ UI ------------------ */
+/* ---------- PRESENCE CALC ---------- */
+function calculatePresence() {
+  const active = Math.min(state.time / 60, 10);
+  const fluctuation = Math.random() * 2;
+
+  return Math.max(
+    1,
+    Math.floor(presenceBase + active + fluctuation)
+  );
+}
+
+/* ---------- UI ---------- */
 function updateUI() {
   humValue.textContent = `${state.hum.toFixed(5)} HUM`;
   walletHum.textContent = state.hum.toFixed(5);
@@ -107,6 +123,10 @@ function updateUI() {
   timeSpent.textContent = `${Math.floor(state.time / 60)} min`;
   stateText.textContent =
     Object.keys(state.days).length >= 7 ? "consistência" : "presença";
+
+  if (presenceEl) {
+    presenceEl.textContent = calculatePresence();
+  }
 
   renderTasks();
 }
@@ -122,7 +142,7 @@ function renderTasks() {
   });
 }
 
-/* ------------------ MODALS ------------------ */
+/* ---------- MODALS ---------- */
 document.querySelectorAll(".menu button").forEach(btn => {
   btn.onclick = () => {
     document.getElementById(btn.dataset.open).classList.remove("hidden");
@@ -135,7 +155,7 @@ document.querySelectorAll(".close").forEach(btn => {
   };
 });
 
-/* ------------------ INVITES ------------------ */
+/* ---------- INVITES ---------- */
 document.getElementById("createInvite").onclick = () => {
   if (window.Telegram && Telegram.WebApp) {
     Telegram.WebApp.share({
@@ -146,7 +166,7 @@ document.getElementById("createInvite").onclick = () => {
   }
 };
 
-/* ------------------ UTILS ------------------ */
+/* ---------- UTILS ---------- */
 function today() {
   return new Date().toISOString().slice(0, 10);
 }

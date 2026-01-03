@@ -63,6 +63,19 @@ button:hover {
   opacity: 0.7;
 }
 
+.presence {
+  margin-top: 12px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.presence-note {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.5;
+}
+
 .menu button {
   margin-bottom: 10px;
 }
