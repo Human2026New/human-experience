@@ -1,7 +1,7 @@
 // --------------------
 // Config
 // --------------------
-const STORAGE_KEY = "human_state_v7";
+const STORAGE_KEY = "human_state_v8";
 
 // --------------------
 // State
@@ -15,9 +15,7 @@ let state = {
   days: {},
   checkins: {},
   invites: [],
-  identity: {
-    name: ""
-  }
+  identity: { name: "" }
 };
 
 // --------------------
@@ -32,17 +30,13 @@ if (saved) {
 // Elements
 // --------------------
 const enterBtn = document.getElementById("enterBtn");
-
-const statsEl = document.getElementById("stats");
-const goalsEl = document.getElementById("goals");
-const checkinEl = document.getElementById("checkin");
-const walletEl = document.getElementById("wallet");
-const invitesEl = document.getElementById("invites");
-const identityEl = document.getElementById("identity");
+const sections = ["stats","goals","checkin","wallet","invites","identity","unlock"];
+sections.forEach(id => window[id+"El"] = document.getElementById(id));
 
 const timeEl = document.getElementById("time");
 const humEl = document.getElementById("hum");
 const stateEl = document.getElementById("state");
+const statusMsg = document.getElementById("statusMsg");
 
 const goal7 = document.getElementById("goal7");
 const goal30 = document.getElementById("goal30");
@@ -65,6 +59,8 @@ const identityAge = document.getElementById("identityAge");
 const identityState = document.getElementById("identityState");
 const identityPhrase = document.getElementById("identityPhrase");
 
+const unlockMsg = document.getElementById("unlockMsg");
+
 // --------------------
 // Restore UI
 // --------------------
@@ -72,7 +68,7 @@ if (state.started) {
   showUI();
   startLoop();
   restoreCheckin();
-  restoreIdentity();
+  identityName.value = state.identity.name || "";
   updateUI();
 }
 
@@ -89,16 +85,9 @@ enterBtn.onclick = () => {
 };
 
 // --------------------
-// Show UI
-// --------------------
 function showUI() {
   enterBtn.style.display = "none";
-  statsEl.classList.remove("hidden");
-  goalsEl.classList.remove("hidden");
-  checkinEl.classList.remove("hidden");
-  walletEl.classList.remove("hidden");
-  invitesEl.classList.remove("hidden");
-  identityEl.classList.remove("hidden");
+  sections.forEach(id => window[id+"El"].classList.remove("hidden"));
 }
 
 // --------------------
@@ -107,15 +96,13 @@ function showUI() {
 function startLoop() {
   setInterval(() => {
     state.time++;
-    state.hum += Math.max(0, state.rate + (Math.random() - 0.5) * 0.00001);
+    state.hum += Math.max(0, state.rate + (Math.random()-0.5)*0.00001);
     checkDay();
     updateUI();
     saveLocal();
   }, 1000);
 }
 
-// --------------------
-// Dia humano
 // --------------------
 function checkDay() {
   if (state.time < 300) return;
@@ -131,8 +118,8 @@ checkinButtons.forEach(btn => {
     const today = todayKey();
     if (state.checkins[today]) return;
     state.checkins[today] = btn.dataset.mood;
-    checkinStatus.textContent = `Hoje foi: ${btn.dataset.mood}`;
     stateEl.textContent = btn.dataset.mood;
+    checkinStatus.textContent = `Hoje foi: ${btn.dataset.mood}`;
     saveLocal();
   };
 });
@@ -146,10 +133,8 @@ function restoreCheckin() {
 }
 
 // --------------------
-// Identidade
+// Identity
 // --------------------
-identityName.value = state.identity.name || "";
-
 identityName.oninput = () => {
   state.identity.name = identityName.value.trim();
   saveLocal();
@@ -166,33 +151,29 @@ inviteBtn.onclick = () => {
   });
   inviteInput.value = "";
   inviteStatus.textContent = "Convite registado.";
-  updateUI();
   saveLocal();
 };
 
 // --------------------
-// UI update
+// UI update + desbloqueios
 // --------------------
 function updateUI() {
-  const daysCount = Object.keys(state.days).length;
+  const days = Object.keys(state.days).length;
 
   timeEl.textContent = `${state.time}s`;
   humEl.textContent = state.hum.toFixed(5);
 
-  const symbolicState =
-    daysCount >= 30 ? "consistência profunda" :
-    daysCount >= 7 ? "consistência" :
+  const symbolic =
+    days >= 30 ? "consistência profunda" :
+    days >= 7 ? "consistência" :
     "presença";
 
-  if (!state.checkins[todayKey()]) {
-    stateEl.textContent = symbolicState;
-  }
+  if (!state.checkins[todayKey()]) stateEl.textContent = symbolic;
 
-  goal7.style.width = `${Math.min(daysCount / 7, 1) * 100}%`;
-  goal30.style.width = `${Math.min(daysCount / 30, 1) * 100}%`;
-
-  goal7txt.textContent = `${Math.min(daysCount,7)} / 7`;
-  goal30txt.textContent = `${Math.min(daysCount,30)} / 30`;
+  goal7.style.width = `${Math.min(days/7,1)*100}%`;
+  goal30.style.width = `${Math.min(days/30,1)*100}%`;
+  goal7txt.textContent = `${Math.min(days,7)} / 7`;
+  goal30txt.textContent = `${Math.min(days,30)} / 30`;
 
   walletBalance.textContent = `${state.hum.toFixed(5)} HUM`;
   walletState.textContent =
@@ -202,22 +183,22 @@ function updateUI() {
 
   inviteCount.textContent = state.invites.length;
 
-  identityAge.textContent = `${daysCount} dias`;
-  identityState.textContent = symbolicState;
-  identityPhrase.textContent = generateIdentityPhrase(daysCount);
+  identityAge.textContent = `${days} dias`;
+  identityState.textContent = symbolic;
+
+  identityPhrase.textContent =
+    days >= 30 ? "Construiu presença profunda." :
+    days >= 7 ? "Volta com consistência." :
+    "Começou a estar presente.";
+
+  // desbloqueios simbólicos
+  unlockMsg.textContent =
+    days >= 30 ? "Aqui o tempo já não precisa de provar nada." :
+    days >= 7 ? "Este espaço não pede atenção. Apenas continuidade." :
+    days >= 3 ? "Estar aqui já começou a criar rasto." :
+    "";
 }
 
-// --------------------
-// Identity phrase
-// --------------------
-function generateIdentityPhrase(days) {
-  if (days >= 30) return "Construiu presença ao longo do tempo.";
-  if (days >= 7) return "Volta com consistência.";
-  return "Começou a estar presente.";
-}
-
-// --------------------
-// Utils
 // --------------------
 function todayKey() {
   return new Date().toISOString().slice(0,10);
