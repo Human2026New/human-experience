@@ -1,12 +1,12 @@
 // =====================================================
-// HUMAN — app.js FINAL REAL (até PASSO 14)
+// HUMAN — app.js FINAL (PASSO 15 — TON TESTNET)
 // =====================================================
 
-const STORAGE_KEY = "human_state_v20";
+const STORAGE_KEY = "human_state_v21";
 const BACKEND_URL = "https://human-backend-1.onrender.com";
 
 // --------------------
-// Identidade técnica anónima
+// Anon ID
 // --------------------
 let anon_id = localStorage.getItem("human_anon_id");
 if (!anon_id) {
@@ -15,7 +15,7 @@ if (!anon_id) {
 }
 
 // --------------------
-// State global (LOCAL-FIRST)
+// State
 // --------------------
 let state = {
   started: false,
@@ -25,18 +25,12 @@ let state = {
   days: {},
 
   userName: "",
+  invites: [],
 
-  // Convites locais (espelho humano)
-  invites: [
-    // { name, code, status: convidado | entrou | ativo }
-  ],
-
-  // Wallet futura
   wallet: {
-    id: null,
-    chain: null,
-    address: null,
-    status: "local" // local | ready | linked
+    status: "local",   // local | linked
+    chain: null,       // "ton"
+    address: null
   }
 };
 
@@ -45,9 +39,7 @@ let state = {
 // --------------------
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
-  try {
-    state = { ...state, ...JSON.parse(saved) };
-  } catch {}
+  try { state = { ...state, ...JSON.parse(saved) }; } catch {}
 }
 
 // --------------------
@@ -68,6 +60,7 @@ const openInvites = document.getElementById("openInvites");
 const walletSpace = document.getElementById("walletSpace");
 const walletBalance = document.getElementById("walletBalance");
 const walletStatus = document.getElementById("walletStatus");
+const walletAddress = document.getElementById("walletAddress");
 
 const inviteSpace = document.getElementById("inviteSpace");
 const userNameInput = document.getElementById("userName");
@@ -77,11 +70,33 @@ const inviteList = document.getElementById("inviteList");
 const inviteCount = document.getElementById("inviteCount");
 
 // --------------------
+// TON CONNECT INIT
+// --------------------
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+  manifestUrl: "https://your-domain-or-github-pages/tonconnect-manifest.json",
+  buttonRootId: "tonConnectButton",
+  network: "testnet"
+});
+
+tonConnectUI.onStatusChange(wallet => {
+  if (wallet) {
+    state.wallet.status = "linked";
+    state.wallet.chain = "ton";
+    state.wallet.address = wallet.account.address;
+  } else {
+    state.wallet.status = "local";
+    state.wallet.chain = null;
+    state.wallet.address = null;
+  }
+  save();
+  updateUI();
+});
+
+// --------------------
 // ENTER
 // --------------------
 enterBtn.onclick = () => {
   if (state.started) return;
-
   state.started = true;
   enterBtn.style.display = "none";
   home.classList.remove("hidden");
@@ -90,13 +105,12 @@ enterBtn.onclick = () => {
   startLoop();
   updateUI();
 
-  // primeira presença real
   syncPresence();
   fetchFriends();
 };
 
 // --------------------
-// LOOP HUMANO (1s)
+// Loop humano
 // --------------------
 function startLoop() {
   setInterval(() => {
@@ -107,7 +121,6 @@ function startLoop() {
     updateUI();
     save();
 
-    // sincronizações suaves
     if (state.time % 30 === 0) {
       syncPresence();
       fetchFriends();
@@ -116,22 +129,20 @@ function startLoop() {
 }
 
 // --------------------
-// DIA HUMANO (>=5min)
+// Dia humano
 // --------------------
 function checkDay() {
   if (state.time < 300) return;
-  const today = todayKey();
-  if (!state.days[today]) state.days[today] = true;
+  const d = todayKey();
+  if (!state.days[d]) state.days[d] = true;
 }
 
 // --------------------
-// BÓNUS REAL (amigos ativos)
+// Bónus por amigos ativos
 // --------------------
 function getCurrentRate() {
-  const activeFriends =
-    state.invites.filter(i => i.status === "ativo").length;
-
-  const bonus = Math.min(activeFriends * 0.05, 0.30);
+  const active = state.invites.filter(i => i.status === "ativo").length;
+  const bonus = Math.min(active * 0.05, 0.30);
   return state.baseRate * (1 + bonus);
 }
 
@@ -140,34 +151,32 @@ function getCurrentRate() {
 // --------------------
 function updateUI() {
   const days = Object.keys(state.days).length;
-  const activeFriends =
-    state.invites.filter(i => i.status === "ativo").length;
+  const active = state.invites.filter(i => i.status === "ativo").length;
 
   daysCount.textContent = days;
 
-  let symbolicState = "presença";
-  if (activeFriends >= 1) symbolicState = "presença partilhada";
-  if (activeFriends >= 3) symbolicState = "presença ampliada";
-
-  stateText.textContent = symbolicState;
+  let symbolic = "presença";
+  if (active >= 1) symbolic = "presença partilhada";
+  if (active >= 3) symbolic = "presença ampliada";
+  stateText.textContent = symbolic;
 
   humValue.textContent = `${state.hum.toFixed(5)} HUM`;
   walletBalance.textContent = `${state.hum.toFixed(5)} HUM`;
-  walletStatus.textContent = state.wallet.status;
 
-  // Bónus simbólico visual
-  if (activeFriends > 0) {
+  walletStatus.textContent = state.wallet.status;
+  walletAddress.textContent =
+    state.wallet.address
+      ? shorten(state.wallet.address)
+      : "—";
+
+  if (active > 0) {
     humContainer.classList.add("bonus");
-    bonusText.textContent =
-      activeFriends === 1
-        ? "A tua presença está a ser partilhada."
-        : "A tua presença cresce com outros.";
+    bonusText.textContent = "A tua presença cresce com outros.";
   } else {
     humContainer.classList.remove("bonus");
     bonusText.textContent = "";
   }
 
-  // Convites (lista humana)
   inviteList.innerHTML = "";
   state.invites.forEach(inv => {
     const li = document.createElement("li");
@@ -176,11 +185,11 @@ function updateUI() {
   });
 
   inviteCount.textContent =
-    `${state.invites.length} convite(s) • ${activeFriends} ativo(s)`;
+    `${state.invites.length} convite(s) • ${active} ativo(s)`;
 }
 
 // --------------------
-// SPACES
+// Spaces
 // --------------------
 openWallet.onclick = () => walletSpace.classList.remove("hidden");
 openInvites.onclick = () => inviteSpace.classList.remove("hidden");
@@ -193,25 +202,7 @@ document.querySelectorAll(".closeSpace").forEach(btn => {
 });
 
 // --------------------
-// WALLET FUTURA (ponte)
-// --------------------
-const prepareWalletBtn = document.getElementById("prepareWallet");
-if (prepareWalletBtn) {
-  prepareWalletBtn.onclick = () => {
-    if (state.wallet.status !== "local") return;
-
-    state.wallet.id = crypto.randomUUID();
-    state.wallet.status = "ready";
-    state.wallet.chain = "undecided";
-    state.wallet.address = null;
-
-    save();
-    updateUI();
-  };
-}
-
-// --------------------
-// CONVITES REAIS
+// Convites
 // --------------------
 addInviteBtn.onclick = () => {
   const name = inviteNameInput.value.trim();
@@ -229,7 +220,6 @@ addInviteBtn.onclick = () => {
   save();
   updateUI();
 
-  // enviar ao backend (fire-and-forget)
   fetch(`${BACKEND_URL}/invite`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -241,7 +231,7 @@ addInviteBtn.onclick = () => {
 };
 
 // --------------------
-// PRESENÇA REAL (backend)
+// Backend sync
 // --------------------
 function syncPresence(invite_code = null) {
   fetch(`${BACKEND_URL}/presence`, {
@@ -254,21 +244,13 @@ function syncPresence(invite_code = null) {
   }).catch(() => {});
 }
 
-// --------------------
-// AMIGOS REAIS (backend)
-// --------------------
 function fetchFriends() {
   fetch(`${BACKEND_URL}/friends/${anon_id}`)
     .then(r => r.json())
     .then(data => {
-      // atualizar estados locais com base no backend
       state.invites.forEach(inv => {
-        if (inv.status === "convidado" && data.total > 0) {
-          inv.status = "entrou";
-        }
-        if (inv.status === "entrou" && data.active_today > 0) {
-          inv.status = "ativo";
-        }
+        if (inv.status === "convidado" && data.total > 0) inv.status = "entrou";
+        if (inv.status === "entrou" && data.active_today > 0) inv.status = "ativo";
       });
       save();
       updateUI();
@@ -277,7 +259,7 @@ function fetchFriends() {
 }
 
 // --------------------
-// Nome do utilizador
+// Nome
 // --------------------
 userNameInput.oninput = () => {
   state.userName = userNameInput.value.trim();
@@ -289,6 +271,10 @@ userNameInput.oninput = () => {
 // --------------------
 function todayKey() {
   return new Date().toISOString().slice(0, 10);
+}
+
+function shorten(addr) {
+  return addr.slice(0, 6) + "..." + addr.slice(-4);
 }
 
 function save() {

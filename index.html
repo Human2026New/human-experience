@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HUMAN</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- TON CONNECT UI -->
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 
@@ -45,7 +48,7 @@
   <!-- WALLET SPACE -->
   <section id="walletSpace" class="space hidden">
     <div class="space-card">
-      <h2>Wallet HUMAN</h2>
+      <h2>Wallet HUMAN (TON testnet)</h2>
 
       <div class="big" id="walletBalance">0.00000 HUM</div>
 
@@ -53,6 +56,20 @@
         <span>Estado</span>
         <b id="walletStatus">local</b>
       </div>
+
+      <div class="row">
+        <span>Endereço</span>
+        <b id="walletAddress">—</b>
+      </div>
+
+      <!-- TON CONNECT BUTTON -->
+      <div id="tonConnectButton"></div>
+
+      <small>
+        Ligação opcional.  
+        Testnet.  
+        Nada é enviado sem ação explícita.
+      </small>
 
       <button class="closeSpace">Fechar</button>
     </div>
@@ -75,7 +92,6 @@
       </div>
 
       <ul id="inviteList"></ul>
-
       <small id="inviteCount"></small>
 
       <button class="closeSpace">Fechar</button>
