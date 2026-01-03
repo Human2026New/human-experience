@@ -8,33 +8,56 @@
 </head>
 <body>
 
-  <div id="app">
-    <div id="core"></div>
+<div id="app">
 
-    <p id="subtitle">
-      Isto mede presença humana ao longo do tempo.
-    </p>
+  <div id="core"></div>
 
-    <button id="enterBtn">ENTRAR</button>
+  <p id="subtitle">
+    Isto mede presença humana ao longo do tempo.
+  </p>
 
-    <div id="stats" class="hidden">
-      <div>
-        <span>Tempo</span>
-        <b id="time">0s</b>
-      </div>
-      <div>
-        <span>HUM</span>
-        <b id="hum">0.00000</b>
-      </div>
-      <div>
-        <span>Estado</span>
-        <b id="state">neutro</b>
-      </div>
+  <button id="enterBtn">ENTRAR</button>
+
+  <div id="stats" class="hidden">
+    <div>
+      <span>Tempo</span>
+      <b id="time">0s</b>
     </div>
-
-    <p id="statusMsg"></p>
+    <div>
+      <span>HUM</span>
+      <b id="hum">0.00000</b>
+    </div>
+    <div>
+      <span>Estado</span>
+      <b id="state">neutro</b>
+    </div>
   </div>
 
-  <script src="app.js"></script>
+  <!-- METAS -->
+  <div id="goals" class="hidden">
+    <h3>Metas humanas</h3>
+
+    <div class="goal">
+      <span>7 dias de presença</span>
+      <div class="bar">
+        <div id="goal7" class="fill"></div>
+      </div>
+      <small id="goal7txt">0 / 7</small>
+    </div>
+
+    <div class="goal">
+      <span>30 dias de presença</span>
+      <div class="bar">
+        <div id="goal30" class="fill"></div>
+      </div>
+      <small id="goal30txt">0 / 30</small>
+    </div>
+  </div>
+
+  <p id="statusMsg"></p>
+
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
