@@ -1,133 +1,97 @@
 // =====================================
-// HUMAN WebApp — UX VIVO
+// HUMAN — LÓGICA HUMANA PROFUNDA
 // =====================================
-
-if (!(window.Telegram && Telegram.WebApp)) {
-  document.body.innerHTML = "HUMAN exists only inside Telegram.";
-  throw new Error("Not inside Telegram");
-}
 
 const tg = Telegram.WebApp;
 tg.ready();
 
-// ---------- STATE ----------
 let state = {
   streak: 0,
   hum: 0,
   displayHum: 0,
-  trust: 1.0,
+  trust: 1,
+  rate: 0.00001,
   busy: false
 };
 
-// ---------- ELEMENTS ----------
-const intro = document.getElementById("intro");
-const main = document.getElementById("main");
-
-const enterBtn = document.getElementById("enterBtn");
-const startBtn = document.getElementById("startBtn");
+const BACKEND = "https://human-backend-ywuf.onrender.com";
 
 const elTime = document.getElementById("timeActive");
 const elCycle = document.getElementById("cycle");
 const elState = document.getElementById("state");
+const startBtn = document.getElementById("startBtn");
 const core = document.getElementById("core");
 
-// ---------- BACKEND ----------
-const BACKEND = "http://localhost:5000";
-
-// ---------- INTRO ----------
-enterBtn.onclick = () => {
-  tg.HapticFeedback.impactOccurred("light");
-  intro.style.display = "none";
-  main.style.display = "flex";
-  fetchStatus();
-  startLiveCounter();
-};
-
-// ---------- BACKEND ----------
+// -----------------------------
 function fetchStatus() {
   fetch(`${BACKEND}/api/status`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ initData: tg.initData })
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({initData: tg.initData})
   })
-    .then(r => r.json())
-    .then(data => {
-      if (!data) return;
-      state.streak = data.streak;
-      state.hum = data.hum;
-      state.displayHum = data.hum;
-      state.trust = data.trust;
-      render();
-    });
+  .then(r => r.json())
+  .then(d => {
+    state.streak = d.streak;
+    state.hum = d.hum;
+    state.displayHum = d.hum;
+    state.trust = d.trust;
+    updateRate();
+    render();
+  });
 }
 
 function proveHumanity() {
   if (state.busy) return;
-
   state.busy = true;
-  startBtn.innerText = "⏳";
-  tg.HapticFeedback.impactOccurred("medium");
 
   fetch(`${BACKEND}/api/prove`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ initData: tg.initData })
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({initData: tg.initData})
   })
-    .then(r => r.json())
-    .then(data => {
-      state.busy = false;
-
-      if (!data.allowed) {
-        startBtn.innerText = "⏳ AINDA NÃO";
-        setTimeout(render, 1500);
-        return;
-      }
-
-      state.streak = data.streak;
-      state.hum = data.hum;
-      state.displayHum = data.hum;
-      state.trust = data.trust;
-
-      pulseCore();
-      tg.HapticFeedback.notificationOccurred("success");
-      render();
-    });
+  .then(r => r.json())
+  .then(d => {
+    state.busy = false;
+    state.streak = d.streak;
+    state.hum = d.hum;
+    state.displayHum = d.hum;
+    state.trust = d.trust;
+    updateRate();
+    pulseCore();
+    render();
+  });
 }
 
-// ---------- LIVE COUNTER ----------
-function startLiveCounter() {
+// -----------------------------
+function updateRate() {
+  // presença humana real
+  state.rate = 0.00001 * state.trust * Math.log(state.streak + 1);
+}
+
+function startCounter() {
   setInterval(() => {
-    state.displayHum += 0.00001;
-    updateCounter();
-    syncPulse();
+    state.displayHum += state.rate;
+    elCycle.innerText = `${state.displayHum.toFixed(5)} HUM`;
   }, 1000);
 }
 
-// ---------- UI ----------
+// -----------------------------
 function render() {
   elTime.innerText = `${state.streak} dias`;
   elState.innerText = `trust ${state.trust.toFixed(2)}`;
-  updateCounter();
+  elCycle.innerText = `${state.displayHum.toFixed(5)} HUM`;
   startBtn.innerText = "⛏ PROVAR HUMANIDADE";
 }
 
-function updateCounter() {
-  elCycle.innerText = `${state.displayHum.toFixed(5)} HUM`;
-}
-
-// ---------- PULSE SYNC ----------
-function syncPulse() {
-  const scale = 1 + Math.min(state.displayHum / 1000, 0.15);
-  core.style.transform = `scale(${scale})`;
-}
-
+// -----------------------------
 function pulseCore() {
-  core.style.transition = "transform 0.2s ease";
-  core.style.transform = "scale(1.2)";
+  core.style.transform = "scale(1.25)";
   setTimeout(() => {
     core.style.transform = "";
-  }, 200);
+  }, 250);
 }
 
-// ---------- ACTION ----------
+// -----------------------------
 startBtn.onclick = proveHumanity;
+fetchStatus();
+startCounter();
