@@ -2,36 +2,30 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <title>HUMAN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="style.css"/>
+  <title>HUMAN</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="app">
-
-  <!-- CORE -->
-  <div id="core-container">
+  <div id="app">
     <div id="core"></div>
+
+    <p id="subtitle">
+      Isto mede presença humana ao longo do tempo.
+    </p>
+
+    <button id="enterBtn">ENTRAR</button>
+
+    <div id="stats" class="hidden">
+      <div><span>Tempo</span><b id="time">0s</b></div>
+      <div><span>HUM</span><b id="hum">0.00000</b></div>
+      <div><span>Estado</span><b id="state">neutro</b></div>
+    </div>
+
+    <p id="statusMsg"></p>
   </div>
 
-  <!-- TEXTO -->
-  <div id="text">
-    Isto mede presença humana ao longo do tempo.
-  </div>
-
-  <!-- BOTÃO -->
-  <button id="enterBtn">ENTRAR</button>
-
-  <!-- STATUS -->
-  <div id="stats" class="hidden">
-    <div>Tempo: <span id="time">0s</span></div>
-    <div>HUM: <span id="hum">0.00000</span></div>
-    <div>Estado: <span id="state">neutro</span></div>
-  </div>
-
-</div>
-
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

@@ -6,11 +6,11 @@
 body {
   margin: 0;
   height: 100vh;
-  background: radial-gradient(circle at center, #0f2d2d, #000);
+  background: radial-gradient(circle at center, #0f3d36, #000);
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: #cffff6;
+  justify-content: center;
+  color: #cfeee8;
 }
 
 #app {
@@ -19,55 +19,60 @@ body {
   max-width: 420px;
 }
 
-#core-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-
 #core {
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
   border-radius: 50%;
-  background: radial-gradient(circle, #3fffe0, #1aa89a);
-  box-shadow: 0 0 40px rgba(63,255,224,0.6);
+  background: radial-gradient(circle, #3fffdc, #0aa);
   animation: pulse 4s infinite ease-in-out;
 }
 
 @keyframes pulse {
-  0%   { transform: scale(1);   box-shadow: 0 0 30px rgba(63,255,224,.4);}
-  50%  { transform: scale(1.08);box-shadow: 0 0 60px rgba(63,255,224,.8);}
-  100% { transform: scale(1);   box-shadow: 0 0 30px rgba(63,255,224,.4);}
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
 }
 
-#text {
+#subtitle {
+  opacity: 0.8;
   font-size: 14px;
-  opacity: 0.85;
   margin-bottom: 20px;
 }
 
 button {
-  padding: 12px 36px;
-  border-radius: 30px;
-  border: 1px solid #3fffe0;
+  padding: 12px 26px;
   background: transparent;
-  color: #3fffe0;
-  font-size: 14px;
+  border: 1px solid #3fffdc;
+  border-radius: 22px;
+  color: #3fffdc;
   cursor: pointer;
-  transition: all .3s;
+  font-size: 14px;
 }
 
 button:hover {
-  background: #3fffe0;
-  color: #002222;
+  background: rgba(63,255,220,0.1);
 }
 
 #stats {
-  margin-top: 30px;
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-around;
   font-size: 13px;
-  opacity: 0.9;
+}
+
+#stats div span {
+  display: block;
+  opacity: 0.6;
+  font-size: 11px;
 }
 
 .hidden {
   display: none;
+}
+
+#statusMsg {
+  margin-top: 12px;
+  font-size: 11px;
+  opacity: 0.5;
 }

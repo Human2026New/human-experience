@@ -1,51 +1,106 @@
-// ESTADO HUMANO LOCAL (não depende de backend)
-let started = false;
-let seconds = 0;
-let hum = 0;
-let rateBase = 0.00001;
+// --------------------
+// Telegram safe init
+// --------------------
+let tg = null;
+try {
+  tg = window.Telegram?.WebApp;
+  tg?.ready();
+} catch {}
 
+// --------------------
+// Backend URL
+// --------------------
+const BACKEND = "https://human-backend-ywuf.onrender.com";
+
+// --------------------
+// State
+// --------------------
+let state = {
+  started: false,
+  time: 0,
+  hum: 0,
+  rate: 0.00002,
+  sessions: 0,
+  lastSync: 0
+};
+
+// --------------------
+// Elements
+// --------------------
 const enterBtn = document.getElementById("enterBtn");
-const stats = document.getElementById("stats");
 const timeEl = document.getElementById("time");
 const humEl = document.getElementById("hum");
 const stateEl = document.getElementById("state");
-const core = document.getElementById("core");
+const statsEl = document.getElementById("stats");
+const statusMsg = document.getElementById("statusMsg");
 
-// Ritmo humano não-linear
-function humanRate() {
-  const noise = Math.sin(Date.now() / 3000) * 0.5 + 0.5;
-  return rateBase * (0.5 + noise);
-}
-
-// Loop vivo
-function tick() {
-  if (!started) return;
-
-  seconds++;
-  hum += humanRate();
-
-  timeEl.textContent = seconds + "s";
-  humEl.textContent = hum.toFixed(5);
-
-  // Estados simbólicos
-  if (seconds < 30) stateEl.textContent = "início";
-  else if (seconds < 120) stateEl.textContent = "presente";
-  else stateEl.textContent = "consistência";
-
-  // micro-variação visual
-  const scale = 1 + Math.sin(Date.now()/800) * 0.02;
-  core.style.transform = `scale(${scale})`;
-}
-
-// BOTÃO ENTRAR — SEMPRE FUNCIONA
+// --------------------
+// Enter
+// --------------------
 enterBtn.onclick = () => {
-  if (started) return;
+  if (state.started) return;
 
-  started = true;
-  enterBtn.classList.add("hidden");
-  stats.classList.remove("hidden");
-  document.getElementById("text").textContent =
-    "Presença registada. HUM acumulado.";
+  state.started = true;
+  state.sessions += 1;
 
-  setInterval(tick, 1000);
+  enterBtn.style.display = "none";
+  statsEl.classList.remove("hidden");
+  statusMsg.textContent = "Presença registada. HUM a acumular.";
+
+  startLoop();
 };
+
+// --------------------
+// Main loop (humano)
+// --------------------
+function startLoop() {
+  setInterval(() => {
+    state.time += 1;
+
+    // ritmo humano não-linear
+    const drift = (Math.random() - 0.5) * 0.00001;
+    state.hum += Math.max(0, state.rate + drift);
+
+    updateUI();
+    maybeSync();
+  }, 1000);
+}
+
+// --------------------
+// UI
+// --------------------
+function updateUI() {
+  timeEl.textContent = `${state.time}s`;
+  humEl.textContent = state.hum.toFixed(5);
+  stateEl.textContent =
+    state.time < 60 ? "neutro" :
+    state.time < 300 ? "estável" :
+    "consistente";
+}
+
+// --------------------
+// Backend sync (safe)
+// --------------------
+function maybeSync() {
+  const now = Date.now();
+  if (now - state.lastSync < 15000) return; // 15s
+
+  state.lastSync = now;
+
+  fetch(`${BACKEND}/sync_hum`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      hum: state.hum,
+      sessions: state.sessions,
+      initDataUnsafe: tg?.initDataUnsafe || {}
+    })
+  })
+  .then(r => r.json())
+  .then(() => {
+    statusMsg.textContent = "Sincronizado.";
+  })
+  .catch(() => {
+    statusMsg.textContent = "Offline. Continua local.";
+  });
+}
