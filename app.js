@@ -1,16 +1,16 @@
 /* =========================
-   HUMAN — app.js
+   HUMAN — app.js (stable)
    ========================= */
 
-const STORAGE_KEY = "human_app_v2";
+const STORAGE_KEY = "human_app_v3";
 const DONATION_ADDRESS =
   "UQC_QK4Kwcw68zJYKGYMKRhrWNAK7lYmniEgV-Kq9kCLkzlf";
 
 /* ---------- TASK POOL ---------- */
 const TASK_POOL = [
   { text: "Entrar com presença", type: "enter", hum: 0.001 },
-  { text: "Ficar 3 minutos", type: "time3", hum: 0.0015 },
-  { text: "Ficar 7 minutos", type: "time7", hum: 0.0025 },
+  { text: "Permanecer 3 minutos", type: "time3", hum: 0.0015 },
+  { text: "Permanecer 7 minutos", type: "time7", hum: 0.0025 },
   { text: "Escrever uma nota humana", type: "note", hum: 0.002 },
   { text: "Voltar depois de uma pausa", type: "return", hum: 0.003 }
 ];
@@ -28,7 +28,9 @@ let state = {
 /* ---------- LOAD ---------- */
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
-  try { state = { ...state, ...JSON.parse(saved) }; } catch {}
+  try {
+    state = { ...state, ...JSON.parse(saved) };
+  } catch {}
 }
 
 /* ---------- HELPERS ---------- */
@@ -201,22 +203,28 @@ tonConnectUI.onStatusChange(wallet => {
   fetch(`https://toncenter.com/api/v2/getAddressBalance?address=${address}`)
     .then(r => r.json())
     .then(d => {
+      if (!d.result) return;
       const ton = (d.result / 1e9).toFixed(4);
       $("tonBalance").textContent = ton;
       if (tonValue) tonValue.textContent = ton + " TON";
-    });
+    })
+    .catch(() => {});
 });
 
 /* ---------- MODALS ---------- */
 document.querySelectorAll(".menu button").forEach(btn => {
   btn.onclick = () => {
-    document.getElementById(btn.dataset.open).classList.remove("hidden");
+    const target = btn.dataset.open;
+    const section = document.getElementById(target);
+    if (section) section.classList.remove("hidden");
   };
 });
 
 document.querySelectorAll(".close").forEach(btn => {
   btn.onclick = () => {
-    document.querySelectorAll(".space").forEach(s => s.classList.add("hidden"));
+    document.querySelectorAll(".space").forEach(s =>
+      s.classList.add("hidden")
+    );
   };
 });
 
