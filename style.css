@@ -1,81 +1,71 @@
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
 }
 
 body {
+  margin: 0;
   height: 100vh;
-  background: #000;
-  color: #e6fdf7;
-  overflow: hidden;
-}
-
-.bg {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at center, #0c2a28 0%, #000 70%);
-}
-
-.container {
-  position: relative;
-  z-index: 10;
-  height: 100vh;
+  background: radial-gradient(circle at center, #0f2d2d, #000);
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 20px;
+  align-items: center;
+  color: #cffff6;
 }
 
-.sphere {
+#app {
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+}
+
+#core-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+#core {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #3fffe0, #0fb9a7);
-  box-shadow: 0 0 30px rgba(63,255,224,0.45);
-  transition: transform 1s ease, box-shadow 1s ease;
+  background: radial-gradient(circle, #3fffe0, #1aa89a);
+  box-shadow: 0 0 40px rgba(63,255,224,0.6);
+  animation: pulse 4s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1);   box-shadow: 0 0 30px rgba(63,255,224,.4);}
+  50%  { transform: scale(1.08);box-shadow: 0 0 60px rgba(63,255,224,.8);}
+  100% { transform: scale(1);   box-shadow: 0 0 30px rgba(63,255,224,.4);}
+}
+
+#text {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 20px;
 }
 
 button {
-  padding: 12px 28px;
-  border-radius: 22px;
+  padding: 12px 36px;
+  border-radius: 30px;
   border: 1px solid #3fffe0;
   background: transparent;
   color: #3fffe0;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
+  transition: all .3s;
 }
 
 button:hover {
-  background: rgba(63,255,224,0.1);
+  background: #3fffe0;
+  color: #002222;
 }
 
-#info {
-  opacity: 0.7;
-  font-size: 14px;
-  text-align: center;
-}
-
-.core {
-  display: flex;
-  gap: 30px;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-
-.core.show {
-  opacity: 1;
-}
-
-.stat {
-  text-align: center;
-}
-
-.label {
-  font-size: 11px;
-  opacity: 0.6;
+#stats {
+  margin-top: 30px;
+  font-size: 13px;
+  opacity: 0.9;
 }
 
 .hidden {

@@ -3,36 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <title>HUMAN</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<div class="bg"></div>
+<div id="app">
 
-<div class="container">
-  <div class="sphere"></div>
+  <!-- CORE -->
+  <div id="core-container">
+    <div id="core"></div>
+  </div>
 
-  <div id="info">
+  <!-- TEXTO -->
+  <div id="text">
     Isto mede presença humana ao longo do tempo.
   </div>
 
-  <button id="startBtn">ENTRAR</button>
+  <!-- BOTÃO -->
+  <button id="enterBtn">ENTRAR</button>
 
-  <div id="core" class="core hidden">
-    <div class="stat">
-      <span class="label">Tempo</span>
-      <span id="time">0s</span>
-    </div>
-    <div class="stat">
-      <span class="label">HUM</span>
-      <span id="hum">0.00000</span>
-    </div>
-    <div class="stat">
-      <span class="label">Estado</span>
-      <span id="state">neutro</span>
-    </div>
+  <!-- STATUS -->
+  <div id="stats" class="hidden">
+    <div>Tempo: <span id="time">0s</span></div>
+    <div>HUM: <span id="hum">0.00000</span></div>
+    <div>Estado: <span id="state">neutro</span></div>
   </div>
+
 </div>
 
 <script src="app.js"></script>
