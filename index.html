@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HUMAN</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- TON CONNECT UI -->
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 
@@ -31,7 +34,7 @@
         <span>€ 0.00</span>
         <span>$ 0.00</span>
         <span>0 BTC</span>
-        <span>0 TON</span>
+        <span id="tonValue">0 TON</span>
       </div>
 
       <div class="presence">
@@ -44,7 +47,7 @@
 
       <small>
         HUM não tem valor monetário.
-        A wallet é apenas um registo de presença.
+        TON é externo e opcional.
       </small>
     </div>
 
@@ -100,12 +103,20 @@
   <section id="wallet" class="space hidden">
     <div class="space-card">
       <h2>Wallet</h2>
-      <p>Estado: <b>ativa (não monetizada)</b></p>
-      <p>Saldo: <span id="walletHum">0.00000</span> HUM</p>
-      <small>
-        HUM não é um token.
-        Não existe trading.
+
+      <div id="ton-connect"></div>
+
+      <p>Endereço TON:</p>
+      <small id="tonAddress">não ligada</small>
+
+      <p style="margin-top:10px;">Saldo TON:</p>
+      <b id="tonBalance">0</b> TON
+
+      <small style="display:block;margin-top:10px;">
+        HUM é interno.  
+        TON pertence à tua wallet.
       </small>
+
       <button class="close">Fechar</button>
     </div>
   </section>

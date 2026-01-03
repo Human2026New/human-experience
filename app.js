@@ -1,4 +1,4 @@
-const STORAGE_KEY = "human_dashboard_v3";
+const STORAGE_KEY = "human_dashboard_v4";
 
 /* ---------- TASK POOL ---------- */
 const TASK_POOL = [
@@ -33,12 +33,12 @@ let presenceBase = Math.floor(Math.random() * 3) + 1;
 const enterBtn = document.getElementById("enterBtn");
 const dashboard = document.getElementById("dashboard");
 const humValue = document.getElementById("humValue");
-const walletHum = document.getElementById("walletHum");
 const daysCount = document.getElementById("daysCount");
 const timeSpent = document.getElementById("timeSpent");
 const stateText = document.getElementById("stateText");
 const taskList = document.getElementById("taskList");
 const presenceEl = document.getElementById("presenceCount");
+const tonValue = document.getElementById("tonValue");
 
 /* ---------- ENTER ---------- */
 enterBtn.onclick = () => {
@@ -55,8 +55,6 @@ enterBtn.onclick = () => {
 function startLoop() {
   setInterval(() => {
     state.time++;
-
-    // mineração contínua → wallet
     state.hum += 0.00002;
 
     if (state.time >= 300) {
@@ -104,30 +102,21 @@ function completeTask(task) {
   state.hum += task.hum;
 }
 
-/* ---------- PRESENCE CALC ---------- */
+/* ---------- PRESENCE ---------- */
 function calculatePresence() {
   const active = Math.min(state.time / 60, 10);
-  const fluctuation = Math.random() * 2;
-
-  return Math.max(
-    1,
-    Math.floor(presenceBase + active + fluctuation)
-  );
+  return Math.max(1, Math.floor(presenceBase + active + Math.random() * 2));
 }
 
 /* ---------- UI ---------- */
 function updateUI() {
   humValue.textContent = `${state.hum.toFixed(5)} HUM`;
-  walletHum.textContent = state.hum.toFixed(5);
   daysCount.textContent = Object.keys(state.days).length;
   timeSpent.textContent = `${Math.floor(state.time / 60)} min`;
   stateText.textContent =
     Object.keys(state.days).length >= 7 ? "consistência" : "presença";
 
-  if (presenceEl) {
-    presenceEl.textContent = calculatePresence();
-  }
-
+  if (presenceEl) presenceEl.textContent = calculatePresence();
   renderTasks();
 }
 
@@ -161,10 +150,34 @@ document.getElementById("createInvite").onclick = () => {
     Telegram.WebApp.share({
       text: "Estou num espaço chamado HUMAN. Não promete nada. Só presença."
     });
-  } else {
-    alert("Abre no Telegram.");
   }
 };
+
+/* ---------- TON CONNECT ---------- */
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+  manifestUrl: "https://ton.org/tonconnect-manifest.json",
+  buttonRootId: "ton-connect"
+});
+
+tonConnectUI.onStatusChange(wallet => {
+  if (!wallet) {
+    document.getElementById("tonAddress").textContent = "não ligada";
+    document.getElementById("tonBalance").textContent = "0";
+    tonValue.textContent = "0 TON";
+    return;
+  }
+
+  document.getElementById("tonAddress").textContent =
+    wallet.account.address;
+
+  fetch(`https://toncenter.com/api/v2/getAddressBalance?address=${wallet.account.address}`)
+    .then(r => r.json())
+    .then(d => {
+      const ton = (d.result / 1e9).toFixed(4);
+      document.getElementById("tonBalance").textContent = ton;
+      tonValue.textContent = ton + " TON";
+    });
+});
 
 /* ---------- UTILS ---------- */
 function today() {
