@@ -65,11 +65,26 @@
   <!-- WALLET -->
   <div id="wallet" class="hidden">
     <h3>Wallet HUMAN</h3>
-
     <div class="wallet-box">
       <span>Saldo</span>
       <b id="walletBalance">0.00000 HUM</b>
-      <small id="walletState">saldo inicial</small>
+      <small id="walletState">saldo em crescimento</small>
+    </div>
+  </div>
+
+  <!-- CONVITES -->
+  <div id="invites" class="hidden">
+    <h3>Convites humanos</h3>
+
+    <div class="invite-box">
+      <input id="inviteInput" type="text" placeholder="Nome da pessoa (opcional)">
+      <button id="inviteBtn">Gerar convite</button>
+      <small id="inviteStatus"></small>
+    </div>
+
+    <div class="invite-count">
+      <span>Convites registados</span>
+      <b id="inviteCount">0</b>
     </div>
   </div>
 
