@@ -5,52 +5,42 @@
   <title>HUMAN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Telegram WebApp -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div id="app">
+  <!-- BACKGROUND -->
+  <div class="bg"></div>
 
-    <!-- INTRO -->
-    <div id="intro">
-      <div id="presence">
-        <div id="core"></div>
+  <!-- CONTAINER -->
+  <div class="container">
+
+    <!-- CORE VISUAL -->
+    <div class="sphere"></div>
+
+    <!-- TEXTO INICIAL -->
+    <p id="info">
+      Isto mede presença humana ao longo do tempo.
+    </p>
+
+    <!-- BOTÃO -->
+    <button id="startBtn" type="button">
+      ENTRAR
+    </button>
+
+    <!-- ÁREA ATIVA -->
+    <div id="core" class="core hidden">
+      <div class="stat">
+        <span class="label">TIME</span>
+        <span id="time">0s</span>
       </div>
-
-      <p class="intro-text">
-        Isto mede presença humana ao longo do tempo.
-      </p>
-
-      <button id="enterBtn">ENTRAR</button>
-    </div>
-
-    <!-- MAIN APP -->
-    <div id="main" style="display:none">
-
-      <div id="presence">
-        <div id="core"></div>
+      <div class="stat">
+        <span class="label">HUM</span>
+        <span id="hum">0.00000</span>
       </div>
-
-      <div id="stats">
-        <div class="stat">
-          <span class="label">TIME</span>
-          <span class="value" id="timeActive">0 dias</span>
-        </div>
-
-        <div class="stat">
-          <span class="label">HUM</span>
-          <span class="value" id="cycle">0.00000 HUM</span>
-        </div>
-
-        <div class="stat">
-          <span class="label">STATE</span>
-          <span class="value" id="state">trust 1.00</span>
-        </div>
-      </div>
-
-      <button id="startBtn">⛏ PROVAR HUMANIDADE</button>
-
     </div>
 
   </div>
