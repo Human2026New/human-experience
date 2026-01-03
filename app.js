@@ -1,4 +1,4 @@
-const STORAGE_KEY = "human_dashboard_v4";
+const STORAGE_KEY = "human_dashboard_v5";
 
 /* ---------- TASK POOL ---------- */
 const TASK_POOL = [
@@ -151,6 +151,13 @@ document.getElementById("createInvite").onclick = () => {
       text: "Estou num espaço chamado HUMAN. Não promete nada. Só presença."
     });
   }
+};
+
+/* ---------- DONATION ---------- */
+document.getElementById("copyDonation").onclick = () => {
+  const addr = "UQC_QK4Kwcw68zJYKGYMKRhrWNAK7lYmniEgV-Kq9kCLkzlf";
+  navigator.clipboard.writeText(addr);
+  alert("Endereço TON copiado.");
 };
 
 /* ---------- TON CONNECT ---------- */

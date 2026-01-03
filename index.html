@@ -46,7 +46,7 @@
       </small>
 
       <small>
-        HUM não tem valor monetário.
+        HUM não tem valor monetário.  
         TON é externo e opcional.
       </small>
     </div>
@@ -57,6 +57,7 @@
       <button data-open="tasks">🧭 Tarefas humanas</button>
       <button data-open="invites">👥 Convites</button>
       <button data-open="wallet">💼 Wallet</button>
+      <button data-open="donation">💚 Doação</button>
       <button data-open="profile">👤 Perfil</button>
     </div>
 
@@ -79,7 +80,7 @@
       <h2>Tarefas humanas</h2>
       <ul id="taskList"></ul>
       <small>
-        As tarefas mudam todos os dias.
+        As tarefas mudam todos os dias.  
         Não são obrigatórias.
       </small>
       <button class="close">Fechar</button>
@@ -92,7 +93,7 @@
       <h2>Convites humanos</h2>
       <button id="createInvite">Convidar humano</button>
       <small>
-        Convites não criam ganhos.
+        Convites não criam ganhos.  
         Criam continuidade.
       </small>
       <button class="close">Fechar</button>
@@ -102,7 +103,7 @@
   <!-- WALLET -->
   <section id="wallet" class="space hidden">
     <div class="space-card">
-      <h2>Wallet</h2>
+      <h2>Wallet TON</h2>
 
       <div id="ton-connect"></div>
 
@@ -121,6 +122,27 @@
     </div>
   </section>
 
+  <!-- DONATION -->
+  <section id="donation" class="space hidden">
+    <div class="space-card">
+      <h2>Apoiar o projeto</h2>
+
+      <p>Wallet TON do projeto:</p>
+      <small id="donationAddress">
+        UQC_QK4Kwcw68zJYKGYMKRhrWNAK7lYmniEgV-Kq9kCLkzlf
+      </small>
+
+      <button id="copyDonation">Copiar endereço</button>
+
+      <small style="display:block;margin-top:10px;">
+        Doações são voluntárias.  
+        Não dão benefícios nem privilégios.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
   <!-- PROFILE -->
   <section id="profile" class="space hidden">
     <div class="space-card">
@@ -128,7 +150,7 @@
       <input id="userName" placeholder="o teu nome"/>
       <textarea id="userNote" placeholder="nota humana (opcional)"></textarea>
       <small>
-        O perfil é opcional.
+        O perfil é opcional.  
         Nada é público.
       </small>
       <button class="close">Fechar</button>
