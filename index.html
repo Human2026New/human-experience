@@ -29,7 +29,7 @@
     </div>
     <div>
       <span>Estado</span>
-      <b id="state">neutro</b>
+      <b id="state">presença</b>
     </div>
   </div>
 
@@ -39,19 +39,29 @@
 
     <div class="goal">
       <span>7 dias de presença</span>
-      <div class="bar">
-        <div id="goal7" class="fill"></div>
-      </div>
+      <div class="bar"><div id="goal7" class="fill"></div></div>
       <small id="goal7txt">0 / 7</small>
     </div>
 
     <div class="goal">
       <span>30 dias de presença</span>
-      <div class="bar">
-        <div id="goal30" class="fill"></div>
-      </div>
+      <div class="bar"><div id="goal30" class="fill"></div></div>
       <small id="goal30txt">0 / 30</small>
     </div>
+  </div>
+
+  <!-- CHECK-IN HUMANO -->
+  <div id="checkin" class="hidden">
+    <h3>Check-in consciente</h3>
+
+    <div class="checkin-options">
+      <button data-mood="presente">Presente</button>
+      <button data-mood="distraído">Distraído</button>
+      <button data-mood="difícil">Difícil</button>
+      <button data-mood="grato">Grato</button>
+    </div>
+
+    <small id="checkinStatus"></small>
   </div>
 
   <p id="statusMsg"></p>
