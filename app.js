@@ -1,9 +1,9 @@
-console.log("HUMAN — persistência ativa");
+console.log("HUMAN — convites humanos ativos");
 
 const tg = window.Telegram?.WebApp;
 if (tg) tg.ready();
 
-const BACKEND = "https://human-backend-ywuf.onrender.com";
+const BACKEND = "https://human-backend-XXXX.onrender.com";
 
 const startBtn = document.getElementById("startBtn");
 const info = document.getElementById("info");
@@ -12,93 +12,65 @@ const core = document.getElementById("core");
 const timeEl = document.getElementById("time");
 const humEl = document.getElementById("hum");
 const stateEl = document.getElementById("state");
-const sphere = document.querySelector(".sphere");
 
-let started = false;
-let startTime = null;
-let lastTick = null;
+let hum=0, totalTime=0;
+let presence=0, calm=0, stable=0;
+let inviteCode=null, inviter=null;
+let started=false;
 
-let hum = 0;
-let totalTime = 0;
-
-let presence = 0;
-let calm = 0;
-let stable = 0;
-
-const BASE_RATE = 0.000006;
-const MAX_RATE = 0.00002;
-
-async function loadState() {
-  const res = await fetch(`${BACKEND}/api/status`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      initData: tg?.initData || "web"
-    })
+async function load() {
+  const invite = new URLSearchParams(window.location.search).get("invite");
+  const r = await fetch(`${BACKEND}/api/status`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({initData:tg?.initData||"web", invite})
   });
-  const d = await res.json();
-
-  hum = d.hum;
-  totalTime = d.total_time;
-  presence = d.presence;
-  calm = d.calm;
-  stable = d.stable;
+  const d = await r.json();
+  hum=d.hum; totalTime=d.total_time;
+  presence=d.presence; calm=d.calm; stable=d.stable;
+  inviteCode=d.invite_code; inviter=d.inviter;
 }
 
-async function saveState() {
-  fetch(`${BACKEND}/api/update`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      initData: tg?.initData || "web",
-      hum,
-      total_time: totalTime,
-      presence,
-      calm,
-      stable
+async function save() {
+  fetch(`${BACKEND}/api/update`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      initData:tg?.initData||"web",
+      hum,total_time:totalTime,
+      presence,calm,stable
     })
   });
 }
 
-function humanRate(seconds) {
-  let r = BASE_RATE * Math.log(seconds + 2);
-  if (stable) r *= 1.15;
-  r += (Math.random() - 0.5) * r * 0.25;
-  return Math.min(MAX_RATE, Math.max(BASE_RATE * 0.4, r));
-}
-
-startBtn.addEventListener("click", async () => {
-  if (started) return;
-  started = true;
-
-  await loadState();
-
-  startBtn.style.display = "none";
-  info.style.display = "none";
+startBtn.onclick = async ()=>{
+  if(started) return;
+  started=true;
+  await load();
+  startBtn.style.display="none";
+  info.innerHTML = `
+    Teu código humano:<br><b>${inviteCode}</b><br>
+    Partilha com alguém consciente.
+  `;
   core.classList.remove("hidden");
-  core.classList.add("show");
+  let start=Date.now();
 
-  startTime = Date.now();
-  lastTick = startTime;
+  setInterval(async ()=>{
+    totalTime++;
+    hum+=0.000005+Math.random()*0.000002;
 
-  setInterval(() => {
-    const now = Date.now();
-    const delta = (now - lastTick) / 1000;
-    lastTick = now;
+    if(totalTime>180 && inviter){
+      await fetch(`${BACKEND}/api/invite/confirm`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({initData:tg?.initData||"web"})
+      });
+      inviter=null;
+    }
 
-    totalTime += delta;
-
-    const rate = humanRate(totalTime);
-    hum += rate * delta;
-
-    if (totalTime > 300) presence = 1;
-    if (totalTime > 120) calm = 1;
-    if (totalTime > 600) stable = 1;
-
-    timeEl.innerText = Math.floor(totalTime) + "s";
-    humEl.innerText = hum.toFixed(5);
-    stateEl.innerText = stable ? "estável" : calm ? "calmo" : presence ? "presente" : "neutro";
-
-    saveState();
-  }, 2000);
-});
+    timeEl.innerText=totalTime+"s";
+    humEl.innerText=hum.toFixed(5);
+    stateEl.innerText= stable?"ligado":calm?"calmo":presence?"presente":"neutro";
+    save();
+  },2000);
+};
