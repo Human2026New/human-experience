@@ -41,9 +41,7 @@
         <span id="presenceCount">–</span> humanos presentes agora
       </div>
 
-      <small class="presence-note">
-        presença sentida neste momento
-      </small>
+      <small class="presence-note">presença sentida neste momento</small>
 
       <small>
         HUM não tem valor monetário.  
@@ -58,6 +56,7 @@
       <button data-open="invites">👥 Convites</button>
       <button data-open="wallet">💼 Wallet</button>
       <button data-open="donation">💚 Doação</button>
+      <button data-open="about">ℹ️ Sobre</button>
       <button data-open="profile">👤 Perfil</button>
     </div>
 
@@ -79,10 +78,7 @@
     <div class="space-card">
       <h2>Tarefas humanas</h2>
       <ul id="taskList"></ul>
-      <small>
-        As tarefas mudam todos os dias.  
-        Não são obrigatórias.
-      </small>
+      <small>As tarefas mudam todos os dias. Não são obrigatórias.</small>
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -92,10 +88,7 @@
     <div class="space-card">
       <h2>Convites humanos</h2>
       <button id="createInvite">Convidar humano</button>
-      <small>
-        Convites não criam ganhos.  
-        Criam continuidade.
-      </small>
+      <small>Convites não criam ganhos. Criam continuidade.</small>
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -132,11 +125,45 @@
         UQC_QK4Kwcw68zJYKGYMKRhrWNAK7lYmniEgV-Kq9kCLkzlf
       </small>
 
+      <img id="tonQr" alt="QR Code TON"/>
+
+      <button id="openTonkeeper">Abrir Tonkeeper</button>
       <button id="copyDonation">Copiar endereço</button>
 
       <small style="display:block;margin-top:10px;">
         Doações são voluntárias.  
-        Não dão benefícios nem privilégios.
+        Não dão privilégios.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="space hidden">
+    <div class="space-card">
+      <h2>Sobre o projeto</h2>
+
+      <p>
+        HUMAN não é um token.  
+        Não promete retornos.  
+        Não mede valor financeiro.
+      </p>
+
+      <p>
+        É um espaço de presença contínua,  
+        onde o tempo conta mais do que cliques.
+      </p>
+
+      <p>
+        HUM é apenas um registo simbólico  
+        de estar, voltar e permanecer.
+      </p>
+
+      <small>
+        Projeto independente.  
+        Cresce devagar.  
+        Sem pressa.
       </small>
 
       <button class="close">Fechar</button>
@@ -149,10 +176,7 @@
       <h2>Perfil humano</h2>
       <input id="userName" placeholder="o teu nome"/>
       <textarea id="userNote" placeholder="nota humana (opcional)"></textarea>
-      <small>
-        O perfil é opcional.  
-        Nada é público.
-      </small>
+      <small>O perfil é opcional. Nada é público.</small>
       <button class="close">Fechar</button>
     </div>
   </section>

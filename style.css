@@ -95,6 +95,7 @@ button:hover {
   border-radius: 16px;
   width: 90%;
   max-width: 360px;
+  text-align: center;
 }
 
 .hidden {
@@ -111,4 +112,11 @@ input, textarea {
 
 ul {
   padding-left: 18px;
+  text-align: left;
+}
+
+#tonQr {
+  margin-top: 12px;
+  width: 160px;
+  height: 160px;
 }
