@@ -42,13 +42,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  background: rgba(63,255,220,0.1);
-}
-
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 
 .card {
   margin-top: 22px;
@@ -60,13 +54,7 @@ button:hover {
 
 .card h2 {
   font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.hint {
-  font-size: 12px;
-  opacity: 0.65;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .row {
@@ -82,9 +70,7 @@ button:hover {
   margin: 10px 0;
 }
 
-.goal {
-  margin-top: 12px;
-}
+.goal { margin-top: 12px; }
 
 .bar {
   height: 8px;
@@ -98,16 +84,10 @@ button:hover {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, #3fffdc, #7fffe9);
-  transition: width 0.6s ease;
 }
 
 .actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-}
-
-.actions button {
-  font-size: 12px;
-  padding: 10px;
 }

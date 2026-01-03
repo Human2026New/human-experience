@@ -13,8 +13,8 @@
   <!-- HERO -->
   <section id="hero">
     <h1>HUMAN</h1>
-    <p>
-      Um espaço digital onde o tempo só conta
+    <p id="heroText">
+      Um espaço onde o tempo só conta
       se houver presença.
     </p>
   </section>
@@ -24,44 +24,48 @@
   <!-- DASHBOARD -->
   <section id="dashboard" class="hidden">
 
-    <!-- IDENTIDADE -->
-    <section class="card">
-      <h2>Quem és aqui</h2>
-      <p class="hint">
-        Não precisas de provar nada.  
-        Apenas estar.
-      </p>
+    <!-- ONBOARDING MESSAGE -->
+    <section id="onboarding" class="card">
+      <p id="onboardingText"></p>
+    </section>
 
+    <!-- IDENTIDADE -->
+    <section id="identityCard" class="card hidden">
+      <h2>Quem és aqui</h2>
       <div class="row">
         <span>Dias de presença</span>
         <b id="identityDays">0</b>
       </div>
-
       <div class="row">
-        <span>Estado atual</span>
+        <span>Estado</span>
         <b id="identityState">presença</b>
       </div>
     </section>
 
+    <!-- CHECK-IN -->
+    <section id="checkinCard" class="card hidden">
+      <h2>Check-in consciente</h2>
+      <div class="actions">
+        <button data-mood="presente">Presente</button>
+        <button data-mood="distraído">Distraído</button>
+        <button data-mood="difícil">Difícil</button>
+        <button data-mood="grato">Grato</button>
+      </div>
+      <small id="checkinStatus"></small>
+    </section>
+
     <!-- WALLET -->
-    <section class="card">
+    <section id="walletCard" class="card hidden">
       <h2>Wallet HUMAN</h2>
-      <p class="hint">
+      <div class="big" id="walletBalance">0.00000 HUM</div>
+      <small>
         HUM não é moeda.
         É rasto de continuidade.
-      </p>
-
-      <div class="big">
-        <span id="walletBalance">0.00000 HUM</span>
-      </div>
-
-      <small id="walletMeaning">
-        O valor cresce devagar e nunca desaparece.
       </small>
     </section>
 
     <!-- METAS -->
-    <section class="card">
+    <section id="goalsCard" class="card hidden">
       <h2>Presença no tempo</h2>
 
       <div class="goal">
@@ -77,40 +81,17 @@
       </div>
     </section>
 
-    <!-- AÇÕES -->
-    <section class="card">
-      <h2>Ações conscientes</h2>
-      <p class="hint">
-        Pequenos gestos contam.
-      </p>
-
-      <div class="actions">
-        <button data-mood="presente">Estou presente</button>
-        <button data-mood="distraído">Distraído</button>
-        <button data-mood="difícil">Dia difícil</button>
-        <button data-mood="grato">Grato</button>
-      </div>
-
-      <small id="checkinStatus"></small>
-    </section>
-
     <!-- ESPELHO -->
-    <section class="card">
+    <section id="mirrorCard" class="card hidden">
       <h2>Espelho social</h2>
-      <p class="hint">
-        Não estás sozinho.
-      </p>
-
       <div class="row">
         <span>Humanos presentes</span>
         <b id="mirrorTotal">–</b>
       </div>
-
       <div class="row">
         <span>Ativos hoje</span>
         <b id="mirrorToday">–</b>
       </div>
-
       <small id="mirrorText"></small>
     </section>
 

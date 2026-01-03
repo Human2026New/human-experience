@@ -1,4 +1,4 @@
-const STORAGE_KEY = "human_state_v13";
+const STORAGE_KEY = "human_state_v14";
 const BACKEND_URL = "https://human-backend-1.onrender.com";
 
 let state = {
@@ -18,9 +18,16 @@ if (saved) {
 const enterBtn = document.getElementById("enterBtn");
 const dashboard = document.getElementById("dashboard");
 
+const onboardingText = document.getElementById("onboardingText");
+
+const identityCard = document.getElementById("identityCard");
+const checkinCard  = document.getElementById("checkinCard");
+const walletCard   = document.getElementById("walletCard");
+const goalsCard    = document.getElementById("goalsCard");
+const mirrorCard   = document.getElementById("mirrorCard");
+
 const identityDays = document.getElementById("identityDays");
 const identityState = document.getElementById("identityState");
-
 const walletBalance = document.getElementById("walletBalance");
 
 const goal7 = document.getElementById("goal7");
@@ -28,12 +35,12 @@ const goal30 = document.getElementById("goal30");
 const goal7txt = document.getElementById("goal7txt");
 const goal30txt = document.getElementById("goal30txt");
 
-const checkinStatus = document.getElementById("checkinStatus");
-const actionButtons = document.querySelectorAll(".actions button");
-
 const mirrorTotal = document.getElementById("mirrorTotal");
 const mirrorToday = document.getElementById("mirrorToday");
-const mirrorText = document.getElementById("mirrorText");
+const mirrorText  = document.getElementById("mirrorText");
+
+const actionButtons = document.querySelectorAll(".actions button");
+const checkinStatus = document.getElementById("checkinStatus");
 
 enterBtn.onclick = () => {
   if (state.started) return;
@@ -41,28 +48,27 @@ enterBtn.onclick = () => {
   enterBtn.style.display = "none";
   dashboard.classList.remove("hidden");
   save();
-  start();
-  update();
+  startLoop();
+  updateUI();
   fetchMirror();
 };
 
 actionButtons.forEach(btn => {
   btn.onclick = () => {
-    const mood = btn.dataset.mood;
     const today = todayKey();
     if (state.checkins[today]) return;
-    state.checkins[today] = mood;
-    checkinStatus.textContent = `Hoje registado como: ${mood}`;
+    state.checkins[today] = btn.dataset.mood;
+    checkinStatus.textContent = `Hoje registado como: ${btn.dataset.mood}`;
     save();
   };
 });
 
-function start() {
+function startLoop() {
   setInterval(() => {
     state.time++;
     state.hum += state.rate;
     checkDay();
-    update();
+    updateUI();
     save();
   }, 1000);
 }
@@ -73,8 +79,23 @@ function checkDay() {
   if (!state.days[d]) state.days[d] = true;
 }
 
-function update() {
+function updateUI() {
   const days = Object.keys(state.days).length;
+
+  onboardingText.textContent =
+    days === 0 ? "Este é apenas o início. Nada te é pedido." :
+    days === 1 ? "Voltar já é suficiente." :
+    days === 2 ? "A continuidade começa a ganhar forma." :
+    days === 3 ? "O tempo começa a reconhecer-te." :
+    days < 7   ? "Não precisas acelerar." :
+                 "Agora já fazes parte do ritmo.";
+
+  identityCard.classList.remove("hidden");
+
+  if (days >= 1) checkinCard.classList.remove("hidden");
+  if (days >= 2) walletCard.classList.remove("hidden");
+  if (days >= 3) goalsCard.classList.remove("hidden");
+  if (days >= 5) mirrorCard.classList.remove("hidden");
 
   identityDays.textContent = days;
   identityState.textContent =
