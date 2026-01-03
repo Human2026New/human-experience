@@ -8,9 +8,9 @@ try {
 } catch {}
 
 // --------------------
-// Backend URL
+// Local storage keys
 // --------------------
-const BACKEND = "https://human-backend-ywuf.onrender.com";
+const STORAGE_KEY = "human_state_v1";
 
 // --------------------
 // State
@@ -20,9 +20,19 @@ let state = {
   time: 0,
   hum: 0,
   rate: 0.00002,
-  sessions: 0,
-  lastSync: 0
+  sessions: 0
 };
+
+// --------------------
+// Load saved state
+// --------------------
+const saved = localStorage.getItem(STORAGE_KEY);
+if (saved) {
+  try {
+    const parsed = JSON.parse(saved);
+    state = { ...state, ...parsed };
+  } catch {}
+}
 
 // --------------------
 // Elements
@@ -35,6 +45,17 @@ const statsEl = document.getElementById("stats");
 const statusMsg = document.getElementById("statusMsg");
 
 // --------------------
+// Restore UI if active
+// --------------------
+if (state.started) {
+  enterBtn.style.display = "none";
+  statsEl.classList.remove("hidden");
+  statusMsg.textContent = "Presença retomada.";
+  startLoop();
+  updateUI();
+}
+
+// --------------------
 // Enter
 // --------------------
 enterBtn.onclick = () => {
@@ -45,13 +66,14 @@ enterBtn.onclick = () => {
 
   enterBtn.style.display = "none";
   statsEl.classList.remove("hidden");
-  statusMsg.textContent = "Presença registada. HUM a acumular.";
+  statusMsg.textContent = "Presença iniciada.";
 
+  saveState();
   startLoop();
 };
 
 // --------------------
-// Main loop (humano)
+// Main loop
 // --------------------
 function startLoop() {
   setInterval(() => {
@@ -62,7 +84,7 @@ function startLoop() {
     state.hum += Math.max(0, state.rate + drift);
 
     updateUI();
-    maybeSync();
+    saveState();
   }, 1000);
 }
 
@@ -72,6 +94,7 @@ function startLoop() {
 function updateUI() {
   timeEl.textContent = `${state.time}s`;
   humEl.textContent = state.hum.toFixed(5);
+
   stateEl.textContent =
     state.time < 60 ? "neutro" :
     state.time < 300 ? "estável" :
@@ -79,28 +102,8 @@ function updateUI() {
 }
 
 // --------------------
-// Backend sync (safe)
+// Save local
 // --------------------
-function maybeSync() {
-  const now = Date.now();
-  if (now - state.lastSync < 15000) return; // 15s
-
-  state.lastSync = now;
-
-  fetch(`${BACKEND}/sync_hum`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      hum: state.hum,
-      sessions: state.sessions,
-      initDataUnsafe: tg?.initDataUnsafe || {}
-    })
-  })
-  .then(r => r.json())
-  .then(() => {
-    statusMsg.textContent = "Sincronizado.";
-  })
-  .catch(() => {
-    statusMsg.textContent = "Offline. Continua local.";
-  });
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
