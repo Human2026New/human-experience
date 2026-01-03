@@ -6,37 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="bg"></div>
 
-  <div class="container">
+<div class="bg"></div>
 
-    <div class="sphere"></div>
+<div class="container">
+  <div class="sphere"></div>
 
-    <div id="info">
-      Isto mede presença humana ao longo do tempo.
-    </div>
-
-    <button id="startBtn">ENTRAR</button>
-
-    <div class="core hidden" id="core">
-      <div class="stat">
-        <span class="label">Tempo</span>
-        <span id="time">0s</span>
-      </div>
-      <div class="stat">
-        <span class="label">HUM</span>
-        <span id="hum">0.00000</span>
-      </div>
-      <div class="stat">
-        <span class="label">Estado</span>
-        <span id="state">calmo</span>
-      </div>
-    </div>
-
+  <div id="info">
+    Isto mede presença humana ao longo do tempo.
   </div>
 
-  <script src="app.js"></script>
+  <button id="startBtn">ENTRAR</button>
+
+  <div id="core" class="core hidden">
+    <div class="stat">
+      <span class="label">Tempo</span>
+      <span id="time">0s</span>
+    </div>
+    <div class="stat">
+      <span class="label">HUM</span>
+      <span id="hum">0.00000</span>
+    </div>
+    <div class="stat">
+      <span class="label">Estado</span>
+      <span id="state">neutro</span>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>

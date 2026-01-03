@@ -8,8 +8,8 @@
 body {
   height: 100vh;
   background: #000;
-  overflow: hidden;
   color: #e6fdf7;
+  overflow: hidden;
 }
 
 .bg {
@@ -34,8 +34,8 @@ body {
   height: 140px;
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, #3fffe0, #0fb9a7);
-  box-shadow: 0 0 30px rgba(63,255,224,0.4);
-  transition: all 1.2s ease;
+  box-shadow: 0 0 30px rgba(63,255,224,0.45);
+  transition: transform 1s ease, box-shadow 1s ease;
 }
 
 button {
@@ -53,17 +53,16 @@ button:hover {
 }
 
 #info {
-  opacity: 0.75;
+  opacity: 0.7;
   font-size: 14px;
   text-align: center;
 }
 
 .core {
   display: flex;
-  gap: 35px;
-  margin-top: 10px;
+  gap: 30px;
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.6s ease;
 }
 
 .core.show {
@@ -75,21 +74,10 @@ button:hover {
 }
 
 .label {
-  display: block;
   font-size: 11px;
   opacity: 0.6;
 }
 
 .hidden {
   display: none;
-}
-
-/* ESTADOS HUMANOS */
-
-.state-calm .sphere {
-  box-shadow: 0 0 50px rgba(63,255,224,0.6);
-}
-
-.state-stable .sphere {
-  transform: scale(1.05);
 }
