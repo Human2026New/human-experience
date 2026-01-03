@@ -1,24 +1,9 @@
 // =====================================
-// HUMAN WebApp — INTRO → LIVE APP
+// HUMAN WebApp — UX VIVO
 // =====================================
 
-// ---------- TELEGRAM CHECK ----------
 if (!(window.Telegram && Telegram.WebApp)) {
-  document.body.innerHTML = `
-    <div style="
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-      background:#000;
-      color:#aaa;
-      font-family:system-ui;
-      text-align:center;
-    ">
-      HUMAN<br><br>
-      This experience only exists inside Telegram.
-    </div>
-  `;
+  document.body.innerHTML = "HUMAN exists only inside Telegram.";
   throw new Error("Not inside Telegram");
 }
 
@@ -44,18 +29,19 @@ const startBtn = document.getElementById("startBtn");
 const elTime = document.getElementById("timeActive");
 const elCycle = document.getElementById("cycle");
 const elState = document.getElementById("state");
+const core = document.getElementById("core");
 
 // ---------- BACKEND ----------
 const BACKEND = "http://localhost:5000";
 
-// ---------- INTRO ACTION ----------
-enterBtn.addEventListener("click", () => {
+// ---------- INTRO ----------
+enterBtn.onclick = () => {
+  tg.HapticFeedback.impactOccurred("light");
   intro.style.display = "none";
-  main.style.display = "block";
-
+  main.style.display = "flex";
   fetchStatus();
   startLiveCounter();
-});
+};
 
 // ---------- BACKEND ----------
 function fetchStatus() {
@@ -66,13 +52,11 @@ function fetchStatus() {
   })
     .then(r => r.json())
     .then(data => {
-      if (data.error) return;
-
+      if (!data) return;
       state.streak = data.streak;
       state.hum = data.hum;
       state.displayHum = data.hum;
       state.trust = data.trust;
-
       render();
     });
 }
@@ -81,8 +65,8 @@ function proveHumanity() {
   if (state.busy) return;
 
   state.busy = true;
-  startBtn.disabled = true;
-  startBtn.innerText = "⏳ A PROVAR...";
+  startBtn.innerText = "⏳";
+  tg.HapticFeedback.impactOccurred("medium");
 
   fetch(`${BACKEND}/api/prove`, {
     method: "POST",
@@ -101,10 +85,11 @@ function proveHumanity() {
 
       state.streak = data.streak;
       state.hum = data.hum;
-      state.trust = data.trust;
       state.displayHum = data.hum;
+      state.trust = data.trust;
 
-      animateSuccess(data.reward);
+      pulseCore();
+      tg.HapticFeedback.notificationOccurred("success");
       render();
     });
 }
@@ -114,6 +99,7 @@ function startLiveCounter() {
   setInterval(() => {
     state.displayHum += 0.00001;
     updateCounter();
+    syncPulse();
   }, 1000);
 }
 
@@ -122,22 +108,26 @@ function render() {
   elTime.innerText = `${state.streak} dias`;
   elState.innerText = `trust ${state.trust.toFixed(2)}`;
   updateCounter();
-
   startBtn.innerText = "⛏ PROVAR HUMANIDADE";
-  startBtn.disabled = false;
 }
 
 function updateCounter() {
   elCycle.innerText = `${state.displayHum.toFixed(5)} HUM`;
 }
 
-function animateSuccess(reward) {
-  startBtn.innerText = `+${reward.toFixed(2)} HUM`;
-  startBtn.style.background = "rgba(76,255,215,0.35)";
+// ---------- PULSE SYNC ----------
+function syncPulse() {
+  const scale = 1 + Math.min(state.displayHum / 1000, 0.15);
+  core.style.transform = `scale(${scale})`;
+}
+
+function pulseCore() {
+  core.style.transition = "transform 0.2s ease";
+  core.style.transform = "scale(1.2)";
   setTimeout(() => {
-    startBtn.style.background = "";
-  }, 1200);
+    core.style.transform = "";
+  }, 200);
 }
 
 // ---------- ACTION ----------
-startBtn.addEventListener("click", proveHumanity);
+startBtn.onclick = proveHumanity;
