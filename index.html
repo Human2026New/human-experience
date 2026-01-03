@@ -33,78 +33,28 @@
     </div>
   </div>
 
-  <!-- METAS -->
-  <div id="goals" class="hidden">
-    <h3>Metas humanas</h3>
-    <div class="goal">
-      <span>7 dias de presença</span>
-      <div class="bar"><div id="goal7" class="fill"></div></div>
-      <small id="goal7txt">0 / 7</small>
-    </div>
-    <div class="goal">
-      <span>30 dias de presença</span>
-      <div class="bar"><div id="goal30" class="fill"></div></div>
-      <small id="goal30txt">0 / 30</small>
-    </div>
-  </div>
+  <div id="goals" class="hidden"></div>
+  <div id="checkin" class="hidden"></div>
+  <div id="wallet" class="hidden"></div>
+  <div id="invites" class="hidden"></div>
+  <div id="identity" class="hidden"></div>
+  <div id="unlock" class="hidden"></div>
 
-  <!-- CHECK-IN -->
-  <div id="checkin" class="hidden">
-    <h3>Check-in consciente</h3>
-    <div class="checkin-options">
-      <button data-mood="presente">Presente</button>
-      <button data-mood="distraído">Distraído</button>
-      <button data-mood="difícil">Difícil</button>
-      <button data-mood="grato">Grato</button>
-    </div>
-    <small id="checkinStatus"></small>
-  </div>
+  <!-- ESPELHO SOCIAL -->
+  <div id="mirror" class="hidden">
+    <h3>Espelho social</h3>
 
-  <!-- WALLET -->
-  <div id="wallet" class="hidden">
-    <h3>Wallet HUMAN</h3>
-    <div class="wallet-box">
-      <span>Saldo</span>
-      <b id="walletBalance">0.00000 HUM</b>
-      <small id="walletState">saldo em crescimento</small>
-    </div>
-  </div>
-
-  <!-- CONVITES -->
-  <div id="invites" class="hidden">
-    <h3>Convites humanos</h3>
-    <div class="invite-box">
-      <input id="inviteInput" type="text" placeholder="Nome da pessoa (opcional)">
-      <button id="inviteBtn">Gerar convite</button>
-      <small id="inviteStatus"></small>
-    </div>
-    <div class="invite-count">
-      <span>Convites registados</span>
-      <b id="inviteCount">0</b>
-    </div>
-  </div>
-
-  <!-- IDENTIDADE -->
-  <div id="identity" class="hidden">
-    <h3>Identidade</h3>
-    <div class="identity-box">
-      <input id="identityName" type="text" placeholder="Nome humano (opcional)">
-      <div class="identity-line">
-        <span>Idade de presença</span>
-        <b id="identityAge">0 dias</b>
+    <div class="mirror-box">
+      <div class="mirror-line">
+        <span>Humanos presentes</span>
+        <b id="mirrorTotal">–</b>
       </div>
-      <div class="identity-line">
-        <span>Estado simbólico</span>
-        <b id="identityState">presença</b>
+      <div class="mirror-line">
+        <span>Ativos hoje</span>
+        <b id="mirrorToday">–</b>
       </div>
-      <small id="identityPhrase"></small>
+      <small id="mirrorText"></small>
     </div>
-  </div>
-
-  <!-- DESBLOQUEIOS -->
-  <div id="unlock" class="hidden">
-    <h3>Espaço interno</h3>
-    <p id="unlockMsg"></p>
   </div>
 
   <p id="statusMsg"></p>

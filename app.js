@@ -1,7 +1,14 @@
+// =====================================================
+// HUMAN — app.js COMPLETO (frontend + backend ético)
+// =====================================================
+
 // --------------------
 // Config
 // --------------------
-const STORAGE_KEY = "human_state_v8";
+const STORAGE_KEY = "human_state_v10";
+
+// 👉 ALTERA PARA O TEU BACKEND REAL
+const BACKEND_URL = "https://teu-backend.exemplo.com";
 
 // --------------------
 // State
@@ -23,15 +30,15 @@ let state = {
 // --------------------
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
-  try { state = { ...state, ...JSON.parse(saved) }; } catch {}
+  try {
+    state = { ...state, ...JSON.parse(saved) };
+  } catch {}
 }
 
 // --------------------
 // Elements
 // --------------------
 const enterBtn = document.getElementById("enterBtn");
-const sections = ["stats","goals","checkin","wallet","invites","identity","unlock"];
-sections.forEach(id => window[id+"El"] = document.getElementById(id));
 
 const timeEl = document.getElementById("time");
 const humEl = document.getElementById("hum");
@@ -59,17 +66,30 @@ const identityAge = document.getElementById("identityAge");
 const identityState = document.getElementById("identityState");
 const identityPhrase = document.getElementById("identityPhrase");
 
-const unlockMsg = document.getElementById("unlockMsg");
+const mirrorTotal = document.getElementById("mirrorTotal");
+const mirrorToday = document.getElementById("mirrorToday");
+const mirrorText = document.getElementById("mirrorText");
+
+// --------------------
+// Identidade técnica anónima
+// --------------------
+let anon_id = localStorage.getItem("human_anon_id");
+if (!anon_id) {
+  anon_id = crypto.randomUUID();
+  localStorage.setItem("human_anon_id", anon_id);
+}
 
 // --------------------
 // Restore UI
 // --------------------
 if (state.started) {
-  showUI();
+  hideEnter();
   startLoop();
   restoreCheckin();
-  identityName.value = state.identity.name || "";
+  restoreIdentity();
   updateUI();
+  syncPresence();      // 👈 espelha logo
+  fetchMirror();       // 👈 espelho social real
 }
 
 // --------------------
@@ -77,17 +97,24 @@ if (state.started) {
 // --------------------
 enterBtn.onclick = () => {
   if (state.started) return;
+
   state.started = true;
   state.sessions++;
-  showUI();
+
+  hideEnter();
   saveLocal();
   startLoop();
+
+  syncPresence();
+  fetchMirror();
 };
 
 // --------------------
-function showUI() {
+function hideEnter() {
   enterBtn.style.display = "none";
-  sections.forEach(id => window[id+"El"].classList.remove("hidden"));
+  document.querySelectorAll(".hidden").forEach(el => {
+    el.classList.remove("hidden");
+  });
 }
 
 // --------------------
@@ -96,52 +123,72 @@ function showUI() {
 function startLoop() {
   setInterval(() => {
     state.time++;
-    state.hum += Math.max(0, state.rate + (Math.random()-0.5)*0.00001);
+    state.hum += Math.max(0, state.rate + (Math.random() - 0.5) * 0.00001);
+
     checkDay();
     updateUI();
     saveLocal();
+
+    // 🔁 backend espelhado a cada ~30s
+    if (state.time % 30 === 0) {
+      syncPresence();
+      fetchMirror();
+    }
   }, 1000);
 }
 
 // --------------------
+// Dia humano (>=5 min)
+// --------------------
 function checkDay() {
   if (state.time < 300) return;
   const today = todayKey();
-  if (!state.days[today]) state.days[today] = true;
+  if (!state.days[today]) {
+    state.days[today] = true;
+  }
 }
 
 // --------------------
-// Check-in
+// Check-in consciente
 // --------------------
 checkinButtons.forEach(btn => {
   btn.onclick = () => {
     const today = todayKey();
     if (state.checkins[today]) return;
-    state.checkins[today] = btn.dataset.mood;
-    stateEl.textContent = btn.dataset.mood;
-    checkinStatus.textContent = `Hoje foi: ${btn.dataset.mood}`;
+
+    const mood = btn.dataset.mood;
+    state.checkins[today] = mood;
+
+    checkinStatus.textContent = `Hoje foi: ${mood}`;
+    stateEl.textContent = mood;
+
     saveLocal();
+    syncPresence();
   };
 });
 
 function restoreCheckin() {
   const today = todayKey();
   if (state.checkins[today]) {
-    stateEl.textContent = state.checkins[today];
     checkinStatus.textContent = `Hoje foi: ${state.checkins[today]}`;
+    stateEl.textContent = state.checkins[today];
   }
 }
 
 // --------------------
-// Identity
+// Identidade
 // --------------------
+function restoreIdentity() {
+  identityName.value = state.identity.name || "";
+}
+
 identityName.oninput = () => {
   state.identity.name = identityName.value.trim();
   saveLocal();
 };
 
 // --------------------
-// Convites
+// Convites humanos
 // --------------------
 inviteBtn.onclick = () => {
   state.invites.push({
@@ -149,13 +196,16 @@ inviteBtn.onclick = () => {
     code: crypto.randomUUID(),
     date: new Date().toISOString()
   });
+
   inviteInput.value = "";
-  inviteStatus.textContent = "Convite registado.";
+  inviteStatus.textContent = "Convite humano registado.";
+
   saveLocal();
+  syncPresence();
 };
 
 // --------------------
-// UI update + desbloqueios
+// UI update
 // --------------------
 function updateUI() {
   const days = Object.keys(state.days).length;
@@ -168,12 +218,14 @@ function updateUI() {
     days >= 7 ? "consistência" :
     "presença";
 
-  if (!state.checkins[todayKey()]) stateEl.textContent = symbolic;
+  if (!state.checkins[todayKey()]) {
+    stateEl.textContent = symbolic;
+  }
 
-  goal7.style.width = `${Math.min(days/7,1)*100}%`;
-  goal30.style.width = `${Math.min(days/30,1)*100}%`;
-  goal7txt.textContent = `${Math.min(days,7)} / 7`;
-  goal30txt.textContent = `${Math.min(days,30)} / 30`;
+  goal7.style.width = `${Math.min(days / 7, 1) * 100}%`;
+  goal30.style.width = `${Math.min(days / 30, 1) * 100}%`;
+  goal7txt.textContent = `${Math.min(days, 7)} / 7`;
+  goal30txt.textContent = `${Math.min(days, 30)} / 30`;
 
   walletBalance.textContent = `${state.hum.toFixed(5)} HUM`;
   walletState.textContent =
@@ -185,23 +237,71 @@ function updateUI() {
 
   identityAge.textContent = `${days} dias`;
   identityState.textContent = symbolic;
-
   identityPhrase.textContent =
     days >= 30 ? "Construiu presença profunda." :
     days >= 7 ? "Volta com consistência." :
     "Começou a estar presente.";
+}
 
-  // desbloqueios simbólicos
-  unlockMsg.textContent =
-    days >= 30 ? "Aqui o tempo já não precisa de provar nada." :
-    days >= 7 ? "Este espaço não pede atenção. Apenas continuidade." :
-    days >= 3 ? "Estar aqui já começou a criar rasto." :
-    "";
+// =====================================================
+// 🔗 BACKEND — LIGAÇÃO REAL (FIRE-AND-FORGET)
+// =====================================================
+
+// --------------------
+// Espelhar presença (POST /presence)
+// --------------------
+function syncPresence() {
+  if (!BACKEND_URL) return;
+
+  const days = Object.keys(state.days).length;
+  const symbolic =
+    days >= 30 ? "consistência profunda" :
+    days >= 7 ? "consistência" :
+    "presença";
+
+  try {
+    fetch(`${BACKEND_URL}/presence`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        anon_id,
+        days,
+        hum: Number(state.hum.toFixed(5)),
+        symbolic_state: symbolic
+      })
+    });
+    // ⚠️ sem await
+    // ⚠️ sem catch agressivo
+    // ⚠️ se falhar → silêncio
+  } catch {}
 }
 
 // --------------------
+// Espelho social real (GET /mirror)
+// --------------------
+function fetchMirror() {
+  if (!BACKEND_URL) return;
+
+  try {
+    fetch(`${BACKEND_URL}/mirror`)
+      .then(r => r.json())
+      .then(data => {
+        mirrorTotal.textContent = data.total_humans ?? "–";
+        mirrorToday.textContent = data.active_today ?? "–";
+
+        mirrorText.textContent =
+          data.total_humans > 30
+            ? "Existe continuidade coletiva."
+            : "Outros humanos também estão aqui.";
+      });
+  } catch {}
+}
+
+// --------------------
+// Utils
+// --------------------
 function todayKey() {
-  return new Date().toISOString().slice(0,10);
+  return new Date().toISOString().slice(0, 10);
 }
 
 function saveLocal() {
