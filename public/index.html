@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HUMAN</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- TON CONNECT UI -->
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- HERO -->
+  <section id="hero">
+    <h1>HUMAN</h1>
+    <p>Presença humana ao longo do tempo.</p>
+  </section>
+
+  <button id="enterBtn">ENTRAR</button>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="hidden">
+
+    <div class="card big">
+      <h2>HUM total (wallet)</h2>
+      <div class="hum-value" id="humValue">0.00000 HUM</div>
+
+      <div class="values">
+        <span>€ 0</span>
+        <span>$ 0</span>
+        <span>0 BTC</span>
+        <span id="tonValue">0 TON</span>
+      </div>
+
+      <div class="presence">
+        <span id="presenceCount">–</span> humanos presentes agora
+      </div>
+
+      <small class="presence-note">presença sentida neste momento</small>
+
+      <small>
+        HUM não tem valor monetário.<br>
+        TON é externo e opcional.
+      </small>
+    </div>
+
+    <div class="menu">
+      <button data-open="stats">📊 Estatísticas</button>
+      <button data-open="tasks">🧭 Tarefas humanas</button>
+      <button data-open="invites">👥 Convites</button>
+      <button data-open="wallet">💼 Wallet</button>
+      <button data-open="donation">💚 Doação</button>
+      <button data-open="about">ℹ️ Sobre</button>
+      <button data-open="profile">👤 Perfil</button>
+    </div>
+
+  </section>
+
+  <!-- INVITES -->
+  <section id="invites" class="space hidden">
+    <div class="space-card">
+      <h2>Convites humanos</h2>
+
+      <button id="createInvite">Convidar humano</button>
+
+      <small>
+        Convites não criam ganhos.<br>
+        Criam continuidade.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- WALLET -->
+  <section id="wallet" class="space hidden">
+    <div class="space-card">
+      <h2>Wallet TON</h2>
+
+      <div id="ton-connect"></div>
+
+      <p>Endereço TON:</p>
+      <small id="tonAddress">não ligada</small>
+
+      <p>Saldo TON:</p>
+      <b id="tonBalance">0</b> TON
+
+      <small>
+        HUM é interno.<br>
+        TON pertence à tua wallet.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
