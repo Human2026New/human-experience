@@ -10,85 +10,85 @@
 
 <div id="app">
 
+  <!-- HERO -->
   <section id="hero">
     <h1>HUMAN</h1>
-    <p id="heroText">
-      Um espaço onde o tempo só conta
-      se houver presença.
-    </p>
+    <p>Presença ao longo do tempo.</p>
   </section>
 
   <button id="enterBtn">ENTRAR</button>
 
-  <section id="dashboard" class="hidden">
+  <!-- HOME -->
+  <section id="home" class="hidden">
 
-    <!-- ONBOARDING -->
-    <section id="onboarding" class="card">
-      <p id="onboardingText"></p>
-      <small id="unlockNote" class="unlock-note"></small>
-    </section>
-
-    <!-- IDENTIDADE -->
-    <section id="identityCard" class="card hidden">
-      <h2>Quem és aqui</h2>
+    <div class="card">
       <div class="row">
-        <span>Dias de presença</span>
-        <b id="identityDays">0</b>
+        <span>Dias</span>
+        <b id="daysCount">0</b>
       </div>
       <div class="row">
         <span>Estado</span>
-        <b id="identityState">presença</b>
+        <b id="stateText">presença</b>
       </div>
-    </section>
-
-    <!-- CHECK-IN -->
-    <section id="checkinCard" class="card hidden">
-      <h2>Check-in consciente</h2>
-      <div class="actions">
-        <button data-mood="presente">Presente</button>
-        <button data-mood="distraído">Distraído</button>
-        <button data-mood="difícil">Difícil</button>
-        <button data-mood="grato">Grato</button>
+      <div class="row big">
+        <span id="humValue">0.00000 HUM</span>
       </div>
-      <small id="checkinStatus"></small>
-    </section>
+    </div>
 
-    <!-- WALLET -->
-    <section id="walletCard" class="card hidden">
+    <div class="actions-main">
+      <button id="openWallet">Abrir Wallet</button>
+      <button id="openInvites">Convites</button>
+    </div>
+
+  </section>
+
+  <!-- WALLET SPACE -->
+  <section id="walletSpace" class="space hidden">
+    <div class="space-card">
       <h2>Wallet HUMAN</h2>
+      <p class="hint">
+        HUM não é moeda.
+        É um rasto de continuidade.
+      </p>
+
       <div class="big" id="walletBalance">0.00000 HUM</div>
-      <small>O valor cresce devagar e nunca desaparece.</small>
-    </section>
 
-    <!-- METAS -->
-    <section id="goalsCard" class="card hidden">
-      <h2>Presença no tempo</h2>
-      <div class="goal">
-        <span>7 dias</span>
-        <div class="bar"><div id="goal7" class="fill"></div></div>
-        <small id="goal7txt">0 / 7</small>
-      </div>
-      <div class="goal">
-        <span>30 dias</span>
-        <div class="bar"><div id="goal30" class="fill"></div></div>
-        <small id="goal30txt">0 / 30</small>
-      </div>
-    </section>
+      <small>
+        Esta wallet poderá ligar-se no futuro,
+        mas nunca te vai obrigar a nada.
+      </small>
 
-    <!-- ESPELHO -->
-    <section id="mirrorCard" class="card hidden">
-      <h2>Espelho social</h2>
-      <div class="row">
-        <span>Humanos presentes</span>
-        <b id="mirrorTotal">–</b>
-      </div>
-      <div class="row">
-        <span>Ativos hoje</span>
-        <b id="mirrorToday">–</b>
-      </div>
-      <small id="mirrorText"></small>
-    </section>
+      <button class="closeSpace">Fechar</button>
+    </div>
+  </section>
 
+  <!-- INVITES SPACE -->
+  <section id="inviteSpace" class="space hidden">
+    <div class="space-card">
+      <h2>Convites humanos</h2>
+
+      <div class="field">
+        <label>O teu nome aqui</label>
+        <input id="userName" placeholder="ex: Helder"/>
+      </div>
+
+      <div class="field">
+        <label>Convidar alguém</label>
+        <input id="inviteName" placeholder="nome do humano"/>
+        <button id="addInvite">Criar convite</button>
+      </div>
+
+      <p class="hint">
+        Convites não expiram.
+        Não há pressão.
+      </p>
+
+      <ul id="inviteList"></ul>
+
+      <small id="inviteCount"></small>
+
+      <button class="closeSpace">Fechar</button>
+    </div>
   </section>
 
 </div>
