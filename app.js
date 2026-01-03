@@ -1,14 +1,22 @@
 // =====================================================
-// HUMAN — app.js COMPLETO (frontend + backend ético)
+// HUMAN — app.js COMPLETO (Browser + Telegram SAFE)
 // =====================================================
 
 // --------------------
 // Config
 // --------------------
-const STORAGE_KEY = "human_state_v10";
+const STORAGE_KEY = "human_state_v11";
+const BACKEND_URL = "https://human-backend-1.onrender.com"; // 🔁 altera
 
-// 👉 ALTERA PARA O TEU BACKEND REAL
-const BACKEND_URL = "https://human-backend-1.onrender.com";
+// --------------------
+// Detect Telegram
+// --------------------
+const isTelegram = !!window.Telegram?.WebApp;
+if (isTelegram) {
+  try {
+    Telegram.WebApp.ready();
+  } catch {}
+}
 
 // --------------------
 // State
@@ -33,6 +41,13 @@ if (saved) {
   try {
     state = { ...state, ...JSON.parse(saved) };
   } catch {}
+}
+
+// ⚠️ REGRA CRÍTICA:
+// No Telegram, nunca confiar em started automático
+if (isTelegram) {
+  state.started = false;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
 // --------------------
@@ -71,7 +86,7 @@ const mirrorToday = document.getElementById("mirrorToday");
 const mirrorText = document.getElementById("mirrorText");
 
 // --------------------
-// Identidade técnica anónima
+// anon_id (técnico, anónimo)
 // --------------------
 let anon_id = localStorage.getItem("human_anon_id");
 if (!anon_id) {
@@ -80,56 +95,43 @@ if (!anon_id) {
 }
 
 // --------------------
-// Restore UI
-// --------------------
-if (state.started) {
-  hideEnter();
-  startLoop();
-  restoreCheckin();
-  restoreIdentity();
-  updateUI();
-  syncPresence();      // 👈 espelha logo
-  fetchMirror();       // 👈 espelho social real
-}
-
-// --------------------
-// Enter
+// ENTER (ÚNICA FORMA DE ARRANQUE)
 // --------------------
 enterBtn.onclick = () => {
   if (state.started) return;
 
   state.started = true;
-  state.sessions++;
+  state.sessions += 1;
 
-  hideEnter();
+  enterBtn.style.display = "none";
+  document.querySelectorAll(".hidden").forEach(el =>
+    el.classList.remove("hidden")
+  );
+
   saveLocal();
   startLoop();
+  restoreCheckin();
+  restoreIdentity();
+  updateUI();
 
   syncPresence();
   fetchMirror();
 };
 
 // --------------------
-function hideEnter() {
-  enterBtn.style.display = "none";
-  document.querySelectorAll(".hidden").forEach(el => {
-    el.classList.remove("hidden");
-  });
-}
-
-// --------------------
 // Loop humano
 // --------------------
 function startLoop() {
   setInterval(() => {
-    state.time++;
-    state.hum += Math.max(0, state.rate + (Math.random() - 0.5) * 0.00001);
+    state.time += 1;
+
+    const drift = (Math.random() - 0.5) * 0.00001;
+    state.hum += Math.max(0, state.rate + drift);
 
     checkDay();
     updateUI();
     saveLocal();
 
-    // 🔁 backend espelhado a cada ~30s
     if (state.time % 30 === 0) {
       syncPresence();
       fetchMirror();
@@ -138,7 +140,7 @@ function startLoop() {
 }
 
 // --------------------
-// Dia humano (>=5 min)
+// Dia humano (>=5min)
 // --------------------
 function checkDay() {
   if (state.time < 300) return;
@@ -244,12 +246,8 @@ function updateUI() {
 }
 
 // =====================================================
-// 🔗 BACKEND — LIGAÇÃO REAL (FIRE-AND-FORGET)
+// BACKEND — FIRE & FORGET
 // =====================================================
-
-// --------------------
-// Espelhar presença (POST /presence)
-// --------------------
 function syncPresence() {
   if (!BACKEND_URL) return;
 
@@ -270,15 +268,9 @@ function syncPresence() {
         symbolic_state: symbolic
       })
     });
-    // ⚠️ sem await
-    // ⚠️ sem catch agressivo
-    // ⚠️ se falhar → silêncio
   } catch {}
 }
 
-// --------------------
-// Espelho social real (GET /mirror)
-// --------------------
 function fetchMirror() {
   if (!BACKEND_URL) return;
 
