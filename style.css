@@ -1,13 +1,8 @@
-/* ================================
-   HUMAN — STYLE.CSS
-   Ritmo vivo e humano
-   ================================ */
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 body {
@@ -21,70 +16,54 @@ body {
   position: fixed;
   inset: 0;
   background: radial-gradient(circle at center, #0c2a28 0%, #000 70%);
-  z-index: 0;
 }
 
 .container {
   position: relative;
   z-index: 10;
   height: 100vh;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 22px;
+  gap: 20px;
 }
 
-/* ESFERA HUMANA */
 .sphere {
   width: 140px;
   height: 140px;
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, #3fffe0, #0fb9a7);
-  box-shadow: 0 0 30px rgba(63, 255, 224, 0.45);
-  animation: breathe 5s ease-in-out infinite;
-  pointer-events: none;
-  transition: transform 1.2s ease, box-shadow 1.2s ease;
+  box-shadow: 0 0 30px rgba(63,255,224,0.4);
+  transition: all 1.2s ease;
 }
 
-@keyframes breathe {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-/* TEXTO */
-#info {
-  opacity: 0.8;
-  font-size: 14px;
-  text-align: center;
-  max-width: 260px;
-}
-
-/* BOTÃO */
 button {
-  padding: 12px 30px;
+  padding: 12px 28px;
   border-radius: 22px;
   border: 1px solid #3fffe0;
   background: transparent;
   color: #3fffe0;
   font-size: 16px;
   cursor: pointer;
-  z-index: 9999;
 }
 
 button:hover {
-  background: rgba(63, 255, 224, 0.1);
+  background: rgba(63,255,224,0.1);
 }
 
-/* CORE */
+#info {
+  opacity: 0.75;
+  font-size: 14px;
+  text-align: center;
+}
+
 .core {
   display: flex;
-  gap: 40px;
+  gap: 35px;
   margin-top: 10px;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.8s ease;
 }
 
 .core.show {
@@ -97,10 +76,20 @@ button:hover {
 
 .label {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   opacity: 0.6;
 }
 
 .hidden {
   display: none;
+}
+
+/* ESTADOS HUMANOS */
+
+.state-calm .sphere {
+  box-shadow: 0 0 50px rgba(63,255,224,0.6);
+}
+
+.state-stable .sphere {
+  transform: scale(1.05);
 }

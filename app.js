@@ -1,101 +1,92 @@
-// ==================================
-// HUMAN — APP.JS
-// Ritmo humano não-linear
-// ==================================
+console.log("HUMAN — metas humanas ativas");
 
-console.log("HUMAN app.js carregado");
-
-// Telegram WebApp (se existir)
-const tg = window.Telegram?.WebApp;
-if (tg) tg.ready();
-
-// ELEMENTOS
 const startBtn = document.getElementById("startBtn");
 const info = document.getElementById("info");
 const core = document.getElementById("core");
+
 const timeEl = document.getElementById("time");
 const humEl = document.getElementById("hum");
+const stateEl = document.getElementById("state");
 const sphere = document.querySelector(".sphere");
 
-// ESTADO HUMANO
 let started = false;
 let startTime = null;
-let timer = null;
+let lastTick = null;
 
 let hum = 0;
-let lastTick = 0;
+let state = "neutro";
 
-// parâmetros humanos (ajustáveis no futuro)
-const BASE_RATE = 0.000006;   // base lenta
-const MAX_RATE = 0.00002;    // limite superior humano
+let presenceUnlocked = false;
+let calmUnlocked = false;
+let stabilityUnlocked = false;
 
-// ---------- FUNÇÕES ----------
+const BASE_RATE = 0.000006;
+const MAX_RATE = 0.00002;
 
-// calcula ritmo humano (não-linear)
-function calculateHumanRate(secondsActive) {
-  // crescimento inicial mais rápido (acolhimento)
-  let rhythm = BASE_RATE * Math.log(secondsActive + 2);
+function humanRate(seconds) {
+  let r = BASE_RATE * Math.log(seconds + 2);
+  if (stabilityUnlocked) r *= 1.15;
 
-  // fadiga suave após muito tempo contínuo
-  if (secondsActive > 300) {
-    rhythm *= 0.85;
-  }
-  if (secondsActive > 900) {
-    rhythm *= 0.7;
-  }
+  const noise = (Math.random() - 0.5) * r * 0.25;
+  r += noise;
 
-  // micro-variação humana
-  const noise = (Math.random() - 0.5) * rhythm * 0.3;
-
-  rhythm += noise;
-
-  // limites humanos
-  rhythm = Math.max(BASE_RATE * 0.4, rhythm);
-  rhythm = Math.min(MAX_RATE, rhythm);
-
-  return rhythm;
+  return Math.min(MAX_RATE, Math.max(BASE_RATE * 0.4, r));
 }
 
-// pulso vivo sincronizado com ritmo
-function updatePulse(rate) {
-  if (!sphere) return;
-
+function updateVisual(rate) {
   const scale = 1 + (rate / MAX_RATE) * 0.08;
-  const glow = 25 + (rate / MAX_RATE) * 25;
-
   sphere.style.transform = `scale(${scale})`;
-  sphere.style.boxShadow = `0 0 ${glow}px rgba(63,255,224,0.45)`;
 }
 
-// ---------- INICIAR EXPERIÊNCIA ----------
+function updateState(seconds) {
+  // META 1 — presença
+  if (seconds >= 300 && !presenceUnlocked) {
+    presenceUnlocked = true;
+    state = "presente";
+  }
+
+  // META 2 — calma
+  if (seconds >= 120 && !calmUnlocked) {
+    calmUnlocked = true;
+    state = "calmo";
+    document.body.classList.add("state-calm");
+  }
+
+  // META 3 — estabilidade
+  if (seconds >= 600 && !stabilityUnlocked) {
+    stabilityUnlocked = true;
+    state = "estável";
+    document.body.classList.add("state-stable");
+  }
+
+  stateEl.innerText = state;
+}
+
 startBtn.addEventListener("click", () => {
   if (started) return;
   started = true;
 
   startBtn.style.display = "none";
   info.style.display = "none";
-
   core.classList.remove("hidden");
   setTimeout(() => core.classList.add("show"), 50);
 
   startTime = Date.now();
   lastTick = startTime;
 
-  timer = setInterval(() => {
+  setInterval(() => {
     const now = Date.now();
-    const secondsActive = Math.floor((now - startTime) / 1000);
+    const seconds = Math.floor((now - startTime) / 1000);
     const delta = (now - lastTick) / 1000;
     lastTick = now;
 
-    const rate = calculateHumanRate(secondsActive);
+    const rate = humanRate(seconds);
     hum += rate * delta;
 
-    timeEl.innerText = secondsActive + "s";
+    timeEl.innerText = seconds + "s";
     humEl.innerText = hum.toFixed(5);
 
-    updatePulse(rate);
+    updateVisual(rate);
+    updateState(seconds);
   }, 1000);
 });
-
-// DEBUG
-alert("APP CARREGADA — ritmo humano ativo");
