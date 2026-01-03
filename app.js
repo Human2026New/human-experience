@@ -1,21 +1,31 @@
-const STORAGE_KEY = "human_state_v16";
+const STORAGE_KEY = "human_state_v17";
 
+// --------------------
+// State
+// --------------------
 let state = {
   started: false,
   time: 0,
   hum: 0,
-  rate: 0.00002,
+  baseRate: 0.00002,
   days: {},
   userName: "",
-  invites: []
+  invites: [] // { name, created }
 };
 
+// --------------------
+// Load local
+// --------------------
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
-  try { state = { ...state, ...JSON.parse(saved) }; } catch {}
+  try {
+    state = { ...state, ...JSON.parse(saved) };
+  } catch {}
 }
 
+// --------------------
 // Elements
+// --------------------
 const enterBtn = document.getElementById("enterBtn");
 const home = document.getElementById("home");
 
@@ -37,7 +47,9 @@ const addInviteBtn = document.getElementById("addInvite");
 const inviteList = document.getElementById("inviteList");
 const inviteCount = document.getElementById("inviteCount");
 
+// --------------------
 // ENTER
+// --------------------
 enterBtn.onclick = () => {
   if (state.started) return;
   state.started = true;
@@ -48,28 +60,53 @@ enterBtn.onclick = () => {
   updateUI();
 };
 
-// Loop
+// --------------------
+// Loop humano (com bónus)
+// --------------------
 function startLoop() {
   setInterval(() => {
     state.time++;
-    state.hum += state.rate;
+
+    const rate = getCurrentRate();
+    state.hum += rate;
+
     checkDay();
     updateUI();
     save();
   }, 1000);
 }
 
+// --------------------
+// Dia humano (>=5 min)
+// --------------------
 function checkDay() {
   if (state.time < 300) return;
   const d = todayKey();
   if (!state.days[d]) state.days[d] = true;
 }
 
+// --------------------
+// BÓNUS POR CONVITES
+// --------------------
+function getCurrentRate() {
+  const inviteCount = state.invites.length;
+
+  const bonus =
+    Math.min(inviteCount * 0.05, 0.30); // máx 30%
+
+  return state.baseRate * (1 + bonus);
+}
+
+// --------------------
 // UI
+// --------------------
 function updateUI() {
   const days = Object.keys(state.days).length;
+  const rateBonusPercent =
+    Math.min(state.invites.length * 5, 30);
 
   daysCount.textContent = days;
+
   stateText.textContent =
     days >= 30 ? "consistência profunda" :
     days >= 7 ? "consistência" :
@@ -78,22 +115,28 @@ function updateUI() {
   humValue.textContent = `${state.hum.toFixed(5)} HUM`;
   walletBalance.textContent = `${state.hum.toFixed(5)} HUM`;
 
+  // Convites
   inviteList.innerHTML = "";
   state.invites.forEach(inv => {
     const li = document.createElement("li");
-    li.textContent = inv.name;
+    li.textContent = `${inv.name}`;
     inviteList.appendChild(li);
   });
 
-  inviteCount.textContent = `${state.invites.length} convite(s) criados`;
+  inviteCount.textContent =
+    `${state.invites.length} convite(s) • bónus +${rateBonusPercent}% HUM`;
 }
 
+// --------------------
 // Wallet
+// --------------------
 openWallet.onclick = () => {
   walletSpace.classList.remove("hidden");
 };
 
-// Invites
+// --------------------
+// Convites
+// --------------------
 openInvites.onclick = () => {
   inviteSpace.classList.remove("hidden");
 };
@@ -112,7 +155,9 @@ addInviteBtn.onclick = () => {
   updateUI();
 };
 
+// --------------------
 // Close spaces
+// --------------------
 document.querySelectorAll(".closeSpace").forEach(btn => {
   btn.onclick = () => {
     walletSpace.classList.add("hidden");
@@ -120,13 +165,17 @@ document.querySelectorAll(".closeSpace").forEach(btn => {
   };
 });
 
-// Name
+// --------------------
+// Nome do utilizador
+// --------------------
 userNameInput.oninput = () => {
   state.userName = userNameInput.value.trim();
   save();
 };
 
+// --------------------
 // Utils
+// --------------------
 function todayKey() {
   return new Date().toISOString().slice(0,10);
 }
