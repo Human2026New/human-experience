@@ -6,103 +6,96 @@
 body {
   margin: 0;
   background: radial-gradient(circle at top, #0f3d36, #000);
-  color: #e6f7f3;
+  color: #dff5f0;
+  min-height: 100vh;
 }
 
 #app {
   max-width: 420px;
-  margin: 0 auto;
-  padding: 30px 18px 60px;
+  margin: auto;
+  padding: 20px;
 }
 
 #hero {
   text-align: center;
-  margin-bottom: 20px;
+  margin-top: 40px;
+}
+
+#hero h1 {
+  letter-spacing: 4px;
 }
 
 button {
   width: 100%;
   padding: 14px;
-  margin-top: 10px;
-  background: transparent;
-  border: 1px solid rgba(63,255,220,0.5);
+  margin-top: 12px;
   border-radius: 24px;
+  border: 1px solid #3fffdc;
+  background: transparent;
   color: #3fffdc;
   cursor: pointer;
 }
 
-.hidden { display: none; }
+button:hover {
+  background: rgba(63,255,220,0.08);
+}
 
 .card {
-  padding: 16px;
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
   border-radius: 16px;
-  background: rgba(0,0,0,0.35);
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.row {
+.card.big {
+  text-align: center;
+}
+
+.hum-value {
+  font-size: 26px;
+  margin: 10px 0;
+}
+
+.values {
   display: flex;
   justify-content: space-between;
-  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.7;
 }
 
-.big {
-  text-align: center;
-  font-size: 22px;
-  margin-top: 12px;
+.menu button {
+  margin-bottom: 10px;
 }
 
-.actions-main {
-  margin-top: 20px;
-  display: grid;
-  gap: 10px;
-}
-
-/* HUM glow (bónus simbólico) */
-.hum-glow.bonus {
-  animation: pulseGlow 4s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
-  0% { text-shadow: 0 0 6px rgba(63,255,220,0.2); }
-  50% { text-shadow: 0 0 14px rgba(63,255,220,0.6); }
-  100% { text-shadow: 0 0 6px rgba(63,255,220,0.2); }
-}
-
-/* Spaces */
 .space {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0,0,0,0.9);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .space-card {
+  background: #0f3d36;
+  padding: 24px;
+  border-radius: 16px;
   width: 90%;
-  max-width: 380px;
-  background: rgba(10,20,18,0.95);
-  padding: 20px;
-  border-radius: 20px;
+  max-width: 360px;
 }
 
-.field {
-  margin-top: 14px;
+.hidden {
+  display: none;
 }
 
-.field input {
+input, textarea {
   width: 100%;
   padding: 10px;
-  border-radius: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
   border: none;
 }
 
 ul {
   padding-left: 18px;
-  margin-top: 10px;
-}
-
-li {
-  margin-bottom: 6px;
 }

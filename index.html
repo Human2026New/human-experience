@@ -5,108 +5,131 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HUMAN</title>
   <link rel="stylesheet" href="style.css">
-
-  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 
 <div id="app">
 
+  <!-- HERO -->
   <section id="hero">
     <h1>HUMAN</h1>
-    <p>Presença ao longo do tempo.</p>
+    <p>Presença humana ao longo do tempo.</p>
   </section>
 
   <button id="enterBtn">ENTRAR</button>
 
-  <!-- HOME -->
-  <section id="home" class="hidden">
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="hidden">
 
-    <div class="card">
-      <div class="row">
-        <span>Dias</span>
-        <b id="daysCount">0</b>
-      </div>
-      <div class="row">
-        <span>Estado</span>
-        <b id="stateText">presença</b>
-      </div>
-      <div class="row big hum-glow" id="humContainer">
-        <span id="humValue">0.00000 HUM</span>
-      </div>
-      <small id="bonusText"></small>
-    </div>
+    <!-- WALLET OVERVIEW -->
+    <div class="card big">
+      <h2>HUM total</h2>
+      <div class="hum-value" id="humValue">0.00000 HUM</div>
 
-    <div class="actions-main">
-      <button id="openWallet">Wallet</button>
-      <button id="openInvites">Convites</button>
-      <button id="openProfile">Perfil humano</button>
-    </div>
-
-  </section>
-
-  <!-- PROFILE SPACE -->
-  <section id="profileSpace" class="space hidden">
-    <div class="space-card">
-      <h2>Perfil humano</h2>
-
-      <label>
-        <input type="checkbox" id="profilePublic"/>
-        Tornar perfil público
-      </label>
-
-      <div class="field">
-        <label>Nome</label>
-        <input id="profileName" placeholder="nome humano"/>
-      </div>
-
-      <div class="field">
-        <label>Nota humana (opcional)</label>
-        <textarea id="profileNote" maxlength="120"
-          placeholder="uma frase simples"></textarea>
-      </div>
-
-      <div class="row">
-        <span>ID público</span>
-        <b id="profileId">—</b>
+      <div class="values">
+        <span>€ 0.00</span>
+        <span>$ 0.00</span>
+        <span>0 BTC</span>
+        <span>0 TON</span>
       </div>
 
       <small>
-        O perfil mostra apenas presença e estado simbólico.  
-        Nada é forçado.
+        HUM não tem valor monetário.
+        Se algum dia tiver, será escolha tua.
+      </small>
+    </div>
+
+    <!-- MENU -->
+    <div class="menu">
+      <button data-open="stats">📊 Estatísticas</button>
+      <button data-open="tasks">🧭 Tarefas humanas</button>
+      <button data-open="invites">👥 Convites</button>
+      <button data-open="wallet">💼 Wallet</button>
+      <button data-open="profile">👤 Perfil</button>
+    </div>
+
+  </section>
+
+  <!-- STATISTICS -->
+  <section id="stats" class="space hidden">
+    <div class="space-card">
+      <h2>Estatísticas</h2>
+      <p>Dias de presença: <b id="daysCount">0</b></p>
+      <p>Tempo total: <b id="timeSpent">0 min</b></p>
+      <p>Estado humano: <b id="stateText">presença</b></p>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- TASKS -->
+  <section id="tasks" class="space hidden">
+    <div class="space-card">
+      <h2>Tarefas humanas</h2>
+
+      <ul id="taskList">
+        <li>✔️ Entrar hoje</li>
+        <li>⏳ Permanecer 5 minutos</li>
+        <li>✍️ Escrever uma nota humana</li>
+        <li>🕊️ Voltar depois de uma pausa</li>
+      </ul>
+
+      <small>
+        As tarefas não são obrigatórias.
+        A presença conta mesmo sem cumprir nada.
       </small>
 
-      <button class="closeSpace">Fechar</button>
+      <button class="close">Fechar</button>
     </div>
   </section>
 
-  <!-- WALLET SPACE -->
-  <section id="walletSpace" class="space hidden">
-    <div class="space-card">
-      <h2>Wallet HUMAN</h2>
-      <div class="big" id="walletBalance">0.00000 HUM</div>
-      <div class="row">
-        <span>Estado</span>
-        <b id="walletStatus">local</b>
-      </div>
-      <div class="row">
-        <span>Endereço</span>
-        <b id="walletAddress">—</b>
-      </div>
-      <div id="tonConnectButton"></div>
-      <button class="closeSpace">Fechar</button>
-    </div>
-  </section>
-
-  <!-- INVITES SPACE -->
-  <section id="inviteSpace" class="space hidden">
+  <!-- INVITES -->
+  <section id="invites" class="space hidden">
     <div class="space-card">
       <h2>Convites humanos</h2>
+
       <input id="inviteName" placeholder="nome do humano"/>
-      <button id="addInvite">Criar convite</button>
+      <button id="createInvite">Criar convite</button>
+
       <ul id="inviteList"></ul>
-      <small id="inviteCount"></small>
-      <button class="closeSpace">Fechar</button>
+
+      <small>
+        Convites não dão dinheiro.
+        Criam presença partilhada.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- WALLET -->
+  <section id="wallet" class="space hidden">
+    <div class="space-card">
+      <h2>Wallet</h2>
+      <p>Estado: <b>não monetizada</b></p>
+      <p>Saldo: 0.00000 HUM</p>
+
+      <small>
+        HUM não é um token.
+        Não existe trading.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="profile" class="space hidden">
+    <div class="space-card">
+      <h2>Perfil humano</h2>
+      <input id="userName" placeholder="o teu nome"/>
+      <textarea id="userNote" placeholder="nota humana (opcional)"></textarea>
+
+      <small>
+        O perfil é opcional.
+        Nada é público por defeito.
+      </small>
+
+      <button class="close">Fechar</button>
     </div>
   </section>
 
