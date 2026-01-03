@@ -1,7 +1,7 @@
 // --------------------
 // Config
 // --------------------
-const STORAGE_KEY = "human_state_v6";
+const STORAGE_KEY = "human_state_v7";
 
 // --------------------
 // State
@@ -14,7 +14,10 @@ let state = {
   sessions: 0,
   days: {},
   checkins: {},
-  invites: []        // [{ name, code, date }]
+  invites: [],
+  identity: {
+    name: ""
+  }
 };
 
 // --------------------
@@ -29,11 +32,13 @@ if (saved) {
 // Elements
 // --------------------
 const enterBtn = document.getElementById("enterBtn");
+
 const statsEl = document.getElementById("stats");
 const goalsEl = document.getElementById("goals");
 const checkinEl = document.getElementById("checkin");
 const walletEl = document.getElementById("wallet");
 const invitesEl = document.getElementById("invites");
+const identityEl = document.getElementById("identity");
 
 const timeEl = document.getElementById("time");
 const humEl = document.getElementById("hum");
@@ -44,8 +49,8 @@ const goal30 = document.getElementById("goal30");
 const goal7txt = document.getElementById("goal7txt");
 const goal30txt = document.getElementById("goal30txt");
 
-const checkinStatus = document.getElementById("checkinStatus");
 const checkinButtons = document.querySelectorAll(".checkin-options button");
+const checkinStatus = document.getElementById("checkinStatus");
 
 const walletBalance = document.getElementById("walletBalance");
 const walletState = document.getElementById("walletState");
@@ -55,15 +60,19 @@ const inviteBtn = document.getElementById("inviteBtn");
 const inviteStatus = document.getElementById("inviteStatus");
 const inviteCount = document.getElementById("inviteCount");
 
-const statusMsg = document.getElementById("statusMsg");
+const identityName = document.getElementById("identityName");
+const identityAge = document.getElementById("identityAge");
+const identityState = document.getElementById("identityState");
+const identityPhrase = document.getElementById("identityPhrase");
 
 // --------------------
 // Restore UI
 // --------------------
 if (state.started) {
-  showCoreUI();
+  showUI();
   startLoop();
   restoreCheckin();
+  restoreIdentity();
   updateUI();
 }
 
@@ -74,21 +83,22 @@ enterBtn.onclick = () => {
   if (state.started) return;
   state.started = true;
   state.sessions++;
-  showCoreUI();
+  showUI();
   saveLocal();
   startLoop();
 };
 
 // --------------------
-// Core UI
+// Show UI
 // --------------------
-function showCoreUI() {
+function showUI() {
   enterBtn.style.display = "none";
   statsEl.classList.remove("hidden");
   goalsEl.classList.remove("hidden");
   checkinEl.classList.remove("hidden");
   walletEl.classList.remove("hidden");
   invitesEl.classList.remove("hidden");
+  identityEl.classList.remove("hidden");
 }
 
 // --------------------
@@ -120,10 +130,9 @@ checkinButtons.forEach(btn => {
   btn.onclick = () => {
     const today = todayKey();
     if (state.checkins[today]) return;
-    const mood = btn.dataset.mood;
-    state.checkins[today] = mood;
-    stateEl.textContent = mood;
-    checkinStatus.textContent = `Hoje foi registado como: ${mood}`;
+    state.checkins[today] = btn.dataset.mood;
+    checkinStatus.textContent = `Hoje foi: ${btn.dataset.mood}`;
+    stateEl.textContent = btn.dataset.mood;
     saveLocal();
   };
 });
@@ -132,23 +141,31 @@ function restoreCheckin() {
   const today = todayKey();
   if (state.checkins[today]) {
     stateEl.textContent = state.checkins[today];
-    checkinStatus.textContent = `Hoje já registaste: ${state.checkins[today]}`;
+    checkinStatus.textContent = `Hoje foi: ${state.checkins[today]}`;
   }
 }
 
 // --------------------
-// Convites humanos
+// Identidade
+// --------------------
+identityName.value = state.identity.name || "";
+
+identityName.oninput = () => {
+  state.identity.name = identityName.value.trim();
+  saveLocal();
+};
+
+// --------------------
+// Convites
 // --------------------
 inviteBtn.onclick = () => {
-  const code = crypto.randomUUID();
   state.invites.push({
     name: inviteInput.value || "humano",
-    code,
+    code: crypto.randomUUID(),
     date: new Date().toISOString()
   });
-
-  inviteStatus.textContent = "Convite humano registado.";
   inviteInput.value = "";
+  inviteStatus.textContent = "Convite registado.";
   updateUI();
   saveLocal();
 };
@@ -162,11 +179,13 @@ function updateUI() {
   timeEl.textContent = `${state.time}s`;
   humEl.textContent = state.hum.toFixed(5);
 
+  const symbolicState =
+    daysCount >= 30 ? "consistência profunda" :
+    daysCount >= 7 ? "consistência" :
+    "presença";
+
   if (!state.checkins[todayKey()]) {
-    stateEl.textContent =
-      daysCount >= 30 ? "consistência profunda" :
-      daysCount >= 7 ? "consistência" :
-      "presença";
+    stateEl.textContent = symbolicState;
   }
 
   goal7.style.width = `${Math.min(daysCount / 7, 1) * 100}%`;
@@ -182,6 +201,19 @@ function updateUI() {
     "saldo em crescimento";
 
   inviteCount.textContent = state.invites.length;
+
+  identityAge.textContent = `${daysCount} dias`;
+  identityState.textContent = symbolicState;
+  identityPhrase.textContent = generateIdentityPhrase(daysCount);
+}
+
+// --------------------
+// Identity phrase
+// --------------------
+function generateIdentityPhrase(days) {
+  if (days >= 30) return "Construiu presença ao longo do tempo.";
+  if (days >= 7) return "Volta com consistência.";
+  return "Começou a estar presente.";
 }
 
 // --------------------

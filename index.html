@@ -75,16 +75,32 @@
   <!-- CONVITES -->
   <div id="invites" class="hidden">
     <h3>Convites humanos</h3>
-
     <div class="invite-box">
       <input id="inviteInput" type="text" placeholder="Nome da pessoa (opcional)">
       <button id="inviteBtn">Gerar convite</button>
       <small id="inviteStatus"></small>
     </div>
-
     <div class="invite-count">
       <span>Convites registados</span>
       <b id="inviteCount">0</b>
+    </div>
+  </div>
+
+  <!-- IDENTIDADE -->
+  <div id="identity" class="hidden">
+    <h3>Identidade</h3>
+
+    <div class="identity-box">
+      <input id="identityName" type="text" placeholder="Nome humano (opcional)">
+      <div class="identity-line">
+        <span>Idade de presença</span>
+        <b id="identityAge">0 dias</b>
+      </div>
+      <div class="identity-line">
+        <span>Estado simbólico</span>
+        <b id="identityState">presença</b>
+      </div>
+      <small id="identityPhrase"></small>
     </div>
   </div>
 
