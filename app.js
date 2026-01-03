@@ -1,5 +1,5 @@
 /* =========================
-   HUMAN — app.js (final)
+   HUMAN — app.js
    ========================= */
 
 const STORAGE_KEY = "human_app_v2";
@@ -28,9 +28,7 @@ let state = {
 /* ---------- LOAD ---------- */
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
-  try {
-    state = { ...state, ...JSON.parse(saved) };
-  } catch {}
+  try { state = { ...state, ...JSON.parse(saved) }; } catch {}
 }
 
 /* ---------- HELPERS ---------- */
@@ -154,7 +152,7 @@ function calculatePresence() {
   );
 }
 
-/* ---------- CONVITES (CORRETO NO TELEGRAM) ---------- */
+/* ---------- CONVITES ---------- */
 const inviteBtn = $("createInvite");
 if (inviteBtn && window.Telegram && Telegram.WebApp) {
   inviteBtn.onclick = () => {
@@ -166,61 +164,61 @@ if (inviteBtn && window.Telegram && Telegram.WebApp) {
 
 /* ---------- DOAÇÃO ---------- */
 function initDonation() {
-  const qr = $("tonQr");
-  if (qr) {
-    qr.src =
-      "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
-      DONATION_ADDRESS;
-  }
+  $("donationAddress").textContent = DONATION_ADDRESS;
 
-  const copyBtn = $("copyDonation");
-  if (copyBtn) {
-    copyBtn.onclick = () => {
-      navigator.clipboard.writeText(DONATION_ADDRESS);
-      alert("Endereço TON copiado.");
-    };
-  }
+  $("tonQr").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+    DONATION_ADDRESS;
 
-  const openBtn = $("openTonkeeper");
-  if (openBtn) {
-    openBtn.onclick = () => {
-      window.location.href = "ton://transfer/" + DONATION_ADDRESS;
-    };
-  }
+  $("openTonkeeper").onclick = () => {
+    window.location.href = "ton://transfer/" + DONATION_ADDRESS;
+  };
+
+  $("copyDonation").onclick = () => {
+    navigator.clipboard.writeText(DONATION_ADDRESS);
+    alert("Endereço TON copiado.");
+  };
 }
 
 /* ---------- TON CONNECT ---------- */
-if (window.TON_CONNECT_UI) {
-  const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl:
-      "https://TEU_USER.github.io/human/tonconnect-manifest.json",
-    buttonRootId: "ton-connect"
-  });
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+  manifestUrl:
+    "https://Human2026New.github.io/human-experience/tonconnect-manifest.json",
+  buttonRootId: "ton-connect"
+});
 
-  tonConnectUI.onStatusChange(wallet => {
-    if (!wallet) {
-      $("tonAddress").textContent = "não ligada";
-      $("tonBalance").textContent = "0";
-      if (tonValue) tonValue.textContent = "0 TON";
-      return;
-    }
+tonConnectUI.onStatusChange(wallet => {
+  if (!wallet) {
+    $("tonAddress").textContent = "não ligada";
+    $("tonBalance").textContent = "0";
+    if (tonValue) tonValue.textContent = "0 TON";
+    return;
+  }
 
-    const address = wallet.account.address;
-    $("tonAddress").textContent = address;
+  const address = wallet.account.address;
+  $("tonAddress").textContent = address;
 
-    fetch(
-      `https://toncenter.com/api/v2/getAddressBalance?address=${address}`
-    )
-      .then(r => r.json())
-      .then(d => {
-        if (!d.result) return;
-        const ton = (d.result / 1e9).toFixed(4);
-        $("tonBalance").textContent = ton;
-        if (tonValue) tonValue.textContent = ton + " TON";
-      })
-      .catch(() => {});
-  });
-}
+  fetch(`https://toncenter.com/api/v2/getAddressBalance?address=${address}`)
+    .then(r => r.json())
+    .then(d => {
+      const ton = (d.result / 1e9).toFixed(4);
+      $("tonBalance").textContent = ton;
+      if (tonValue) tonValue.textContent = ton + " TON";
+    });
+});
+
+/* ---------- MODALS ---------- */
+document.querySelectorAll(".menu button").forEach(btn => {
+  btn.onclick = () => {
+    document.getElementById(btn.dataset.open).classList.remove("hidden");
+  };
+});
+
+document.querySelectorAll(".close").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".space").forEach(s => s.classList.add("hidden"));
+  };
+});
 
 /* ---------- UTILS ---------- */
 function today() {
@@ -233,26 +231,3 @@ function save() {
 
 /* ---------- INIT ---------- */
 updateUI();
-
-/* ---------- MENU OPEN / CLOSE ---------- */
-
-// abrir janelas
-document.querySelectorAll(".menu button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const target = btn.dataset.open;
-    const section = document.getElementById(target);
-    if (section) {
-      section.classList.remove("hidden");
-    }
-  });
-});
-
-// fechar janelas
-document.querySelectorAll(".close").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".space")
-      .forEach(s => s.classList.add("hidden"));
-  });
-});
-
