@@ -8,7 +8,7 @@
 const STORAGE_KEY = "human_state_v10";
 
 // 👉 ALTERA PARA O TEU BACKEND REAL
-const BACKEND_URL = "https://teu-backend.exemplo.com";
+const BACKEND_URL = "https://human-backend-1.onrender.com";
 
 // --------------------
 // State
