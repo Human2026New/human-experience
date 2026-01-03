@@ -1,21 +1,6 @@
 // =====================================
-// HUMAN WebApp — HARDENED + LIVE COUNTER
+// HUMAN WebApp — INTRO → LIVE APP
 // =====================================
-
-// ---------- STATE ----------
-let state = {
-  streak: 0,
-  hum: 0,          // valor real (backend)
-  displayHum: 0,  // valor animado
-  trust: 1.0,
-  busy: false
-};
-
-// ---------- ELEMENTS ----------
-const elTime = document.getElementById("timeActive");
-const elCycle = document.getElementById("cycle");
-const elState = document.getElementById("state");
-const elAction = document.getElementById("startBtn");
 
 // ---------- TELEGRAM CHECK ----------
 if (!(window.Telegram && Telegram.WebApp)) {
@@ -40,16 +25,39 @@ if (!(window.Telegram && Telegram.WebApp)) {
 const tg = Telegram.WebApp;
 tg.ready();
 
+// ---------- STATE ----------
+let state = {
+  streak: 0,
+  hum: 0,
+  displayHum: 0,
+  trust: 1.0,
+  busy: false
+};
+
+// ---------- ELEMENTS ----------
+const intro = document.getElementById("intro");
+const main = document.getElementById("main");
+
+const enterBtn = document.getElementById("enterBtn");
+const startBtn = document.getElementById("startBtn");
+
+const elTime = document.getElementById("timeActive");
+const elCycle = document.getElementById("cycle");
+const elState = document.getElementById("state");
+
 // ---------- BACKEND ----------
 const BACKEND = "http://localhost:5000";
 
-// ---------- INIT ----------
-document.addEventListener("DOMContentLoaded", () => {
+// ---------- INTRO ACTION ----------
+enterBtn.addEventListener("click", () => {
+  intro.style.display = "none";
+  main.style.display = "block";
+
   fetchStatus();
   startLiveCounter();
 });
 
-// ---------- BACKEND CALLS ----------
+// ---------- BACKEND ----------
 function fetchStatus() {
   fetch(`${BACKEND}/api/status`, {
     method: "POST",
@@ -66,9 +74,6 @@ function fetchStatus() {
       state.trust = data.trust;
 
       render();
-    })
-    .catch(() => {
-      console.warn("Backend offline");
     });
 }
 
@@ -76,8 +81,8 @@ function proveHumanity() {
   if (state.busy) return;
 
   state.busy = true;
-  elAction.disabled = true;
-  elAction.innerText = "⏳ A PROVAR...";
+  startBtn.disabled = true;
+  startBtn.innerText = "⏳ A PROVAR...";
 
   fetch(`${BACKEND}/api/prove`, {
     method: "POST",
@@ -89,7 +94,7 @@ function proveHumanity() {
       state.busy = false;
 
       if (!data.allowed) {
-        elAction.innerText = "⏳ AINDA NÃO";
+        startBtn.innerText = "⏳ AINDA NÃO";
         setTimeout(render, 1500);
         return;
       }
@@ -97,57 +102,42 @@ function proveHumanity() {
       state.streak = data.streak;
       state.hum = data.hum;
       state.trust = data.trust;
+      state.displayHum = data.hum;
 
       animateSuccess(data.reward);
-      syncCounter();
       render();
-    })
-    .catch(() => {
-      state.busy = false;
-      render();
-      alert("Sistema indisponível.");
     });
 }
 
 // ---------- LIVE COUNTER ----------
 function startLiveCounter() {
   setInterval(() => {
-    // velocidade simbólica (visual apenas)
-    const rate = 0.00001; // HUM por segundo
-    state.displayHum += rate;
-    updateCounterUI();
+    state.displayHum += 0.00001;
+    updateCounter();
   }, 1000);
-}
-
-function syncCounter() {
-  // quando backend responde, ajusta suavemente
-  state.displayHum = state.hum;
 }
 
 // ---------- UI ----------
 function render() {
   elTime.innerText = `${state.streak} dias`;
   elState.innerText = `trust ${state.trust.toFixed(2)}`;
+  updateCounter();
 
-  updateCounterUI();
-
-  if (!state.busy) {
-    elAction.innerText = "⛏ PROVAR HUMANIDADE";
-    elAction.disabled = false;
-  }
+  startBtn.innerText = "⛏ PROVAR HUMANIDADE";
+  startBtn.disabled = false;
 }
 
-function updateCounterUI() {
+function updateCounter() {
   elCycle.innerText = `${state.displayHum.toFixed(5)} HUM`;
 }
 
 function animateSuccess(reward) {
-  elAction.innerText = `+${reward.toFixed(2)} HUM`;
-  elAction.style.background = "rgba(76,255,215,0.35)";
+  startBtn.innerText = `+${reward.toFixed(2)} HUM`;
+  startBtn.style.background = "rgba(76,255,215,0.35)";
   setTimeout(() => {
-    elAction.style.background = "";
+    startBtn.style.background = "";
   }, 1200);
 }
 
 // ---------- ACTION ----------
-elAction.addEventListener("click", proveHumanity);
+startBtn.addEventListener("click", proveHumanity);

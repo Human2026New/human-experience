@@ -1,49 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
   <meta charset="UTF-8" />
   <title>HUMAN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Telegram WebApp -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div id="app">
 
-    <!-- LOGO / PRESENCE -->
-    <div id="presence">
-      <div id="core"></div>
+    <!-- INTRO -->
+    <div id="intro">
+      <div id="presence">
+        <div id="core"></div>
+      </div>
+
+      <p class="intro-text">
+        Isto mede presença humana ao longo do tempo.
+      </p>
+
+      <button id="enterBtn">ENTRAR</button>
     </div>
 
-    <!-- DATA -->
-    <div id="stats">
-      <div class="stat">
-        <span class="label">TIME</span>
-        <span class="value" id="timeActive">0 dias</span>
+    <!-- MAIN APP -->
+    <div id="main" style="display:none">
+
+      <div id="presence">
+        <div id="core"></div>
       </div>
 
-      <div class="stat">
-        <span class="label">HUM</span>
-        <span class="value" id="cycle">0.00000 HUM</span>
+      <div id="stats">
+        <div class="stat">
+          <span class="label">TIME</span>
+          <span class="value" id="timeActive">0 dias</span>
+        </div>
+
+        <div class="stat">
+          <span class="label">HUM</span>
+          <span class="value" id="cycle">0.00000 HUM</span>
+        </div>
+
+        <div class="stat">
+          <span class="label">STATE</span>
+          <span class="value" id="state">trust 1.00</span>
+        </div>
       </div>
 
-      <div class="stat">
-        <span class="label">STATE</span>
-        <span class="value" id="state">trust 1.00</span>
-      </div>
+      <button id="startBtn">⛏ PROVAR HUMANIDADE</button>
+
     </div>
-
-    <!-- ACTION -->
-    <button id="startBtn">⛏ PROVAR HUMANIDADE</button>
 
   </div>
 
-  <!-- App logic -->
   <script src="app.js"></script>
 </body>
 </html>
