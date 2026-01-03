@@ -6,7 +6,6 @@
   <title>HUMAN</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- TON CONNECT UI -->
   <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
@@ -39,38 +38,62 @@
     </div>
 
     <div class="actions-main">
-      <button id="openWallet">Abrir Wallet</button>
+      <button id="openWallet">Wallet</button>
       <button id="openInvites">Convites</button>
+      <button id="openProfile">Perfil humano</button>
     </div>
 
+  </section>
+
+  <!-- PROFILE SPACE -->
+  <section id="profileSpace" class="space hidden">
+    <div class="space-card">
+      <h2>Perfil humano</h2>
+
+      <label>
+        <input type="checkbox" id="profilePublic"/>
+        Tornar perfil público
+      </label>
+
+      <div class="field">
+        <label>Nome</label>
+        <input id="profileName" placeholder="nome humano"/>
+      </div>
+
+      <div class="field">
+        <label>Nota humana (opcional)</label>
+        <textarea id="profileNote" maxlength="120"
+          placeholder="uma frase simples"></textarea>
+      </div>
+
+      <div class="row">
+        <span>ID público</span>
+        <b id="profileId">—</b>
+      </div>
+
+      <small>
+        O perfil mostra apenas presença e estado simbólico.  
+        Nada é forçado.
+      </small>
+
+      <button class="closeSpace">Fechar</button>
+    </div>
   </section>
 
   <!-- WALLET SPACE -->
   <section id="walletSpace" class="space hidden">
     <div class="space-card">
-      <h2>Wallet HUMAN (TON testnet)</h2>
-
+      <h2>Wallet HUMAN</h2>
       <div class="big" id="walletBalance">0.00000 HUM</div>
-
       <div class="row">
         <span>Estado</span>
         <b id="walletStatus">local</b>
       </div>
-
       <div class="row">
         <span>Endereço</span>
         <b id="walletAddress">—</b>
       </div>
-
-      <!-- TON CONNECT BUTTON -->
       <div id="tonConnectButton"></div>
-
-      <small>
-        Ligação opcional.  
-        Testnet.  
-        Nada é enviado sem ação explícita.
-      </small>
-
       <button class="closeSpace">Fechar</button>
     </div>
   </section>
@@ -79,21 +102,10 @@
   <section id="inviteSpace" class="space hidden">
     <div class="space-card">
       <h2>Convites humanos</h2>
-
-      <div class="field">
-        <label>O teu nome</label>
-        <input id="userName" placeholder="ex: Helder"/>
-      </div>
-
-      <div class="field">
-        <label>Convidar alguém</label>
-        <input id="inviteName" placeholder="nome do humano"/>
-        <button id="addInvite">Criar convite</button>
-      </div>
-
+      <input id="inviteName" placeholder="nome do humano"/>
+      <button id="addInvite">Criar convite</button>
       <ul id="inviteList"></ul>
       <small id="inviteCount"></small>
-
       <button class="closeSpace">Fechar</button>
     </div>
   </section>
