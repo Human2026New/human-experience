@@ -8,9 +8,10 @@ try {
 } catch {}
 
 // --------------------
-// Local storage keys
+// Config
 // --------------------
 const STORAGE_KEY = "human_state_v1";
+const BACKEND = "https://human-backend-ywuf.onrender.com";
 
 // --------------------
 // State
@@ -24,13 +25,12 @@ let state = {
 };
 
 // --------------------
-// Load saved state
+// Load local
 // --------------------
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
   try {
-    const parsed = JSON.parse(saved);
-    state = { ...state, ...parsed };
+    state = { ...state, ...JSON.parse(saved) };
   } catch {}
 }
 
@@ -45,7 +45,7 @@ const statsEl = document.getElementById("stats");
 const statusMsg = document.getElementById("statusMsg");
 
 // --------------------
-// Restore UI if active
+// Restore UI
 // --------------------
 if (state.started) {
   enterBtn.style.display = "none";
@@ -68,24 +68,26 @@ enterBtn.onclick = () => {
   statsEl.classList.remove("hidden");
   statusMsg.textContent = "Presença iniciada.";
 
-  saveState();
+  saveLocal();
   startLoop();
 };
 
 // --------------------
-// Main loop
+// Loop humano
 // --------------------
 function startLoop() {
   setInterval(() => {
     state.time += 1;
 
-    // ritmo humano não-linear
     const drift = (Math.random() - 0.5) * 0.00001;
     state.hum += Math.max(0, state.rate + drift);
 
     updateUI();
-    saveState();
+    saveLocal();
   }, 1000);
+
+  // backend snapshot a cada 20s
+  setInterval(syncBackend, 20000);
 }
 
 // --------------------
@@ -102,8 +104,30 @@ function updateUI() {
 }
 
 // --------------------
-// Save local
+// Local save
 // --------------------
-function saveState() {
+function saveLocal() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+// --------------------
+// Backend sync (espelho)
+// --------------------
+function syncBackend() {
+  fetch(`${BACKEND}/sync_hum`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      hum: state.hum,
+      time: state.time,
+      sessions: state.sessions,
+      initDataUnsafe: tg?.initDataUnsafe || {}
+    })
+  })
+  .then(() => {
+    statusMsg.textContent = "Sincronizado.";
+  })
+  .catch(() => {
+    statusMsg.textContent = "Offline (local ativo).";
+  });
 }
