@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HUMAN</title>
+
   <link rel="stylesheet" href="style.css">
 
-  <!-- TON CONNECT UI -->
+  <!-- Telegram WebApp -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- TON Connect UI -->
   <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
@@ -35,16 +39,12 @@
         <span id="tonValue">0 TON</span>
       </div>
 
-      <div class="presence">
-        <span id="presenceCount">–</span> humanos presentes agora
-      </div>
-
-      <small class="presence-note">presença sentida neste momento</small>
-
       <small>
-        HUM não tem valor monetário.<br>
+        HUM não tem valor monetário.  
         TON é externo e opcional.
       </small>
+
+      <p><b><span id="presenceCount">1</span></b> humanos presentes agora</p>
     </div>
 
     <div class="menu">
@@ -56,21 +56,35 @@
       <button data-open="about">ℹ️ Sobre</button>
       <button data-open="profile">👤 Perfil</button>
     </div>
-
   </section>
 
-  <!-- INVITES -->
+  <!-- ESTATÍSTICAS -->
+  <section id="stats" class="space hidden">
+    <div class="space-card">
+      <h2>Estatísticas</h2>
+      <p>Dias de presença: <b id="daysCount">0</b></p>
+      <p>Tempo total: <b id="timeSpent">0 min</b></p>
+      <p>Estado: <b id="stateText">presença</b></p>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- TAREFAS -->
+  <section id="tasks" class="space hidden">
+    <div class="space-card">
+      <h2>Tarefas humanas</h2>
+      <ul id="taskList"></ul>
+      <small>As tarefas são opcionais. A presença conta sempre.</small>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- CONVITES -->
   <section id="invites" class="space hidden">
     <div class="space-card">
       <h2>Convites humanos</h2>
-
       <button id="createInvite">Convidar humano</button>
-
-      <small>
-        Convites não criam ganhos.<br>
-        Criam continuidade.
-      </small>
-
+      <small>Convites não criam ganhos. Criam continuidade.</small>
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -82,17 +96,78 @@
 
       <div id="ton-connect"></div>
 
-      <p>Endereço TON:</p>
-      <small id="tonAddress">não ligada</small>
-
-      <p>Saldo TON:</p>
-      <b id="tonBalance">0</b> TON
+      <p>Endereço: <b id="tonAddress">não ligada</b></p>
+      <p>Saldo: <b id="tonBalance">0</b> TON</p>
 
       <small>
-        HUM é interno.<br>
-        TON pertence à tua wallet.
+        HUM é interno.  
+        TON pertence apenas ao utilizador.
       </small>
 
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- DOAÇÃO -->
+  <section id="donation" class="space hidden">
+    <div class="space-card">
+      <h2>❤️ Apoiar o projeto</h2>
+
+      <p>Endereço TON:</p>
+      <code id="donationAddress"></code>
+
+      <img id="tonQr" alt="QR Code TON" />
+
+      <button id="openTonkeeper">Abrir Tonkeeper</button>
+      <button id="copyDonation">Copiar endereço</button>
+
+      <small>
+        Doações são voluntárias.  
+        HUMAN não promete retorno.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="about" class="space hidden">
+    <div class="space-card">
+      <h2>Sobre o HUMAN</h2>
+
+      <p>
+        HUMAN é uma experiência digital focada em presença humana ao longo do tempo.
+      </p>
+
+      <p>
+        Não é um jogo.  
+        Não é investimento.  
+        Não promete retorno financeiro.
+      </p>
+
+      <p>
+        HUM é apenas um marcador interno de continuidade.
+        Não é um token.
+      </p>
+
+      <p>
+        TON é opcional e pertence exclusivamente ao utilizador.
+      </p>
+
+      <small>
+        HUMAN existe como memória, não como promessa.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- PERFIL -->
+  <section id="profile" class="space hidden">
+    <div class="space-card">
+      <h2>Perfil humano</h2>
+      <input id="userName" placeholder="o teu nome"/>
+      <textarea id="userNote" placeholder="nota humana (opcional)"></textarea>
       <button class="close">Fechar</button>
     </div>
   </section>

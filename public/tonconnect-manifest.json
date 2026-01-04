@@ -1,10 +1,6 @@
 {
   "name": "HUMAN",
   "description": "Presença humana ao longo do tempo. Sem promessas financeiras.",
-  "url": "https://github.com/Human2026New/human-experience",
-  "icons": [
-    "https://TEU_UTILIZADOR.github.io/human/assets/icon.png"
-  ],
-  "termsOfUseUrl": "https://TEU_UTILIZADOR.github.io/human/whitepaper/HUMAN_whitepaper.html",
-  "privacyPolicyUrl": "https://TEU_UTILIZADOR.github.io/human/privacy.html"
+  "url": "https://Human2026New.github.io/human-experience/",
+  "iconUrl": "https://Human2026New.github.io/human-experience/assets/icon.png"
 }

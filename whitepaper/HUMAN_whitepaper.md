@@ -59,3 +59,44 @@ O crescimento é lento por design.
 
 HUMAN não quer ser grande.
 Quer ser honesto.
+
+
+NFTs de Presença (Registo Simbólico)
+
+O HUMAN poderá, no futuro, permitir o registo simbólico de presença humana através de NFTs gratuitos, denominados NFTs de Presença.
+
+Estes NFTs têm como único objetivo registar momentos, continuidade ou capítulos temporais de presença humana, funcionando como um vestígio digital imutável, e não como um ativo financeiro.
+
+Natureza dos NFTs de Presença
+
+Os NFTs de Presença não representam investimento para ja.
+
+Os NFTs de Presença não garantem rendimentos a curto prazo.
+
+Os NFTs de Presença não substituem nem representam HUM.
+
+HUM permanece um marcador interno, privado e não transferível por enquanto.
+
+Os NFTs são opcionais e emitidos apenas por decisão consciente do utilizador.
+
+Sobre valor e mercado
+
+O projeto HUMAN não atribui valor financeiro, preço, cotação ou utilidade económica aos NFTs de Presença em fase de projecto e construçao.
+
+Qualquer valor que possa vir a ser atribuído externamente por terceiros, plataformas ou mercados futuros sera promovido, incentivado, controlado ou garantido pelo projeto HUMAN, não constituindo promessa nem expectativa criada pela equipa.
+
+Índice de Presença
+
+Cada NFT de Presença pode conter um Índice de Presença, um valor numérico interno utilizado exclusivamente para expressar a densidade temporal ou simbólica da presença registada.
+
+Este índice:
+
+não é moeda,
+
+não é convertível agora,
+
+não representa qualquer forma de valor financeiro.
+
+Limitações e responsabilidade
+
+O HUMAN não se responsabiliza por decisões externas tomadas por utilizadores relativamente à exposição, transferência ou eventual negociação destes NFTs fora do contexto do projeto.
