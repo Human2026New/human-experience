@@ -1,5 +1,5 @@
 /* =========================
-   HUMAN — app.js (stable)
+   HUMAN — app.js (safe)
    ========================= */
 
 const STORAGE_KEY = "human_app_v3";
@@ -15,21 +15,25 @@ const TASK_POOL = [
   { text: "Voltar depois de uma pausa", type: "return", hum: 0.003 }
 ];
 
-/* ---------- STATE ---------- */
+/* ---------- STATE (ORIGINAL + EXTENSÃO SEGURA) ---------- */
 let state = {
   started: false,
   hum: 0,
   time: 0,
   days: {},
   tasks: [],
-  taskDay: null
+  taskDay: null,
+
+  // 🔹 NOVO (não interfere com nada)
+  exchangedHum: 0 // HUM convertido (histórico)
 };
 
-/* ---------- LOAD ---------- */
+/* ---------- LOAD (SEGURO) ---------- */
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
   try {
-    state = { ...state, ...JSON.parse(saved) };
+    const parsed = JSON.parse(saved);
+    state = { ...state, ...parsed }; // mantém compatibilidade
   } catch {}
 }
 
@@ -46,6 +50,12 @@ const stateText = $("stateText");
 const taskList = $("taskList");
 const presenceCount = $("presenceCount");
 const tonValue = $("tonValue");
+
+// 🔹 EXCHANGE ELEMENTS
+const exchangeHum = $("exchangeHum");
+const exchangeTon = $("exchangeTon");
+const humToTonBtn = $("humToTon");
+const tonToHumBtn = $("tonToHum");
 
 /* ---------- PRESENÇA ---------- */
 const presenceBase = Math.floor(Math.random() * 3) + 1;
@@ -132,6 +142,7 @@ function updateUI() {
   }
 
   renderTasks();
+  updateExchangeUI();
 }
 
 function renderTasks() {
@@ -152,6 +163,40 @@ function calculatePresence() {
     1,
     Math.floor(presenceBase + active + Math.random() * 2)
   );
+}
+
+/* ---------- EXCHANGE (SEGURO / SIMBÓLICO) ---------- */
+const HUM_TO_TON_RATE = 0.05; // simbólico
+
+if (humToTonBtn) {
+  humToTonBtn.onclick = () => {
+    if (state.hum <= 0) {
+      alert("Sem HUM disponível para troca.");
+      return;
+    }
+
+    const humAmount = state.hum;
+    state.hum = 0;
+    state.exchangedHum += humAmount;
+
+    alert(
+      `Troca registada:\n${humAmount.toFixed(
+        5
+      )} HUM → TON (processamento futuro)`
+    );
+
+    updateUI();
+    save();
+  };
+}
+
+function updateExchangeUI() {
+  if (exchangeHum) {
+    exchangeHum.textContent = `${state.hum.toFixed(5)} HUM`;
+  }
+  if (exchangeTon) {
+    exchangeTon.textContent = "Ligado via wallet";
+  }
 }
 
 /* ---------- CONVITES ---------- */
@@ -182,52 +227,6 @@ function initDonation() {
   };
 }
 
-/* ---------- TON CONNECT ---------- */
-const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-  manifestUrl:
-    "https://Human2026New.github.io/human-experience/tonconnect-manifest.json",
-  buttonRootId: "ton-connect"
-});
-
-tonConnectUI.onStatusChange(wallet => {
-  if (!wallet) {
-    $("tonAddress").textContent = "não ligada";
-    $("tonBalance").textContent = "0";
-    if (tonValue) tonValue.textContent = "0 TON";
-    return;
-  }
-
-  const address = wallet.account.address;
-  $("tonAddress").textContent = address;
-
-  fetch(`https://toncenter.com/api/v2/getAddressBalance?address=${address}`)
-    .then(r => r.json())
-    .then(d => {
-      if (!d.result) return;
-      const ton = (d.result / 1e9).toFixed(4);
-      $("tonBalance").textContent = ton;
-      if (tonValue) tonValue.textContent = ton + " TON";
-    })
-    .catch(() => {});
-});
-
-/* ---------- MODALS ---------- */
-document.querySelectorAll(".menu button").forEach(btn => {
-  btn.onclick = () => {
-    const target = btn.dataset.open;
-    const section = document.getElementById(target);
-    if (section) section.classList.remove("hidden");
-  };
-});
-
-document.querySelectorAll(".close").forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll(".space").forEach(s =>
-      s.classList.add("hidden")
-    );
-  };
-});
-
 /* ---------- UTILS ---------- */
 function today() {
   return new Date().toISOString().slice(0, 10);
@@ -240,11 +239,9 @@ function save() {
 /* ---------- INIT ---------- */
 updateUI();
 
-/* ---------- MAINNET SPLASH ---------- */
+/* ---------- SPLASH ---------- */
 window.addEventListener("load", () => {
   const splash = document.getElementById("mainnetSplash");
   if (!splash) return;
-  setTimeout(() => {
-    splash.style.display = "none";
-  }, 2000);
+  setTimeout(() => (splash.style.display = "none"), 2000);
 });

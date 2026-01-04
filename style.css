@@ -89,26 +89,7 @@ button:hover {
   display: none;
 }
 
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: none;
-}
-
-ul {
-  padding-left: 18px;
-  text-align: left;
-}
-
-#tonQr {
-  margin-top: 12px;
-  width: 160px;
-  height: 160px;
-}
-
-/* ===== MAINNET SPLASH ===== */
+/* SPLASH */
 #mainnetSplash {
   position: fixed;
   inset: 0;
@@ -121,28 +102,9 @@ ul {
 
 #mainnetSplash .mainnet-box {
   text-align: center;
-  color: #dff5f0;
-  padding: 24px;
 }
 
 #mainnetSplash img {
   max-width: 220px;
   margin-bottom: 18px;
-}
-
-#mainnetSplash h2 {
-  font-size: 22px;
-  margin-bottom: 6px;
-}
-
-#mainnetSplash p {
-  font-size: 15px;
-  opacity: 0.85;
-}
-
-#mainnetSplash small {
-  display: block;
-  margin-top: 10px;
-  font-size: 11px;
-  opacity: 0.6;
 }
