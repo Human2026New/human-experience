@@ -18,10 +18,9 @@
 <!-- SPLASH MAINNET -->
 <div id="mainnetSplash">
   <div class="mainnet-box">
-    <img src="img/mainnet-soon.png" alt="Mainnet em breve">
-    <h2>Mainnet em breve</h2>
-    <p>Token HUMAN (HUM)</p>
-    <small>HUM não tem valor monetário nesta fase</small>
+    <h2>HUMAN</h2>
+    <p>Mainnet em breve</p>
+    <small>Token HUMAN (HUM)</small>
   </div>
 </div>
 
@@ -43,9 +42,8 @@
       <div class="hum-value" id="humValue">0.00000 HUM</div>
 
       <div class="values">
-        <span>€ 0</span>
-        <span>$ 0</span>
-        <span>0 BTC</span>
+        <span id="eurValue">€ 0.00</span>
+        <span id="usdValue">$ 0.00</span>
         <span id="tonValue">0 TON</span>
       </div>
 
@@ -55,8 +53,8 @@
       </p>
 
       <small>
-        HUM não tem valor monetário nesta fase.<br>
-        TON é externo e opcional.
+        HUM tem valor fixo de 0.05€.<br>
+        Conversão automática para TON.
       </small>
     </div>
 
@@ -65,6 +63,7 @@
       <button data-open="tasks">🧭 Tarefas humanas</button>
       <button data-open="invites">👥 Convites</button>
       <button data-open="wallet">💼 Wallet</button>
+      <button data-open="buy">💎 Comprar HUM</button>
       <button data-open="exchange">🔁 Trocar HUM ↔ TON</button>
       <button data-open="donation">💚 Doação</button>
       <button data-open="about">ℹ️ Sobre</button>
@@ -72,30 +71,164 @@
     </div>
   </section>
 
-  <!-- EXCHANGE -->
-  <section id="exchange" class="space hidden">
+  <!-- ESTATÍSTICAS -->
+  <section id="stats" class="space hidden">
     <div class="space-card">
-      <h2>🔁 Troca HUM ↔ TON</h2>
+      <h2>Estatísticas</h2>
+      <p>Dias de presença: <b id="daysCount">0</b></p>
+      <p>Tempo total: <b id="timeSpent">0 min</b></p>
+      <p>Estado humano: <b id="stateText">presença</b></p>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
 
-      <p>HUM disponível:</p>
-      <b id="exchangeHum">0.00000 HUM</b>
+  <!-- TAREFAS -->
+  <section id="tasks" class="space hidden">
+    <div class="space-card">
+      <h2>Tarefas humanas</h2>
+      <ul id="taskList"></ul>
+      <small>
+        As tarefas mudam todos os dias.<br>
+        A presença conta mesmo sem cumprir nada.
+      </small>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
 
-      <p style="margin-top:10px;">TON na wallet:</p>
-      <b id="exchangeTon">0 TON</b>
+  <!-- CONVITES -->
+  <section id="invites" class="space hidden">
+    <div class="space-card">
+      <h2>Convites humanos</h2>
+      <button id="createInvite">Convidar humano</button>
+      <small>
+        Convites criam continuidade.<br>
+        Não criam valor financeiro direto.
+      </small>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
 
-      <button id="humToTon">Converter HUM → TON</button>
-      <button id="tonToHum">Converter TON → HUM</button>
+  <!-- WALLET -->
+  <section id="wallet" class="space hidden">
+    <div class="space-card">
+      <h2>Wallet TON</h2>
+
+      <div id="ton-connect"></div>
+
+      <p>Endereço:</p>
+      <code id="tonAddress">não ligada</code>
+
+      <p>Saldo:</p>
+      <b id="tonBalance">0</b> TON
 
       <small>
-        Troca experimental e limitada.<br>
-        Não representa valor monetário garantido.
+        HUM é interno.<br>
+        TON pertence apenas ao utilizador.
       </small>
 
       <button class="close">Fechar</button>
     </div>
   </section>
 
-  <!-- (resto das secções mantém-se igual) -->
+  <!-- COMPRAR HUM -->
+  <section id="buy" class="space hidden">
+    <div class="space-card">
+      <h2>💎 Comprar HUM</h2>
+
+      <p>Preço fixo:</p>
+      <b>1 HUM = 0.05 €</b>
+
+      <input id="buyHumAmount" type="number" min="1" value="10"/>
+
+      <p>Equivalente em TON:</p>
+      <b id="buyTonEstimate">0 TON</b>
+
+      <button id="buyHumBtn">Comprar com TON</button>
+
+      <small>
+        Compra registada internamente.<br>
+        Token on-chain será lançado na mainnet.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- TROCA -->
+  <section id="exchange" class="space hidden">
+    <div class="space-card">
+      <h2>🔁 Troca HUM ↔ TON</h2>
+
+      <p>HUM disponível:</p>
+      <b id="exchangeHum">0 HUM</b>
+
+      <p>Equivalente em TON:</p>
+      <b id="exchangeTon">0 TON</b>
+
+      <button id="humToTon">HUM → TON</button>
+      <button id="tonToHum">TON → HUM</button>
+
+      <small>
+        Troca simbólica (pré-mainnet).
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- DOAÇÃO -->
+  <section id="donation" class="space hidden">
+    <div class="space-card">
+      <h2>❤️ Apoiar o projeto</h2>
+
+      <p>Endereço TON:</p>
+      <code id="donationAddress"></code>
+
+      <img id="tonQr" alt="QR Code TON"/>
+
+      <button id="openTonkeeper">Abrir Tonkeeper</button>
+      <button id="copyDonation">Copiar endereço</button>
+
+      <small>
+        Doações são voluntárias.<br>
+        Não existe retorno financeiro garantido.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="about" class="space hidden">
+    <div class="space-card">
+      <h2>Sobre o HUMAN</h2>
+
+      <p>
+        HUMAN é uma experiência digital centrada na presença humana ao longo do tempo.
+      </p>
+
+      <p>
+        HUM é um marcador interno de continuidade.<br>
+        O token será lançado na mainnet TON.
+      </p>
+
+      <small>
+        HUMAN existe como memória partilhada, não como promessa.
+      </small>
+
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- PERFIL -->
+  <section id="profile" class="space hidden">
+    <div class="space-card">
+      <h2>Perfil humano</h2>
+      <input id="userName" placeholder="o teu nome"/>
+      <textarea id="userNote" placeholder="nota humana (opcional)"></textarea>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
 
 </div>
 

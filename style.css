@@ -1,3 +1,7 @@
+/* =========================
+   HUMAN — style.css (final)
+   ========================= */
+
 * {
   box-sizing: border-box;
   font-family: system-ui, -apple-system, BlinkMacSystemFont;
@@ -16,6 +20,7 @@ body {
   padding: 20px;
 }
 
+/* ---------- HERO ---------- */
 #hero {
   text-align: center;
   margin-top: 40px;
@@ -23,8 +28,15 @@ body {
 
 #hero h1 {
   letter-spacing: 4px;
+  margin-bottom: 6px;
 }
 
+#hero p {
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+/* ---------- BUTTONS ---------- */
 button {
   width: 100%;
   padding: 14px;
@@ -34,12 +46,18 @@ button {
   background: transparent;
   color: #3fffdc;
   cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
 }
 
 button:hover {
   background: rgba(63,255,220,0.08);
 }
 
+button:active {
+  transform: scale(0.98);
+}
+
+/* ---------- CARDS ---------- */
 .card {
   background: rgba(255,255,255,0.05);
   padding: 20px;
@@ -52,21 +70,45 @@ button:hover {
 }
 
 .hum-value {
-  font-size: 26px;
+  font-size: 28px;
   margin: 10px 0;
+  letter-spacing: 0.5px;
 }
 
+/* ---------- VALUES ---------- */
 .values {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  opacity: 0.7;
+  opacity: 0.75;
+  margin-top: 8px;
 }
 
+/* ---------- MENU ---------- */
 .menu button {
   margin-bottom: 10px;
 }
 
+/* ---------- INPUTS ---------- */
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.08);
+  color: #dff5f0;
+  font-size: 14px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(223,245,240,0.5);
+}
+
+/* ---------- MODALS ---------- */
 .space {
   position: fixed;
   inset: 0;
@@ -74,22 +116,45 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .space-card {
   background: #0f3d36;
   padding: 24px;
-  border-radius: 16px;
+  border-radius: 18px;
   width: 90%;
   max-width: 360px;
   text-align: center;
+  box-shadow: 0 0 30px rgba(0,0,0,0.4);
 }
 
-.hidden {
-  display: none;
+.space-card h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
 }
 
-/* SPLASH */
+.space-card small {
+  display: block;
+  margin-top: 10px;
+  font-size: 11px;
+  opacity: 0.65;
+}
+
+/* ---------- LISTS ---------- */
+ul {
+  padding-left: 18px;
+  text-align: left;
+}
+
+/* ---------- QR ---------- */
+#tonQr {
+  margin-top: 12px;
+  width: 160px;
+  height: 160px;
+}
+
+/* ---------- SPLASH MAINNET ---------- */
 #mainnetSplash {
   position: fixed;
   inset: 0;
@@ -97,14 +162,30 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 99999;
+  z-index: 9999;
 }
 
 #mainnetSplash .mainnet-box {
   text-align: center;
+  padding: 24px;
 }
 
-#mainnetSplash img {
-  max-width: 220px;
-  margin-bottom: 18px;
+#mainnetSplash h2 {
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+
+#mainnetSplash p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+#mainnetSplash small {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+/* ---------- HIDDEN ---------- */
+.hidden {
+  display: none;
 }

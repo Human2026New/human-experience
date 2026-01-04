@@ -1,39 +1,30 @@
 /* =========================
-   HUMAN — app.js (safe)
+   HUMAN — app.js (final)
    ========================= */
 
-const STORAGE_KEY = "human_app_v3";
+const STORAGE_KEY = "human_app_v6";
 const DONATION_ADDRESS =
   "UQC_QK4Kwcw68zJYKGYMKRhrWNAK7lYmniEgV-Kq9kCLkzlf";
 
-/* ---------- TASK POOL ---------- */
-const TASK_POOL = [
-  { text: "Entrar com presença", type: "enter", hum: 0.001 },
-  { text: "Permanecer 3 minutos", type: "time3", hum: 0.0015 },
-  { text: "Permanecer 7 minutos", type: "time7", hum: 0.0025 },
-  { text: "Escrever uma nota humana", type: "note", hum: 0.002 },
-  { text: "Voltar depois de uma pausa", type: "return", hum: 0.003 }
-];
+/* ---------- PREÇO HUM ---------- */
+const HUM_EUR_PRICE = 0.05; // 1 HUM = 0.05 €
 
-/* ---------- STATE (ORIGINAL + EXTENSÃO SEGURA) ---------- */
+/* ---------- STATE (compatível) ---------- */
 let state = {
   started: false,
   hum: 0,
+  tonSim: 0,
   time: 0,
   days: {},
   tasks: [],
-  taskDay: null,
-
-  // 🔹 NOVO (não interfere com nada)
-  exchangedHum: 0 // HUM convertido (histórico)
+  taskDay: null
 };
 
-/* ---------- LOAD (SEGURO) ---------- */
+/* ---------- LOAD ---------- */
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
   try {
-    const parsed = JSON.parse(saved);
-    state = { ...state, ...parsed }; // mantém compatibilidade
+    state = { ...state, ...JSON.parse(saved) };
   } catch {}
 }
 
@@ -44,40 +35,66 @@ const $ = id => document.getElementById(id);
 const enterBtn = $("enterBtn");
 const dashboard = $("dashboard");
 const humValue = $("humValue");
+const eurValue = $("eurValue");
+const usdValue = $("usdValue");
+const tonValue = $("tonValue");
+const presenceCount = $("presenceCount");
+
 const daysCount = $("daysCount");
 const timeSpent = $("timeSpent");
 const stateText = $("stateText");
 const taskList = $("taskList");
-const presenceCount = $("presenceCount");
-const tonValue = $("tonValue");
 
-// 🔹 EXCHANGE ELEMENTS
+/* Exchange / Buy */
+const buyHumAmount = $("buyHumAmount");
+const buyTonEstimate = $("buyTonEstimate");
+const buyHumBtn = $("buyHumBtn");
+
 const exchangeHum = $("exchangeHum");
 const exchangeTon = $("exchangeTon");
 const humToTonBtn = $("humToTon");
 const tonToHumBtn = $("tonToHum");
 
-/* ---------- PRESENÇA ---------- */
-const presenceBase = Math.floor(Math.random() * 3) + 1;
+/* ---------- TON PRICE (LIVE) ---------- */
+let tonEurPrice = 0;
+
+async function fetchTonPrice() {
+  try {
+    const r = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=eur,usd"
+    );
+    const d = await r.json();
+    tonEurPrice = d["the-open-network"].eur;
+    updatePrices();
+  } catch {}
+}
+
+/* ---------- CONVERSÕES ---------- */
+function humToTonRate() {
+  if (!tonEurPrice) return 0;
+  return HUM_EUR_PRICE / tonEurPrice;
+}
 
 /* ---------- ENTER ---------- */
 let loopStarted = false;
 
-enterBtn.onclick = () => {
-  if (loopStarted) return;
-  loopStarted = true;
+if (enterBtn) {
+  enterBtn.onclick = () => {
+    if (loopStarted) return;
+    loopStarted = true;
 
-  state.started = true;
-  enterBtn.style.display = "none";
-  dashboard.classList.remove("hidden");
+    state.started = true;
+    enterBtn.style.display = "none";
+    dashboard.classList.remove("hidden");
 
-  generateDailyTasks();
-  initDonation();
-  startLoop();
-  save();
-};
+    generateDailyTasks();
+    initDonation();
+    startLoop();
+    save();
+  };
+}
 
-/* ---------- LOOP ---------- */
+/* ---------- LOOP PRESENÇA ---------- */
 function startLoop() {
   setInterval(() => {
     state.time++;
@@ -94,6 +111,12 @@ function startLoop() {
 }
 
 /* ---------- TASKS ---------- */
+const TASK_POOL = [
+  { text: "Entrar com presença", type: "enter", hum: 0.001 },
+  { text: "Permanecer 3 minutos", type: "time3", hum: 0.0015 },
+  { text: "Permanecer 7 minutos", type: "time7", hum: 0.0025 }
+];
+
 function generateDailyTasks() {
   const d = today();
   if (state.taskDay === d) return;
@@ -131,18 +154,16 @@ function completeTask(task) {
 
 /* ---------- UI ---------- */
 function updateUI() {
-  humValue.textContent = `${state.hum.toFixed(5)} HUM`;
+  humValue.textContent = state.hum.toFixed(5) + " HUM";
   daysCount.textContent = Object.keys(state.days).length;
-  timeSpent.textContent = `${Math.floor(state.time / 60)} min`;
+  timeSpent.textContent = Math.floor(state.time / 60) + " min";
   stateText.textContent =
     Object.keys(state.days).length >= 7 ? "consistência" : "presença";
 
-  if (presenceCount) {
-    presenceCount.textContent = calculatePresence();
-  }
+  if (presenceCount) presenceCount.textContent = calculatePresence();
 
   renderTasks();
-  updateExchangeUI();
+  updatePrices();
 }
 
 function renderTasks() {
@@ -156,47 +177,74 @@ function renderTasks() {
   });
 }
 
-/* ---------- PRESENÇA ---------- */
 function calculatePresence() {
-  const active = Math.min(state.time / 60, 10);
-  return Math.max(
-    1,
-    Math.floor(presenceBase + active + Math.random() * 2)
-  );
+  return Math.max(1, Math.floor(1 + state.time / 60));
 }
 
-/* ---------- EXCHANGE (SEGURO / SIMBÓLICO) ---------- */
-const HUM_TO_TON_RATE = 0.05; // simbólico
+/* ---------- PREÇOS ---------- */
+function updatePrices() {
+  eurValue.textContent = "€ " + HUM_EUR_PRICE.toFixed(2);
+  usdValue.textContent = "$ " + (HUM_EUR_PRICE * 1.1).toFixed(2);
 
-if (humToTonBtn) {
-  humToTonBtn.onclick = () => {
-    if (state.hum <= 0) {
-      alert("Sem HUM disponível para troca.");
-      return;
-    }
+  const rate = humToTonRate();
+  tonValue.textContent = rate ? rate.toFixed(6) + " TON" : "—";
 
-    const humAmount = state.hum;
-    state.hum = 0;
-    state.exchangedHum += humAmount;
+  if (buyHumAmount && buyTonEstimate) {
+    const hum = Number(buyHumAmount.value || 0);
+    buyTonEstimate.textContent =
+      rate ? (hum * rate).toFixed(6) + " TON" : "—";
+  }
 
-    alert(
-      `Troca registada:\n${humAmount.toFixed(
-        5
-      )} HUM → TON (processamento futuro)`
-    );
+  if (exchangeHum)
+    exchangeHum.textContent = state.hum.toFixed(5) + " HUM";
 
-    updateUI();
+  if (exchangeTon)
+    exchangeTon.textContent =
+      rate ? (state.hum * rate).toFixed(6) + " TON" : "—";
+}
+
+/* ---------- COMPRAR HUM ---------- */
+if (buyHumAmount) {
+  buyHumAmount.oninput = updatePrices;
+}
+
+if (buyHumBtn) {
+  buyHumBtn.onclick = () => {
+    const hum = Number(buyHumAmount.value);
+    if (hum <= 0) return alert("Quantidade inválida.");
+
+    state.hum += hum;
     save();
+    updateUI();
+
+    alert("Compra registada.\nHUM creditado internamente.");
   };
 }
 
-function updateExchangeUI() {
-  if (exchangeHum) {
-    exchangeHum.textContent = `${state.hum.toFixed(5)} HUM`;
-  }
-  if (exchangeTon) {
-    exchangeTon.textContent = "Ligado via wallet";
-  }
+/* ---------- TROCA ---------- */
+if (humToTonBtn) {
+  humToTonBtn.onclick = () => {
+    if (state.hum <= 0) return alert("Sem HUM disponível.");
+
+    const ton = state.hum * humToTonRate();
+    state.tonSim += ton;
+    state.hum = 0;
+
+    save();
+    updateUI();
+  };
+}
+
+if (tonToHumBtn) {
+  tonToHumBtn.onclick = () => {
+    if (state.tonSim <= 0) return alert("Sem TON disponível.");
+
+    state.hum += state.tonSim / humToTonRate();
+    state.tonSim = 0;
+
+    save();
+    updateUI();
+  };
 }
 
 /* ---------- CONVITES ---------- */
@@ -204,7 +252,7 @@ const inviteBtn = $("createInvite");
 if (inviteBtn && window.Telegram && Telegram.WebApp) {
   inviteBtn.onclick = () => {
     Telegram.WebApp.openTelegramLink(
-      "https://t.me/share/url?url=https://t.me/human_proto_bot&text=Estou%20num%20espaço%20chamado%20HUMAN.%20Não%20promete%20nada.%20Só%20presença."
+      "https://t.me/share/url?url=https://t.me/human_proto_bot&text=Estou%20num%20espaço%20chamado%20HUMAN.%20Só%20presença."
     );
   };
 }
@@ -212,7 +260,6 @@ if (inviteBtn && window.Telegram && Telegram.WebApp) {
 /* ---------- DOAÇÃO ---------- */
 function initDonation() {
   $("donationAddress").textContent = DONATION_ADDRESS;
-
   $("tonQr").src =
     "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
     DONATION_ADDRESS;
@@ -227,6 +274,19 @@ function initDonation() {
   };
 }
 
+/* ---------- MODALS ---------- */
+document.querySelectorAll("[data-open]").forEach(btn => {
+  btn.onclick = () =>
+    document.getElementById(btn.dataset.open).classList.remove("hidden");
+});
+
+document.querySelectorAll(".close").forEach(btn => {
+  btn.onclick = () =>
+    document.querySelectorAll(".space").forEach(s =>
+      s.classList.add("hidden")
+    );
+});
+
 /* ---------- UTILS ---------- */
 function today() {
   return new Date().toISOString().slice(0, 10);
@@ -237,11 +297,14 @@ function save() {
 }
 
 /* ---------- INIT ---------- */
+fetchTonPrice();
+setInterval(fetchTonPrice, 1000);
+
 updateUI();
 
 /* ---------- SPLASH ---------- */
 window.addEventListener("load", () => {
-  const splash = document.getElementById("mainnetSplash");
+  const splash = $("mainnetSplash");
   if (!splash) return;
   setTimeout(() => (splash.style.display = "none"), 2000);
 });
