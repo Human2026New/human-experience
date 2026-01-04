@@ -63,19 +63,6 @@ button:hover {
   opacity: 0.7;
 }
 
-.presence {
-  margin-top: 12px;
-  font-size: 13px;
-  opacity: 0.8;
-}
-
-.presence-note {
-  display: block;
-  margin-top: 4px;
-  font-size: 11px;
-  opacity: 0.5;
-}
-
 .menu button {
   margin-bottom: 10px;
 }
@@ -119,4 +106,43 @@ ul {
   margin-top: 12px;
   width: 160px;
   height: 160px;
+}
+
+/* ===== MAINNET SPLASH ===== */
+#mainnetSplash {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+#mainnetSplash .mainnet-box {
+  text-align: center;
+  color: #dff5f0;
+  padding: 24px;
+}
+
+#mainnetSplash img {
+  max-width: 220px;
+  margin-bottom: 18px;
+}
+
+#mainnetSplash h2 {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+#mainnetSplash p {
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+#mainnetSplash small {
+  display: block;
+  margin-top: 10px;
+  font-size: 11px;
+  opacity: 0.6;
 }

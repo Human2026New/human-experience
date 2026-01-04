@@ -239,3 +239,12 @@ function save() {
 
 /* ---------- INIT ---------- */
 updateUI();
+
+/* ---------- MAINNET SPLASH ---------- */
+window.addEventListener("load", () => {
+  const splash = document.getElementById("mainnetSplash");
+  if (!splash) return;
+  setTimeout(() => {
+    splash.style.display = "none";
+  }, 2000);
+});
