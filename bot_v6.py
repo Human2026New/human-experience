@@ -1,6 +1,6 @@
 # =========================================
 # HUMAN 2026 — Telegram Bot
-# Version: v6.3 REWARDS INTEGRATED
+# Version: v6.4 ONBOARDING + HUM UI
 # =========================================
 
 from telegram import (
@@ -24,27 +24,56 @@ WEBAPP_URL = "https://human2026new.github.io/human-experience/?v=4"
 BACKEND_URL = "http://localhost:3000"
 
 
-# ---------- HANDLERS ----------
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    keyboard = InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton("🔁 ENTRAR HOJE", callback_data="checkin")
-        ],
-        [
-            InlineKeyboardButton("🧾 MEUS NFTs", callback_data="my_nfts")
-        ],
+# ---------- KEYBOARDS ----------
+def main_menu_keyboard():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("📆 Marcar Presença", callback_data="checkin")],
+        [InlineKeyboardButton("🧩 Tarefas Humanas", callback_data="tasks")],
+        [InlineKeyboardButton("🧾 Meus NFTs", callback_data="my_nfts")],
+        [InlineKeyboardButton("🔄 Converter HUM", callback_data="convert")],
         [
             InlineKeyboardButton(
-                "ENTRAR NA HUMAN",
+                "🌐 Entrar na HUMAN",
                 web_app=WebAppInfo(url=WEBAPP_URL)
             )
         ]
     ])
 
+
+# ---------- HANDLERS ----------
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        text="‎",
-        reply_markup=keyboard
+        text=(
+            "Bem-vindo ao HUMAN.\n\n"
+            "Isto não é um jogo.\n"
+            "Não é investimento.\n"
+            "Não é promessa.\n\n"
+            "É presença humana registada no tempo."
+        ),
+        reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton("👤 Entrar como humano", callback_data="enter")]
+        ])
+    )
+
+
+async def handle_enter(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    text = (
+        "👤 Estado Humano\n\n"
+        "Presença: 0 dias\n"
+        "NFTs: 0\n\n"
+        "HUM: 0\n"
+        "TON: 0\n"
+        "€: 0\n"
+        "BTC: 0"
+    )
+
+    await query.edit_message_text(
+        text=text,
+        reply_markup=main_menu_keyboard()
     )
 
 
@@ -62,7 +91,10 @@ async def handle_checkin(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         data = r.json()
     except Exception:
-        await query.edit_message_text("⚠️ Sistema indisponível.")
+        await query.edit_message_text(
+            "⚠️ Sistema indisponível.",
+            reply_markup=main_menu_keyboard()
+        )
         return
 
     streak = data.get("streak", 0)
@@ -70,7 +102,7 @@ async def handle_checkin(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if status == "already_checked":
         text = (
-            "🌱 Presença já registada hoje.\n\n"
+            "📆 Presença já registada hoje.\n\n"
             f"🔥 Dias seguidos: {streak}"
         )
     else:
@@ -94,22 +126,46 @@ async def handle_checkin(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"🎯 Próximo marco: {next_reward}"
             )
 
-    keyboard = InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton("🔁 ENTRAR HOJE", callback_data="checkin")
-        ],
-        [
-            InlineKeyboardButton("🧾 MEUS NFTs", callback_data="my_nfts")
-        ],
-        [
-            InlineKeyboardButton(
-                "ENTRAR NA HUMAN",
-                web_app=WebAppInfo(url=WEBAPP_URL)
-            )
-        ]
-    ])
+    await query.edit_message_text(
+        text=text,
+        reply_markup=main_menu_keyboard()
+    )
 
-    await query.edit_message_text(text=text, reply_markup=keyboard)
+
+async def handle_tasks(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    text = (
+        "🧩 Tarefas Humanas\n\n"
+        "Aqui não há spam.\n"
+        "Nem promessas.\n\n"
+        "✔️ Presença diária\n"
+        "✔️ Continuidade\n\n"
+        "Mais tarefas surgirão com o tempo."
+    )
+
+    await query.edit_message_text(
+        text=text,
+        reply_markup=main_menu_keyboard()
+    )
+
+
+async def handle_convert(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    text = (
+        "🔄 Converter HUM → TON\n\n"
+        "Estado: ❌ Indisponível\n\n"
+        "O HUM ainda não tem valor.\n"
+        "Quando (e se) tiver, será comunicado."
+    )
+
+    await query.edit_message_text(
+        text=text,
+        reply_markup=main_menu_keyboard()
+    )
 
 
 async def handle_my_nfts(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -126,36 +182,36 @@ async def handle_my_nfts(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         data = r.json()
     except Exception:
-        await query.edit_message_text("⚠️ Erro ao carregar NFTs.")
+        await query.edit_message_text(
+            "⚠️ Erro ao carregar NFTs.",
+            reply_markup=main_menu_keyboard()
+        )
         return
 
     rewards = data.get("rewards", [])
 
     if not rewards:
         text = (
-            "🧾 MEUS NFTs\n\n"
+            "🧾 Meus NFTs\n\n"
             "Ainda não tens NFTs HUMAN.\n"
             "Continua presente."
         )
     else:
-        text = "🧾 MEUS NFTs\n\n"
+        text = "🧾 Meus NFTs\n\n"
         for r in rewards:
             emoji = {
                 "bronze": "🟤",
                 "prata": "⚪",
                 "ouro": "🟡",
                 "diamante": "💎"
-            }.get(r["type"], "🔹")
+            }.get(r.get("type"), "🔹")
 
-            text += f"{emoji} NFT {r['type'].upper()} — {r['source']}\n"
+            text += f"{emoji} NFT {r.get('type', '').upper()} — {r.get('source', '')}\n"
 
-    keyboard = InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton("⬅️ VOLTAR", callback_data="start")
-        ]
-    ])
-
-    await query.edit_message_text(text=text, reply_markup=keyboard)
+    await query.edit_message_text(
+        text=text,
+        reply_markup=main_menu_keyboard()
+    )
 
 
 # ---------- MAIN ----------
@@ -163,10 +219,13 @@ def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CallbackQueryHandler(handle_enter, pattern="^enter$"))
     app.add_handler(CallbackQueryHandler(handle_checkin, pattern="^checkin$"))
+    app.add_handler(CallbackQueryHandler(handle_tasks, pattern="^tasks$"))
+    app.add_handler(CallbackQueryHandler(handle_convert, pattern="^convert$"))
     app.add_handler(CallbackQueryHandler(handle_my_nfts, pattern="^my_nfts$"))
 
-    print("🟢 HUMAN bot v6.3 ativo.")
+    print("🟢 HUMAN bot v6.4 ativo.")
     app.run_polling()
 
 
