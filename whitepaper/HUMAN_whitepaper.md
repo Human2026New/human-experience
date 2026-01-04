@@ -4,7 +4,7 @@
 
 HUMAN é um espaço digital de presença.
 Não é uma plataforma financeira.
-Não é um produto de investimento.
+Não é um produto de investimento a curto prazo.
 
 O tempo é o único recurso observado.
 
@@ -12,12 +12,12 @@ O tempo é o único recurso observado.
 
 ## 2. HUM
 
-HUM é uma unidade simbólica.
-Não é um token.
-Não é negociável.
-Não representa valor monetário.
+HUM é uma unidade simbólica com valor futuro.
+É um token.
+É negociável.
+Representa valor monetário.
 
-Serve apenas para tornar o tempo visível.
+Serve para tornar o tempo visível.
 
 ---
 
@@ -27,7 +27,7 @@ A integração com TON é opcional.
 Serve apenas para:
 - ligação externa
 - doações voluntárias
-- NFTs simbólicos
+- Compra de Hum
 
 Nunca para promessas financeiras.
 
