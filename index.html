@@ -10,17 +10,20 @@
   <!-- Telegram WebApp -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <!-- TON Connect UI -->
+  <!-- TON Connect UI (futuro) -->
   <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 
-<!-- SPLASH / MANIFESTO -->
+<!-- SPLASH OFICIAL -->
 <div id="mainnetSplash">
   <div class="mainnet-box">
     <h2>HUMAN</h2>
-    <p>Oficialmente lançado</p>
-    <small>Presença humana registada no tempo</small>
+    <p>lançado oficialmente</p>
+    <small>
+      Presença humana registada no tempo.<br>
+      O valor cresce com a continuidade coletiva.
+    </small>
   </div>
 </div>
 
@@ -39,31 +42,89 @@
 
     <div class="card big">
       <h2>HUM (presença acumulada)</h2>
+
       <div class="hum-value" id="humValue">0.00000 HUM</div>
 
       <div class="values">
         <span id="eurValue">€ 0.00</span>
         <span id="usdValue">$ 0.00</span>
-        <span id="tonValue">0 TON</span>
+        <span id="tonValue">—</span>
       </div>
 
       <p>
-        <b id="presenceCount">1</b>
-        Humanos presentes agora
+        <b><span id="presenceCount">1</span></b>
+        humanos presentes agora
       </p>
 
-      <small id="phaseText">
-        Fase 0 — Génese<br>
-        HUM guardado (dormente)
+      <small>
+        Estado: HUM guardado (dormente)<br>
+        Conversão bloqueada até Fase 2
       </small>
     </div>
 
     <div class="menu">
+      <button data-open="buy">💎 Comprar HUM</button>
+      <button data-open="protocol">📜 Protocolo HUM</button>
       <button data-open="stats">📊 Estatísticas</button>
       <button data-open="tasks">🧭 Tarefas humanas</button>
+      <button data-open="invites">👥 Convites</button>
       <button data-open="wallet">💼 Wallet</button>
-      <button data-open="protocol">📜 Protocolo HUM</button>
-      <button data-open="profile">👤 Perfil</button>
+      <button data-open="exchange">🔁 Conversão</button>
+      <button data-open="donation">💚 Apoiar</button>
+      <button data-open="about">ℹ️ Sobre</button>
+    </div>
+  </section>
+
+  <!-- COMPRAR HUM -->
+  <section id="buy" class="space hidden">
+    <div class="space-card">
+      <h2>💎 Comprar HUM</h2>
+
+      <p>
+        HUM acelera a presença humana.<br>
+        O preço sobe com o progresso coletivo.
+      </p>
+
+      <p><b>Quantidade HUM</b></p>
+      <input id="buyHumAmount" type="number" min="1" value="10"/>
+
+      <p>Equivalente aproximado:</p>
+      <b id="buyTonEstimate">—</b>
+
+      <small>
+        HUM comprado fica guardado (dormente).<br>
+        Conversão só será ativada na Fase 2.
+      </small>
+
+      <button id="buyHumBtn">Comprar HUM</button>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- PROTOCOLO HUM -->
+  <section id="protocol" class="space hidden">
+    <div class="space-card">
+      <h2>📜 Protocolo HUM</h2>
+
+      <p>
+        HUM é um marcador de presença humana.<br><br>
+
+        Pode ser acumulado por presença,
+        tarefas e compra consciente.<br><br>
+
+        O valor do HUM aumenta à medida
+        que o sistema amadurece.<br><br>
+
+        A conversão para TON só será ativada
+        quando a maturidade coletiva for atingida.
+      </p>
+
+      <small>
+        HUMAN não é promessa.<br>
+        É continuidade.
+      </small>
+
+      <button class="close">Fechar</button>
     </div>
   </section>
 
@@ -73,7 +134,7 @@
       <h2>Estatísticas</h2>
       <p>Dias de presença: <b id="daysCount">0</b></p>
       <p>Tempo total: <b id="timeSpent">0 min</b></p>
-      <p>Percentagem minerada: <b id="minedPercent">0%</b></p>
+      <p>Estado humano: <b id="stateText">presença</b></p>
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -83,7 +144,15 @@
     <div class="space-card">
       <h2>Tarefas humanas</h2>
       <ul id="taskList"></ul>
-      <small>A presença conta mesmo sem tarefas.</small>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- CONVITES -->
+  <section id="invites" class="space hidden">
+    <div class="space-card">
+      <h2>Convites</h2>
+      <button id="createInvite">Convidar humano</button>
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -92,44 +161,39 @@
   <section id="wallet" class="space hidden">
     <div class="space-card">
       <h2>Wallet TON</h2>
-      <p>Conversão:</p>
-      <b id="conversionState">Bloqueada até Fase 2</b>
-      <small>HUM permanece interno até maturidade do sistema.</small>
+      <p>Integração real em breve.</p>
       <button class="close">Fechar</button>
     </div>
   </section>
 
-  <!-- PROTOCOLO HUM -->
-  <section id="protocol" class="space hidden">
+  <!-- CONVERSÃO -->
+  <section id="exchange" class="space hidden">
     <div class="space-card">
-      <h2>📜 Protocolo HUM</h2>
-      <p>
-        HUM não é investimento.<br>
-        HUM é presença acumulada.
-      </p>
-      <p>
-        O HUM nasce sem valor financeiro direto.<br>
-        Cresce com o tempo humano coletivo.
-      </p>
-      <p>
-        Fase 0 — Génese:<br>
-        HUM pode ser acumulado e comprado.<br>
-        Conversões permanecem bloqueadas.
-      </p>
-      <small>
-        Nada aqui promete retorno.<br>
-        Apenas regista existência.
-      </small>
+      <h2>Conversão HUM → TON</h2>
+      <p>Estado atual:</p>
+      <b>Bloqueada até Fase 2</b>
       <button class="close">Fechar</button>
     </div>
   </section>
 
-  <!-- PERFIL -->
-  <section id="profile" class="space hidden">
+  <!-- DOAÇÃO -->
+  <section id="donation" class="space hidden">
     <div class="space-card">
-      <h2>Perfil humano</h2>
-      <input placeholder="o teu nome"/>
-      <textarea placeholder="nota humana (opcional)"></textarea>
+      <h2>Apoiar o projeto</h2>
+      <p>Endereço oficial:</p>
+      <code>EQCC2LH8-sEap7cfMZZIJOSVQ2aTWNUYIUEEKD8GeRYpB7oU</code>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="about" class="space hidden">
+    <div class="space-card">
+      <h2>Sobre o HUMAN</h2>
+      <p>
+        HUMAN é uma experiência de presença.<br>
+        HUM é a memória dessa continuidade.
+      </p>
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -137,5 +201,27 @@
 </div>
 
 <script src="app.js"></script>
+
+<script>
+  // Splash 2 segundos
+  window.addEventListener("load", () => {
+    const splash = document.getElementById("mainnetSplash");
+    setTimeout(() => splash.style.display = "none", 2000);
+  });
+
+  // Modais
+  document.querySelectorAll("[data-open]").forEach(btn => {
+    btn.onclick = () =>
+      document.getElementById(btn.dataset.open).classList.remove("hidden");
+  });
+
+  document.querySelectorAll(".close").forEach(btn => {
+    btn.onclick = () =>
+      document.querySelectorAll(".space").forEach(s =>
+        s.classList.add("hidden")
+      );
+  });
+</script>
+
 </body>
 </html>
