@@ -2,10 +2,10 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>HUMAN</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 
   <!-- Telegram WebApp -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -13,7 +13,7 @@
 
 <body>
 
-<!-- SPLASH OFICIAL -->
+<!-- SPLASH -->
 <div id="mainnetSplash">
   <div class="mainnet-box">
     <h2>HUMAN</h2>
@@ -22,132 +22,67 @@
   </div>
 </div>
 
+<!-- APP -->
 <div id="app">
 
-  <!-- HERO -->
   <section id="hero">
     <h1>HUMAN</h1>
     <p>Não é um jogo. Não é promessa. É presença.</p>
   </section>
 
-  <!-- DASHBOARD -->
   <section id="dashboard">
-
     <div class="card big">
       <h2>HUM acumulado</h2>
       <div class="hum-value" id="humValue">0.00000 HUM</div>
 
-      <div class="values">
-        <span id="eurValue">€ —</span>
-        <span id="usdValue">$ —</span>
-        <span id="tonValue">TON —</span>
-      </div>
-
-      <p>
-        <b id="presenceCount">1</b> humanos presentes agora
-      </p>
+      <p id="percentText">— % minerado</p>
 
       <small id="phaseText">
-        Fase 0 — Génese<br>
+        Fase 0 — Génese<br />
         HUM guardado (dormente)
       </small>
     </div>
 
     <div class="menu">
-      <button data-open="stats">📊 Estatísticas</button>
-      <button data-open="tasks">🧭 Tarefas humanas</button>
-      <button data-open="invites">👥 Convites</button>
-      <button data-open="wallet">💼 Wallet</button>
-      <button data-open="buy">💎 Comprar HUM</button>
-      <button data-open="exchange">🔁 Converter HUM</button>
       <button data-open="protocol">📜 Protocolo HUM</button>
       <button data-open="about">ℹ️ Sobre</button>
     </div>
   </section>
 
-  <!-- ESTATÍSTICAS -->
-  <section id="stats" class="space hidden">
-    <div class="space-card">
-      <h2>Estatísticas</h2>
-      <p>Dias de presença: <b id="daysCount">0</b></p>
-      <p>Tempo total: <b id="timeSpent">0 min</b></p>
-      <p>Estado: <b id="stateText">presença</b></p>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- TAREFAS -->
-  <section id="tasks" class="space hidden">
-    <div class="space-card">
-      <h2>Tarefas humanas</h2>
-      <ul id="taskList"></ul>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- CONVITES -->
-  <section id="invites" class="space hidden">
-    <div class="space-card">
-      <h2>Convites</h2>
-      <button id="createInvite">Criar convite</button>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- WALLET -->
-  <section id="wallet" class="space hidden">
-    <div class="space-card">
-      <h2>Wallet TON</h2>
-      <p>Integração real será ativada na Fase 1</p>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- COMPRAR -->
-  <section id="buy" class="space hidden">
-    <div class="space-card">
-      <h2>Comprar HUM</h2>
-      <p>Disponível na Fase 0</p>
-      <small>Preço dinâmico por percentagem minerada</small>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- CONVERTER -->
-  <section id="exchange" class="space hidden">
-    <div class="space-card">
-      <h2>Converter HUM</h2>
-      <p>Conversão bloqueada até Fase 2</p>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- PROTOCOLO -->
   <section id="protocol" class="space hidden">
     <div class="space-card">
       <h2>Protocolo HUM</h2>
       <p>
-        HUM é acumulado por presença humana.<br><br>
-        O valor cresce conforme o sistema amadurece.<br><br>
-        Conversão apenas após prova coletiva.
+        HUM é um marcador de presença humana.<br /><br />
+        Não é investimento.<br />
+        Não é promessa de retorno.
       </p>
       <button class="close">Fechar</button>
     </div>
   </section>
 
-  <!-- SOBRE -->
   <section id="about" class="space hidden">
     <div class="space-card">
       <h2>Sobre</h2>
       <p>
-        HUMAN é um registo vivo de presença.<br>
-        Não é investimento. Não é promessa.
+        HUMAN regista presença no tempo.<br />
+        A maturidade é coletiva.
       </p>
       <button class="close">Fechar</button>
     </div>
   </section>
 
 </div>
+
+<!-- FAILSAFE SPLASH -->
+<script>
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      const splash = document.getElementById("mainnetSplash");
+      if (splash) splash.style.display = "none";
+    }, 1200);
+  });
+</script>
 
 <script src="app.js"></script>
 </body>

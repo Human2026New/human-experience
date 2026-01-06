@@ -1,228 +1,109 @@
 /* =========================
-   HUMAN — style.css (final)
+   HUMAN — style.css
    ========================= */
 
 * {
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
 }
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #0f3d36, #000);
-  color: #dff5f0;
-  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-#app {
-  max-width: 420px;
-  margin: auto;
-  padding: 20px;
-}
-
-/* ---------- HERO ---------- */
-#hero {
-  text-align: center;
-  margin-top: 40px;
-}
-
-#hero h1 {
-  letter-spacing: 4px;
-  margin-bottom: 6px;
-}
-
-#hero p {
-  opacity: 0.8;
-  font-size: 14px;
-}
-
-/* ---------- BUTTONS ---------- */
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 12px;
-  border-radius: 24px;
-  border: 1px solid #3fffdc;
-  background: transparent;
-  color: #3fffdc;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-}
-
-button:hover {
-  background: rgba(63,255,220,0.08);
-}
-
-button:active {
-  transform: scale(0.98);
-}
-
-/* ---------- CARDS ---------- */
-.card {
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 16px;
-  margin-bottom: 20px;
-}
-
-.card.big {
-  text-align: center;
-}
-
-.hum-value {
-  font-size: 28px;
-  margin: 10px 0;
-  letter-spacing: 0.5px;
-}
-
-/* ---------- VALUES ---------- */
-.values {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  opacity: 0.75;
-  margin-top: 8px;
-}
-
-/* ---------- MENU ---------- */
-.menu button {
-  margin-bottom: 10px;
-}
-
-/* ---------- INPUTS ---------- */
-input,
-textarea {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 12px;
-  border: none;
-  outline: none;
-  background: rgba(255,255,255,0.08);
-  color: #dff5f0;
-  font-size: 14px;
-}
-
-/* ---------- MODALS ---------- */
-.space {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-/* ---------- SPLASH HUMAN LAUNCH ---------- */
+/* SPLASH */
 #mainnetSplash {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, #050505 0%, #000 70%);
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
 }
 
-.launch-box {
+.mainnet-box {
   text-align: center;
-  color: #fff;
-  max-width: 320px;
+}
+
+.mainnet-box h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.mainnet-box p {
+  margin: 0.5rem 0;
+}
+
+#app {
   padding: 20px;
-  animation: fadeInUp 1.2s ease;
 }
 
-.launch-box h1 {
-  font-size: 2.6rem;
-  letter-spacing: 0.18em;
-  margin-bottom: 22px;
+/* HERO */
+#hero {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.launch-line {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 14px;
-  opacity: 0.9;
+/* CARD */
+.card {
+  background: #111;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
-.launch-line.strong {
-  font-weight: 600;
+.hum-value {
+  font-size: 1.6rem;
+  margin: 10px 0;
 }
 
-.launch-line.subtle {
-  font-size: 0.95rem;
-  opacity: 0.7;
+/* MENU */
+.menu {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.launch-line.final {
-  margin-top: 18px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+.menu button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #222;
+  color: #fff;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* MODALS */
+.space {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ---------- HIDDEN ---------- */
-.hidden {
+.space.hidden {
   display: none;
 }
 
-/* =========================
-   HUMAN — subtle animations
-   ========================= */
-
-/* Respiração suave */
-@keyframes breathe {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
+.space-card {
+  background: #111;
+  padding: 20px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
 }
 
-/* Fade por linha */
-@keyframes lineFade {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.breathe {
-  animation: breathe 3.6s ease-in-out infinite;
-}
-
-.fade-line {
-  opacity: 0;
-  animation: lineFade 1.2s ease forwards;
-}
-
-.fade-line.delay-1 { animation-delay: 0.4s; }
-.fade-line.delay-2 { animation-delay: 0.8s; }
-.fade-line.delay-3 { animation-delay: 1.2s; }
-
-/* Splash refinado */
-#mainnetSplash h2 {
-  animation: breathe 4s ease-in-out infinite;
-}
-
-.fade {
-  animation: fadein 0.6s ease;
-}
-
-@keyframes fadein {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+.space-card button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #333;
+  color: #fff;
 }
