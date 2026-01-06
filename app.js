@@ -1,40 +1,22 @@
-/* ==================================================
-   HUMAN — app.js (produção / excelência)
-   ================================================== */
+/* =========================
+   HUMAN — app.js (stable)
+   ========================= */
 
-/* ---------- CONFIG ---------- */
 const STORAGE_KEY = "human_app_state_v1";
-const BACKEND_URL = "http://localhost:3000"; // depois trocas para Render
-const DONATION_ADDRESS =
-  "UQC_QK4Kwcw68zJYKGYMKRhrWNAK7lYmniEgV-Kq9kCLkzlf";
-
-/* ---------- TELEGRAM SAFE ---------- */
-if (window.Telegram && Telegram.WebApp) {
-  Telegram.WebApp.ready();
-  Telegram.WebApp.expand();
-  document.body.style.height = "auto";
-  document.body.style.overflow = "auto";
-}
 
 /* ---------- STATE ---------- */
 let state = {
-  started: false,
+  started: true,
   hum: 0,
   time: 0,
   days: {},
-  lastTick: Date.now()
+  tasks: [],
+  taskDay: null,
+  phase: 0,           // 0 | 1 | 2
+  minedPercent: 0     // backend futuramente
 };
 
-let humStatus = {
-  phase: 0,
-  phase_name: "Génese",
-  mined_percent: 0,
-  hum_price_eur: 0.05,
-  conversion_enabled: false,
-  withdraw_enabled: false
-};
-
-/* ---------- LOAD STATE ---------- */
+/* ---------- LOAD ---------- */
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
   try {
@@ -44,105 +26,106 @@ if (saved) {
 
 /* ---------- HELPERS ---------- */
 const $ = id => document.getElementById(id);
-
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
 function today() {
   return new Date().toISOString().slice(0, 10);
 }
 
-function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
 /* ---------- ELEMENTS ---------- */
-const enterBtn = $("enterBtn");
-const dashboard = $("dashboard");
 const humValue = $("humValue");
-const eurValue = $("eurValue");
 const presenceCount = $("presenceCount");
+const daysCount = $("daysCount");
+const timeSpent = $("timeSpent");
+const stateText = $("stateText");
+const phaseText = $("phaseText");
+const taskList = $("taskList");
 
-/* ---------- SPLASH ---------- */
-window.addEventListener("load", () => {
-  const splash = $("mainnetSplash");
-  if (!splash) return;
-  setTimeout(() => {
-    splash.style.display = "none";
-    document.body.style.overflow = "auto";
-  }, 2000);
-});
-
-/* ---------- ENTER ---------- */
+/* ---------- START LOOP ---------- */
 let loopStarted = false;
-
-if (enterBtn) {
-  enterBtn.onclick = () => {
-    if (loopStarted) return;
-    loopStarted = true;
-
-    state.started = true;
-    enterBtn.style.display = "none";
-    dashboard.classList.remove("hidden");
-
-    startLoop();
-    save();
-  };
+if (!loopStarted) {
+  loopStarted = true;
+  startMiningLoop();
 }
 
-/* ---------- PRESENÇA (ANTI RESET) ---------- */
-function startLoop() {
+/* ---------- MINING LOOP ---------- */
+function startMiningLoop() {
   setInterval(() => {
-    const now = Date.now();
-    const delta = Math.floor((now - state.lastTick) / 1000);
-    state.lastTick = now;
-
-    if (delta <= 0) return;
-
-    state.time += delta;
-    state.hum += delta * 0.00002;
+    state.time++;
+    state.hum += 0.00002;
 
     if (state.time >= 300) {
       state.days[today()] = true;
     }
 
+    updatePhase();
     updateUI();
     save();
   }, 1000);
 }
 
-/* ---------- BACKEND STATUS ---------- */
-async function fetchHumStatus() {
-  try {
-    const r = await fetch(BACKEND_URL + "/hum/status");
-    const data = await r.json();
-    humStatus = data;
-    applyHumStatus();
-  } catch {
-    console.warn("Backend offline — modo local ativo");
-  }
-}
-
-function applyHumStatus() {
-  const statusBox = document.querySelector(".card.big small");
-  if (!statusBox) return;
-
-  statusBox.innerHTML = `
-    Fase: <b>Fase ${humStatus.phase} — ${humStatus.phase_name}</b><br>
-    Percentagem minerada: ${humStatus.mined_percent.toFixed(4)}%<br>
-    ${
-      humStatus.conversion_enabled
-        ? "Conversão ativa"
-        : "Conversão bloqueada até Fase 2"
-    }
-  `;
+/* ---------- PHASE LOGIC ---------- */
+function updatePhase() {
+  if (state.minedPercent >= 20) state.phase = 1;
+  if (state.minedPercent >= 40) state.phase = 2;
 }
 
 /* ---------- UI ---------- */
 function updateUI() {
   humValue.textContent = state.hum.toFixed(5) + " HUM";
-  eurValue.textContent = "€ " + (state.hum * humStatus.hum_price_eur).toFixed(2);
-  presenceCount.textContent = Math.max(1, Math.floor(1 + state.time / 60));
+  daysCount.textContent = Object.keys(state.days).length;
+  timeSpent.textContent = Math.floor(state.time / 60) + " min";
+  stateText.textContent = Object.keys(state.days).length >= 7
+    ? "consistência"
+    : "presença";
+
+  presenceCount.textContent = Math.max(1, Math.floor(state.time / 60));
+
+  phaseText.innerHTML =
+    state.phase === 0
+      ? "Fase 0 — Génese<br>HUM guardado (dormente)"
+      : state.phase === 1
+      ? "Fase 1 — Maturação<br>Levantamentos limitados"
+      : "Fase 2 — Conversão ativa";
+
+  renderTasks();
 }
 
-/* ---------- INIT ---------- */
+/* ---------- TASKS ---------- */
+const TASK_POOL = [
+  { text: "Entrar com presença", hum: 0.001 },
+  { text: "Permanecer 3 minutos", hum: 0.0015 },
+  { text: "Permanecer 7 minutos", hum: 0.0025 }
+];
+
+function renderTasks() {
+  taskList.innerHTML = "";
+  TASK_POOL.forEach(t => {
+    const li = document.createElement("li");
+    li.textContent = "✔️ " + t.text;
+    taskList.appendChild(li);
+  });
+}
+
+/* ---------- MODALS ---------- */
+document.querySelectorAll("[data-open]").forEach(btn => {
+  btn.onclick = () =>
+    document.getElementById(btn.dataset.open).classList.remove("hidden");
+});
+document.querySelectorAll(".close").forEach(btn => {
+  btn.onclick = () =>
+    document.querySelectorAll(".space").forEach(s =>
+      s.classList.add("hidden")
+    );
+});
+
+/* ---------- SPLASH ---------- */
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const splash = $("mainnetSplash");
+    if (splash) splash.style.display = "none";
+  }, 2000);
+});
+
 updateUI();
-fetchHumStatus();
-setInterval(fetchHumStatus, 15000);
