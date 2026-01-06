@@ -1,6 +1,6 @@
 # =========================================
 # HUMAN 2026 — Telegram Bot
-# Version: v6.4 ONBOARDING + HUM UI
+# Version: v6.5 ONBOARDING + HUM UI + TOKEN HUM
 # =========================================
 
 from telegram import (
@@ -23,12 +23,16 @@ BOT_TOKEN = "7642930214:AAFnbJzFjbBEbCy9_2TBelEJrhZjQVznOVc"
 WEBAPP_URL = "https://human2026new.github.io/human-experience/?v=4"
 BACKEND_URL = "http://localhost:3000"
 
+# ---------- TOKEN HUM ----------
+HUM_JETTON_ADDRESS = "EQCC2LH8-sEap7cfMZZIJOSVQ2aTWNUYIUEEKD8GeRYpB7oU"
+
 
 # ---------- KEYBOARDS ----------
 def main_menu_keyboard():
     return InlineKeyboardMarkup([
         [InlineKeyboardButton("📆 Marcar Presença", callback_data="checkin")],
         [InlineKeyboardButton("🧩 Tarefas Humanas", callback_data="tasks")],
+        [InlineKeyboardButton("🪙 Token HUM", callback_data="token_hum")],
         [InlineKeyboardButton("🧾 Meus NFTs", callback_data="my_nfts")],
         [InlineKeyboardButton("🔄 Converter HUM", callback_data="convert")],
         [
@@ -74,6 +78,35 @@ async def handle_enter(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.edit_message_text(
         text=text,
         reply_markup=main_menu_keyboard()
+    )
+
+
+async def handle_token_hum(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    text = (
+        "🪙 Token HUMAN (HUM)\n\n"
+        "Rede: TON Mainnet\n\n"
+        "Contrato oficial:\n"
+        f"{HUM_JETTON_ADDRESS}\n\n"
+        "Este é o endereço oficial do token HUM.\n"
+        "Podes adicioná-lo manualmente na tua wallet TON."
+    )
+
+    keyboard = InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                "➕ Adicionar à Tonkeeper",
+                url=f"https://app.tonkeeper.com/add-asset?address={HUM_JETTON_ADDRESS}"
+            )
+        ],
+        [InlineKeyboardButton("⬅️ Voltar", callback_data="enter")]
+    ])
+
+    await query.edit_message_text(
+        text=text,
+        reply_markup=keyboard
     )
 
 
@@ -157,9 +190,9 @@ async def handle_convert(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     text = (
         "🔄 Converter HUM → TON\n\n"
-        "Estado: ❌ Indisponível\n\n"
-        "O HUM ainda não tem valor.\n"
-        "Quando (e se) tiver, será comunicado."
+        "Estado: ⏳ Indisponível\n\n"
+        "A conversão será ativada apenas quando\n"
+        "existirem condições seguras no sistema."
     )
 
     await query.edit_message_text(
@@ -220,12 +253,13 @@ def main():
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(handle_enter, pattern="^enter$"))
+    app.add_handler(CallbackQueryHandler(handle_token_hum, pattern="^token_hum$"))
     app.add_handler(CallbackQueryHandler(handle_checkin, pattern="^checkin$"))
     app.add_handler(CallbackQueryHandler(handle_tasks, pattern="^tasks$"))
     app.add_handler(CallbackQueryHandler(handle_convert, pattern="^convert$"))
     app.add_handler(CallbackQueryHandler(handle_my_nfts, pattern="^my_nfts$"))
 
-    print("🟢 HUMAN bot v6.4 ativo.")
+    print("🟢 HUMAN bot v6.5 ativo (base preservada).")
     app.run_polling()
 
 
