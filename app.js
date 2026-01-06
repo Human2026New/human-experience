@@ -1,138 +1,108 @@
 /* =========================
    HUMAN — app.js FINAL
-   Backend-synced
+   Fonte: Backend (/hum/status)
    ========================= */
 
-const API_BASE = "https://TEU_BACKEND_RENDER_URL"; // 🔴 ALTERA SÓ ISTO
+const API_BASE = "https://TEU_BACKEND.render.com"; // altera
 const STORAGE_KEY = "human_app_state_v1";
 
 /* ---------- STATE ---------- */
 let state = {
-  telegram_id: null,
   hum: 0,
+  mining_today: false,
   phase: 0,
-  phase_name: "Génese",
-  mined_percent: 0,
-  hum_price_eur: 0,
-  can_buy: false,
-  can_convert: false,
-  mining_active: false
+  percent: 0,
+  price: 0,
+  last_sync: null
 };
 
-/* ---------- HELPERS ---------- */
-const $ = id => document.getElementById(id);
+/* ---------- ELEMENTS ---------- */
+const humValue = document.getElementById("humValue");
+const phaseText = document.getElementById("phaseText");
+const percentText = document.getElementById("percentText");
+const buyBtn = document.getElementById("buyHumBtn");
+const convertBtn = document.getElementById("humToTon");
+const protocolText = document.getElementById("protocolText");
 
-function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
+/* ---------- LOAD ---------- */
+const saved = localStorage.getItem(STORAGE_KEY);
+if (saved) state = { ...state, ...JSON.parse(saved) };
 
-function load() {
-  const s = localStorage.getItem(STORAGE_KEY);
-  if (s) {
-    try {
-      state = { ...state, ...JSON.parse(s) };
-    } catch {}
-  }
-}
-
-/* ---------- TELEGRAM ---------- */
-if (window.Telegram && Telegram.WebApp) {
-  Telegram.WebApp.ready();
-  state.telegram_id = String(Telegram.WebApp.initDataUnsafe?.user?.id || "");
-}
-
-/* ---------- FETCH STATUS ---------- */
-async function fetchStatus() {
-  if (!state.telegram_id) return;
-
+/* ---------- SYNC STATUS ---------- */
+async function syncStatus() {
   try {
-    const r = await fetch(
-      `${API_BASE}/hum/status?telegram_id=${state.telegram_id}`
-    );
+    const r = await fetch(`${API_BASE}/hum/status`);
     const d = await r.json();
 
     state.phase = d.phase;
-    state.phase_name = d.phase_name;
-    state.mined_percent = d.mined_percent;
-    state.hum_price_eur = d.hum_price_eur;
-    state.can_buy = d.can_buy;
-    state.can_convert = d.can_convert;
-    state.hum = d.user?.hum || state.hum;
+    state.percent = d.percent_mined;
+    state.price = d.price_hum;
+    state.rules = d.rules;
 
     updateUI();
     save();
   } catch (e) {
-    console.error("STATUS ERROR", e);
+    console.warn("Offline /hum/status");
   }
 }
 
 /* ---------- UI ---------- */
 function updateUI() {
-  $("humValue").textContent = state.hum.toFixed(5) + " HUM";
+  humValue.textContent = state.hum.toFixed(5) + " HUM";
+  percentText.textContent = state.percent.toFixed(2) + "% minerado";
 
-  $("phaseText").textContent =
-    `Fase ${state.phase} — ${state.phase_name}`;
+  phaseText.textContent =
+    state.phase === 0 ? "Fase 0 — Génese" :
+    state.phase === 1 ? "Fase 1 — Ativação" :
+    "Fase 2 — Circulação";
 
-  $("percentText").textContent =
-    state.mined_percent.toFixed(4) + "% minerado";
+  buyBtn.disabled = !state.rules.buy;
+  convertBtn.disabled = !state.rules.convert;
 
-  $("priceText").textContent =
-    state.hum_price_eur.toFixed(4) + " € / HUM";
-
-  $("buyStatus").textContent = state.can_buy
-    ? "Compra ativa"
-    : "Compra bloqueada";
-
-  $("convertStatus").textContent = state.can_convert
-    ? "Conversão ativa"
-    : "Conversão bloqueada";
-
-  $("humState").textContent =
-    state.can_convert
-      ? "HUM ativo"
-      : "HUM guardado (dormente)";
+  protocolText.textContent =
+    state.phase === 0
+      ? "HUM está em fase génese. Conversão bloqueada."
+      : state.phase === 1
+      ? "Levantamento limitado. Conversão bloqueada."
+      : "Conversão ativa.";
 }
 
-/* ---------- COMPRA HUM ---------- */
-$("buyHumBtn").onclick = async () => {
-  const amount = Number($("buyHumAmount").value);
+/* ---------- MINERAÇÃO (frontend apenas visual) ---------- */
+function startPresenceTimer() {
+  setInterval(() => {
+    state.hum += 0.00002;
+    updateUI();
+    save();
+  }, 1000);
+}
 
-  if (!amount || amount <= 0) {
-    alert("Quantidade inválida");
-    return;
-  }
+/* ---------- BUY ---------- */
+buyBtn.onclick = async () => {
+  const amount = Number(document.getElementById("buyHumAmount").value);
+  if (amount <= 0) return alert("Quantidade inválida");
 
-  if (!state.can_buy) {
-    alert("Compra bloqueada nesta fase");
-    return;
-  }
+  const r = await fetch(`${API_BASE}/hum/buy/prepare`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      telegram_id: Telegram.WebApp.initDataUnsafe.user.id,
+      hum_amount: amount
+    })
+  });
 
-  try {
-    const r = await fetch(`${API_BASE}/hum/buy`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        telegram_id: state.telegram_id,
-        hum_amount: amount
-      })
-    });
+  const d = await r.json();
 
-    const d = await r.json();
-
-    if (d.status === "ok") {
-      state.hum += amount;
-      updateUI();
-      save();
-      alert("HUM creditado com sucesso");
-    } else {
-      alert("Erro na compra");
-    }
-  } catch {
-    alert("Erro de ligação");
-  }
+  Telegram.WebApp.openLink(
+    `ton://transfer/${d.ton_address}?amount=${d.ton_amount}&text=${encodeURIComponent(d.payload)}`
+  );
 };
 
+/* ---------- SAVE ---------- */
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
 /* ---------- INIT ---------- */
-load();
-fetchStatus();
-setInterval(fetchStatus, 10_000);
+syncStatus();
+setInterval(syncStatus, 30000);
+startPresenceTimer();
