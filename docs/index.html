@@ -21,76 +21,61 @@
 
 <!-- HERO -->
 <header class="hero">
-  <div class="hero-content">
+  <img src="hum-logo.png" alt="HUM Logo" class="logo">
 
-    <div class="coin">
-      <svg width="200" height="200" viewBox="0 0 200 200">
-        <defs>
-          <radialGradient id="gold" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#fff9d6"/>
-            <stop offset="60%" stop-color="#e6c97a"/>
-            <stop offset="100%" stop-color="#8f6b00"/>
-          </radialGradient>
-        </defs>
-        <circle cx="100" cy="100" r="92" fill="url(#gold)" />
-        <circle cx="100" cy="100" r="78" fill="#060606"/>
-        <text x="100" y="118" text-anchor="middle"
-              font-size="48" fill="#e6c97a"
-              font-weight="bold">HUM</text>
-      </svg>
-    </div>
+  <h1>HUMAN</h1>
 
-    <h1>HUMAN</h1>
-
-    <p class="tagline"
-       data-pt="Não é mineração de hardware. Não é promessa. É presença humana no tempo."
-       data-en="Not hardware mining. Not a promise. Human presence over time.">
-    </p>
-
-  </div>
+  <p class="tagline"
+     data-pt="Não é mineração de hardware. É presença humana no tempo."
+     data-en="Not hardware mining. Human presence over time.">
+  </p>
 </header>
 
 <main>
 
-  <section class="block fade">
-    <h2 data-pt="Presença, não máquinas"
-        data-en="Presence, not machines"></h2>
-    <p data-pt="HUMAN regista presença humana real. Aqui não ganham computadores."
-       data-en="HUMAN records real human presence. Machines do not compete here."></p>
-    <p data-pt="Todas as pessoas contam da mesma forma."
-       data-en="All humans count equally."></p>
+  <!-- VISUAL BLOCKS -->
+  <section class="grid">
+
+    <div class="card fade">
+      <span class="icon">🧬</span>
+      <h3 data-pt="Presença humana"
+          data-en="Human presence"></h3>
+      <p data-pt="Aqui não competem máquinas. Todas as pessoas contam da mesma forma."
+         data-en="No machines compete here. All humans count equally."></p>
+    </div>
+
+    <div class="card fade">
+      <span class="icon">🔒</span>
+      <h3 data-pt="Oferta fixa"
+          data-en="Fixed supply"></h3>
+      <p data-pt="Existem apenas 80.000.000 HUM. Não podem ser criadas nem queimadas."
+         data-en="Only 80,000,000 HUM exist. No minting. No burning."></p>
+    </div>
+
+    <div class="card fade">
+      <span class="icon">📈</span>
+      <h3 data-pt="Valor progressivo"
+          data-en="Progressive value"></h3>
+      <p data-pt="Preço inicial de 0,05 €. Cresce com a maturidade do sistema."
+         data-en="Initial price €0.05. Grows as the system matures."></p>
+    </div>
+
   </section>
 
-  <section class="block highlight fade">
-    <h2 data-pt="80.000.000 HUM"
-        data-en="80,000,000 HUM"></h2>
+  <!-- STATE -->
+  <section class="state fade">
+    <h2 data-pt="Estado atual"
+        data-en="Current status"></h2>
     <p class="big"
-       data-pt="Oferta fixa. Definitiva. Imutável."
-       data-en="Fixed supply. Final. Immutable."></p>
-    <ul>
-      <li data-pt="Não podem ser criadas mais moedas"
-          data-en="No new coins can be created"></li>
-      <li data-pt="Não podem ser queimadas moedas"
-          data-en="Coins cannot be burned"></li>
-      <li data-pt="Escassez permanente"
-          data-en="Permanent scarcity"></li>
-    </ul>
+       data-pt="Fase 0 — Génese"
+       data-en="Phase 0 — Genesis"></p>
+    <p data-pt="O sistema está a nascer. A presença começa agora."
+       data-en="The system is being born. Presence starts now."></p>
   </section>
 
-  <section class="block fade">
-    <h2 data-pt="Preço inicial"
-        data-en="Initial price"></h2>
-    <p class="big"
-       data-pt="0,05 € por HUM"
-       data-en="€0.05 per HUM"></p>
-    <p data-pt="O preço cresce com a maturidade do sistema."
-       data-en="The price grows as the system matures."></p>
-  </section>
-
+  <!-- LEGAL -->
   <section class="legal fade">
-    <h2 data-pt="Aviso legal"
-        data-en="Legal notice"></h2>
-    <p data-pt="HUMAN  é um instrumento financeiro. A participação é voluntária."
+    <p data-pt="HUMAN é um instrumento financeiro. A participação é voluntária."
        data-en="HUMAN is a financial instrument. Participation is voluntary."></p>
   </section>
 
@@ -108,10 +93,8 @@
       el.textContent = el.dataset[lang];
     });
   }
-
-  const savedLang = localStorage.getItem("human_lang") || "pt";
-  setLang(savedLang);
+  setLang(localStorage.getItem("human_lang") || "pt");
 </script>
 
 </body>
-  </html>
+</html>
