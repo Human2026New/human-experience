@@ -4,39 +4,73 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: system-ui, sans-serif;
   background: #000;
   color: #fff;
-  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* LANGUAGE SWITCH */
+.lang-switch {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  font-size: 0.9rem;
+}
+
+.lang-switch button {
+  background: none;
+  border: none;
+  color: #e6c97a;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lang-switch span {
+  color: #666;
+}
+
+/* BACKGROUND */
+.stars {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 80% 40%, #aaa, transparent);
+  animation: drift 60s linear infinite;
+  z-index: -1;
+}
+
+@keyframes drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-200px); }
 }
 
 /* HERO */
 .hero {
   min-height: 100vh;
-  background: radial-gradient(circle at top, #1a1a1a, #000 70%);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 40px 20px;
-}
-
-.hero-content {
-  max-width: 700px;
 }
 
 .coin {
-  margin-bottom: 30px;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  50% { transform: translateY(-12px); }
 }
 
 h1 {
-  font-size: 3.8rem;
-  margin: 0;
-  letter-spacing: 2px;
+  font-size: 3.5rem;
+  margin: 20px 0 0;
 }
 
 .tagline {
-  margin-top: 20px;
+  margin-top: 15px;
   font-size: 1.2rem;
   color: #ccc;
 }
@@ -45,34 +79,17 @@ h1 {
 main {
   max-width: 900px;
   margin: auto;
-  padding: 60px 20px;
+  padding: 80px 20px;
 }
 
 .block {
-  margin-bottom: 70px;
-}
-
-.block h2 {
-  font-size: 1.7rem;
-  margin-bottom: 15px;
-}
-
-.block p {
-  margin-bottom: 15px;
-}
-
-.block ul {
-  padding-left: 20px;
-}
-
-.block li {
-  margin-bottom: 8px;
+  margin-bottom: 80px;
 }
 
 .highlight {
-  background: #0b0b0b;
+  background: rgba(255,255,255,0.03);
   padding: 30px;
-  border-radius: 18px;
+  border-radius: 20px;
   border: 1px solid #222;
 }
 
@@ -81,18 +98,10 @@ main {
   color: #e6c97a;
 }
 
-pre {
-  background: #111;
-  padding: 15px;
-  border-radius: 10px;
-  color: #9cdcfe;
-  overflow-x: auto;
-}
-
+/* LEGAL */
 .legal {
   border-top: 1px solid #222;
   padding-top: 30px;
-  font-size: 0.9rem;
   color: #aaa;
 }
 
@@ -101,5 +110,4 @@ footer {
   padding: 30px;
   font-size: 0.8rem;
   color: #555;
-  border-top: 1px solid #222;
 }
