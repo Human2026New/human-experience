@@ -103,11 +103,6 @@ textarea {
   font-size: 14px;
 }
 
-input::placeholder,
-textarea::placeholder {
-  color: rgba(223,245,240,0.5);
-}
-
 /* ---------- MODALS ---------- */
 .space {
   position: fixed;
@@ -119,70 +114,62 @@ textarea::placeholder {
   z-index: 1000;
 }
 
-.space-card {
-  background: #0f3d36;
-  padding: 24px;
-  border-radius: 18px;
-  width: 90%;
-  max-width: 360px;
-  text-align: center;
-  box-shadow: 0 0 30px rgba(0,0,0,0.4);
-}
-
-.space-card h2 {
-  margin-top: 0;
-  margin-bottom: 12px;
-}
-
-.space-card small {
-  display: block;
-  margin-top: 10px;
-  font-size: 11px;
-  opacity: 0.65;
-}
-
-/* ---------- LISTS ---------- */
-ul {
-  padding-left: 18px;
-  text-align: left;
-}
-
-/* ---------- QR ---------- */
-#tonQr {
-  margin-top: 12px;
-  width: 160px;
-  height: 160px;
-}
-
-/* ---------- SPLASH MAINNET ---------- */
+/* ---------- SPLASH HUMAN LAUNCH ---------- */
 #mainnetSplash {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.95);
+  background: radial-gradient(circle at center, #050505 0%, #000 70%);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
 }
 
-#mainnetSplash .mainnet-box {
+.launch-box {
   text-align: center;
-  padding: 24px;
+  color: #fff;
+  max-width: 320px;
+  padding: 20px;
+  animation: fadeInUp 1.2s ease;
 }
 
-#mainnetSplash h2 {
-  letter-spacing: 3px;
-  margin-bottom: 6px;
+.launch-box h1 {
+  font-size: 2.6rem;
+  letter-spacing: 0.18em;
+  margin-bottom: 22px;
 }
 
-#mainnetSplash p {
-  font-size: 14px;
-  opacity: 0.8;
+.launch-line {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  opacity: 0.9;
 }
 
-#mainnetSplash small {
-  font-size: 11px;
-  opacity: 0.6;
+.launch-line.strong {
+  font-weight: 600;
+}
+
+.launch-line.subtle {
+  font-size: 0.95rem;
+  opacity: 0.7;
+}
+
+.launch-line.final {
+  margin-top: 18px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ---------- HIDDEN ---------- */
