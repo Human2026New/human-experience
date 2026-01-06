@@ -1,89 +1,83 @@
 /* =========================
-   HUMAN — app.js (FASE B)
-   Compras HUM + Fases
+   HUMAN — app.js
+   TON Connect REAL (E3)
    ========================= */
 
-const STORAGE_KEY = "human_app_v7";
+const STORAGE_KEY = "human_app_v8";
 
-/* ---------- BACKEND ---------- */
+/* BACKEND */
 const BACKEND_URL = "http://localhost:3000";
 
-/* ---------- WALLET OFICIAL HUM ---------- */
+/* WALLET HUM (OFICIAL) */
 const HUM_WALLET =
   "EQCC2LH8-sEap7cfMZZIJOSVQ2aTWNUYIUEEKD8GeRYpB7oU";
 
-/* ---------- STATE ---------- */
+/* STATE */
 let state = {
   started: false,
   hum: 0,
-  humStatus: "dormente",
   phase: 0,
   minedPercent: 0,
-  priceEUR: 0.05,
-  tonSim: 0,
-  time: 0,
-  days: {},
-  tasks: [],
-  taskDay: null
+  priceEUR: 0.05
 };
 
-/* ---------- LOAD ---------- */
+/* LOAD */
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
-  try {
-    state = { ...state, ...JSON.parse(saved) };
-  } catch {}
+  try { state = { ...state, ...JSON.parse(saved) }; } catch {}
 }
 
-/* ---------- HELPERS ---------- */
 const $ = id => document.getElementById(id);
 
-/* ---------- ELEMENTS ---------- */
+/* ELEMENTS */
 const enterBtn = $("enterBtn");
 const dashboard = $("dashboard");
-
 const humValue = $("humValue");
 const eurValue = $("eurValue");
 const usdValue = $("usdValue");
 const tonValue = $("tonValue");
-const presenceCount = $("presenceCount");
-
-/* BUY */
 const buyHumAmount = $("buyHumAmount");
 const buyTonEstimate = $("buyTonEstimate");
 const buyHumBtn = $("buyHumBtn");
 
-/* STATUS TEXTS */
-const exchangeHum = $("exchangeHum");
-const exchangeTon = $("exchangeTon");
+/* TON CONNECT */
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+  manifestUrl: "https://human2026new.github.io/tonconnect-manifest.json",
+  buttonRootId: "ton-connect"
+});
 
-/* ---------- FETCH HUM STATUS ---------- */
+/* ENTER */
+enterBtn.onclick = () => {
+  state.started = true;
+  enterBtn.style.display = "none";
+  dashboard.classList.remove("hidden");
+  updateUI();
+  save();
+};
+
+/* FETCH HUM STATUS */
 async function fetchHumStatus() {
   try {
     const r = await fetch(`${BACKEND_URL}/hum/status`);
     const d = await r.json();
-
     state.phase = d.phase;
     state.minedPercent = d.minedPercent;
 
-    const priceRes = await fetch(`${BACKEND_URL}/hum/price`);
-    const p = await priceRes.json();
+    const pr = await fetch(`${BACKEND_URL}/hum/price`);
+    const p = await pr.json();
     state.priceEUR = p.priceEUR;
 
     updateUI();
     save();
-  } catch (e) {
-    console.warn("Backend indisponível");
-  }
+  } catch {}
 }
 
-/* ---------- TON PRICE ---------- */
+/* TON PRICE */
 let tonEurPrice = 0;
-
 async function fetchTonPrice() {
   try {
     const r = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=eur,usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=eur"
     );
     const d = await r.json();
     tonEurPrice = d["the-open-network"].eur;
@@ -91,120 +85,75 @@ async function fetchTonPrice() {
   } catch {}
 }
 
-/* ---------- PRICE HELPERS ---------- */
 function humToTonRate() {
   if (!tonEurPrice) return 0;
   return state.priceEUR / tonEurPrice;
 }
 
-/* ---------- ENTER ---------- */
-let loopStarted = false;
+/* BUY HUM WITH TON */
+buyHumBtn.onclick = async () => {
+  if (!tonConnectUI.wallet) {
+    alert("Liga primeiro a tua wallet TON.");
+    return;
+  }
 
-if (enterBtn) {
-  enterBtn.onclick = () => {
-    if (loopStarted) return;
-    loopStarted = true;
+  const hum = Number(buyHumAmount.value);
+  if (!hum || hum <= 0) {
+    alert("Quantidade inválida.");
+    return;
+  }
 
-    state.started = true;
-    enterBtn.style.display = "none";
-    dashboard.classList.remove("hidden");
+  const tonAmount = hum * humToTonRate();
+  if (!tonAmount) {
+    alert("Preço indisponível.");
+    return;
+  }
 
-    startLoop();
-    fetchHumStatus();
-    save();
+  const tx = {
+    validUntil: Math.floor(Date.now() / 1000) + 300,
+    messages: [
+      {
+        address: HUM_WALLET,
+        amount: Math.floor(tonAmount * 1e9).toString(),
+        payload: "HUM purchase"
+      }
+    ]
   };
-}
 
-/* ---------- LOOP PRESENÇA ---------- */
-function startLoop() {
-  setInterval(() => {
-    state.time++;
-    state.hum += 0.00002;
+  try {
+    await tonConnectUI.sendTransaction(tx);
+    alert(
+      "⏳ Transação enviada\n\n" +
+      "Após confirmação na rede TON,\n" +
+      "o HUM será creditado.\n\n" +
+      "Estado: guardado (dormente)"
+    );
+  } catch (e) {
+    alert("Transação cancelada.");
+  }
+};
 
-    if (state.time >= 300) {
-      state.days[today()] = true;
-    }
-
-    updateUI();
-    save();
-  }, 1000);
-}
-
-/* ---------- UI ---------- */
+/* UI */
 function updateUI() {
-  humValue.textContent =
-    state.hum.toFixed(5) + " HUM (guardado)";
-
-  eurValue.textContent =
-    "€ " + state.priceEUR.toFixed(4);
-
-  usdValue.textContent =
-    "$ " + (state.priceEUR * 1.1).toFixed(4);
-
-  const rate = humToTonRate();
+  humValue.textContent = state.hum.toFixed(5) + " HUM";
+  eurValue.textContent = "€ " + state.priceEUR.toFixed(4);
+  usdValue.textContent = "$ " + (state.priceEUR * 1.1).toFixed(4);
   tonValue.textContent =
-    rate ? rate.toFixed(6) + " TON" : "—";
+    humToTonRate() ? humToTonRate().toFixed(6) + " TON" : "—";
 
   if (buyHumAmount && buyTonEstimate) {
     const hum = Number(buyHumAmount.value || 0);
     buyTonEstimate.textContent =
-      rate ? (hum * rate).toFixed(6) + " TON" : "—";
-  }
-
-  if (exchangeHum) {
-    exchangeHum.textContent =
-      state.hum.toFixed(5) + " HUM";
-  }
-
-  if (exchangeTon) {
-    exchangeTon.textContent =
-      "Conversão bloqueada até Fase 2";
-  }
-
-  if (presenceCount) {
-    presenceCount.textContent =
-      Math.max(1, Math.floor(1 + state.time / 60));
+      humToTonRate() ? (hum * humToTonRate()).toFixed(6) + " TON" : "—";
   }
 }
 
-/* ---------- COMPRAR HUM (SIMULADO) ---------- */
-if (buyHumBtn) {
-  buyHumBtn.onclick = () => {
-    const hum = Number(buyHumAmount.value);
-
-    if (!hum || hum <= 0)
-      return alert("Quantidade inválida.");
-
-    if (state.phase > 1) {
-      alert("Compra disponível apenas até Fase 1.");
-      return;
-    }
-
-    state.hum += hum;
-    state.humStatus = "dormente";
-
-    alert(
-      "✔ Compra registada\n\n" +
-      `+${hum} HUM\n` +
-      "Estado: guardado (dormente)\n\n" +
-      "Conversão apenas a partir da Fase 2."
-    );
-
-    save();
-    updateUI();
-  };
-}
-
-/* ---------- UTILS ---------- */
-function today() {
-  return new Date().toISOString().slice(0, 10);
-}
-
+/* SAVE */
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-/* ---------- INIT ---------- */
+/* INIT */
 fetchHumStatus();
 fetchTonPrice();
 setInterval(fetchHumStatus, 15000);

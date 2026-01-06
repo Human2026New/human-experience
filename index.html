@@ -10,12 +10,12 @@
   <!-- Telegram WebApp -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <!-- TON Connect UI (futuro) -->
+  <!-- TON Connect UI -->
   <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 
-<!-- SPLASH OFICIAL -->
+<!-- SPLASH -->
 <div id="mainnetSplash">
   <div class="mainnet-box">
     <h2>HUMAN</h2>
@@ -29,7 +29,6 @@
 
 <div id="app">
 
-  <!-- HERO -->
   <section id="hero">
     <h1>HUMAN</h1>
     <p>Presença humana ao longo do tempo.</p>
@@ -37,12 +36,10 @@
 
   <button id="enterBtn">ENTRAR</button>
 
-  <!-- DASHBOARD -->
   <section id="dashboard" class="hidden">
 
     <div class="card big">
-      <h2>HUM (presença acumulada)</h2>
-
+      <h2>HUM</h2>
       <div class="hum-value" id="humValue">0.00000 HUM</div>
 
       <div class="values">
@@ -50,11 +47,6 @@
         <span id="usdValue">$ 0.00</span>
         <span id="tonValue">—</span>
       </div>
-
-      <p>
-        <b><span id="presenceCount">1</span></b>
-        humanos presentes agora
-      </p>
 
       <small>
         Estado: HUM guardado (dormente)<br>
@@ -65,13 +57,6 @@
     <div class="menu">
       <button data-open="buy">💎 Comprar HUM</button>
       <button data-open="protocol">📜 Protocolo HUM</button>
-      <button data-open="stats">📊 Estatísticas</button>
-      <button data-open="tasks">🧭 Tarefas humanas</button>
-      <button data-open="invites">👥 Convites</button>
-      <button data-open="wallet">💼 Wallet</button>
-      <button data-open="exchange">🔁 Conversão</button>
-      <button data-open="donation">💚 Apoiar</button>
-      <button data-open="about">ℹ️ Sobre</button>
     </div>
   </section>
 
@@ -80,119 +65,33 @@
     <div class="space-card">
       <h2>💎 Comprar HUM</h2>
 
-      <p>
-        HUM acelera a presença humana.<br>
-        O preço sobe com o progresso coletivo.
-      </p>
+      <div id="ton-connect"></div>
 
-      <p><b>Quantidade HUM</b></p>
+      <p>Quantidade HUM</p>
       <input id="buyHumAmount" type="number" min="1" value="10"/>
 
       <p>Equivalente aproximado:</p>
       <b id="buyTonEstimate">—</b>
 
       <small>
-        HUM comprado fica guardado (dormente).<br>
+        HUM fica guardado (dormente).<br>
         Conversão só será ativada na Fase 2.
       </small>
 
-      <button id="buyHumBtn">Comprar HUM</button>
+      <button id="buyHumBtn">Comprar HUM com TON</button>
       <button class="close">Fechar</button>
     </div>
   </section>
 
-  <!-- PROTOCOLO HUM -->
+  <!-- PROTOCOLO -->
   <section id="protocol" class="space hidden">
     <div class="space-card">
       <h2>📜 Protocolo HUM</h2>
-
       <p>
         HUM é um marcador de presença humana.<br><br>
-
-        Pode ser acumulado por presença,
-        tarefas e compra consciente.<br><br>
-
-        O valor do HUM aumenta à medida
-        que o sistema amadurece.<br><br>
-
+        O preço sobe com o progresso coletivo.<br><br>
         A conversão para TON só será ativada
-        quando a maturidade coletiva for atingida.
-      </p>
-
-      <small>
-        HUMAN não é promessa.<br>
-        É continuidade.
-      </small>
-
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- ESTATÍSTICAS -->
-  <section id="stats" class="space hidden">
-    <div class="space-card">
-      <h2>Estatísticas</h2>
-      <p>Dias de presença: <b id="daysCount">0</b></p>
-      <p>Tempo total: <b id="timeSpent">0 min</b></p>
-      <p>Estado humano: <b id="stateText">presença</b></p>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- TAREFAS -->
-  <section id="tasks" class="space hidden">
-    <div class="space-card">
-      <h2>Tarefas humanas</h2>
-      <ul id="taskList"></ul>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- CONVITES -->
-  <section id="invites" class="space hidden">
-    <div class="space-card">
-      <h2>Convites</h2>
-      <button id="createInvite">Convidar humano</button>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- WALLET -->
-  <section id="wallet" class="space hidden">
-    <div class="space-card">
-      <h2>Wallet TON</h2>
-      <p>Integração real em breve.</p>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- CONVERSÃO -->
-  <section id="exchange" class="space hidden">
-    <div class="space-card">
-      <h2>Conversão HUM → TON</h2>
-      <p>Estado atual:</p>
-      <b>Bloqueada até Fase 2</b>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- DOAÇÃO -->
-  <section id="donation" class="space hidden">
-    <div class="space-card">
-      <h2>Apoiar o projeto</h2>
-      <p>Endereço oficial:</p>
-      <code>EQCC2LH8-sEap7cfMZZIJOSVQ2aTWNUYIUEEKD8GeRYpB7oU</code>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- SOBRE -->
-  <section id="about" class="space hidden">
-    <div class="space-card">
-      <h2>Sobre o HUMAN</h2>
-      <p>
-        HUMAN é uma experiência de presença.<br>
-        HUM é a memória dessa continuidade.
+        quando o sistema atingir maturidade.
       </p>
       <button class="close">Fechar</button>
     </div>
@@ -203,10 +102,11 @@
 <script src="app.js"></script>
 
 <script>
-  // Splash 2 segundos
+  // Splash 2s
   window.addEventListener("load", () => {
-    const splash = document.getElementById("mainnetSplash");
-    setTimeout(() => splash.style.display = "none", 2000);
+    setTimeout(() => {
+      document.getElementById("mainnetSplash").style.display = "none";
+    }, 2000);
   });
 
   // Modais
