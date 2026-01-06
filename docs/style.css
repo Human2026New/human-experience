@@ -131,3 +131,14 @@ footer {
   color: #555;
   border-top: 1px solid #222;
     }
+/* SLIDE ANIMATION */
+.slide {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.slide.show {
+  opacity: 1;
+  transform: translateY(0);
+}
