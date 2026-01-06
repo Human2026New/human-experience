@@ -15,47 +15,45 @@
 </head>
 <body>
 
-<!-- SPLASH HUMAN LAUNCH -->
+<!-- =========================
+     SPLASH HUMAN (2s)
+     ========================= -->
 <div id="mainnetSplash">
-  <div class="launch-box">
-    <h1>HUMAN</h1>
+  <div class="mainnet-box">
+    <h2 class="breathe">HUMAN</h2>
 
-    <p class="launch-line strong">
-      HUMAN foi oficialmente iniciado.
+    <p class="fade-line delay-1" data-i18n="splash_line_1">
+      Presença humana registada no tempo
     </p>
 
-    <p class="launch-line">
-      Não é um token.<br>
-      Não é um jogo.<br>
-      Não é uma promessa.
+    <p class="fade-line delay-2" data-i18n="splash_line_2">
+      Não é investimento. Não é promessa.
     </p>
 
-    <p class="launch-line subtle">
-      Presença humana registada no tempo.
-    </p>
-
-    <p class="launch-line final">
-      Entra consciente.<br>
-      Permanece humano.
-    </p>
+    <small class="fade-line delay-3" data-i18n="splash_line_3">
+      Lançado oficialmente — fase génese
+    </small>
   </div>
 </div>
 
+<!-- =========================
+     APP
+     ========================= -->
 <div id="app">
 
   <!-- HERO -->
   <section id="hero">
     <h1>HUMAN</h1>
-    <p>Presença humana ao longo do tempo.</p>
+    <p data-i18n="hero_subtitle">Presença humana ao longo do tempo.</p>
   </section>
 
-  <button id="enterBtn">ENTRAR</button>
+  <button id="enterBtn" data-i18n="enter_btn">ENTRAR</button>
 
   <!-- DASHBOARD -->
   <section id="dashboard" class="hidden">
 
     <div class="card big">
-      <h2>HUM (presença acumulada)</h2>
+      <h2 data-i18n="hum_title">HUM (presença acumulada)</h2>
       <div class="hum-value" id="humValue">0.00000 HUM</div>
 
       <div class="values">
@@ -66,30 +64,101 @@
 
       <p>
         <b><span id="presenceCount">1</span></b>
-        Humanos presentes agora
+        <span data-i18n="humans_now">Humanos presentes agora</span>
       </p>
 
       <small>
-        HUM é presença acumulada.<br>
-        Não representa promessa financeira.
+        <span data-i18n="phase_label">Fase:</span>
+        <b id="phaseText">Fase 0 — Génese</b><br>
+        <span data-i18n="mined_label">Percentagem minerada:</span>
+        <b id="protocolPercent">0%</b>
       </small>
     </div>
 
     <div class="menu">
-      <button data-open="stats">📊 Estatísticas</button>
-      <button data-open="tasks">🧭 Tarefas humanas</button>
-      <button data-open="invites">👥 Convites</button>
-      <button data-open="wallet">💼 Wallet</button>
-      <button data-open="buy">💎 Comprar HUM</button>
-      <button data-open="exchange">🔁 Trocar HUM ↔ TON</button>
-      <button data-open="donation">💚 Doação</button>
-      <button data-open="about">ℹ️ Sobre</button>
-      <button data-open="profile">👤 Perfil</button>
+      <button data-open="stats">📊 <span data-i18n="menu_stats">Estatísticas</span></button>
+      <button data-open="tasks">🧭 <span data-i18n="menu_tasks">Tarefas humanas</span></button>
+      <button data-open="invites">👥 <span data-i18n="menu_invites">Convites</span></button>
+      <button data-open="wallet">💼 <span data-i18n="menu_wallet">Wallet</span></button>
+      <button data-open="about">📜 <span data-i18n="menu_protocol">Protocolo HUM</span></button>
+      <button data-open="profile">👤 <span data-i18n="menu_profile">Perfil</span></button>
     </div>
   </section>
 
-  <!-- RESTO DAS SECÇÕES (inalteradas) -->
-  <!-- Mantêm exatamente como já tinhas -->
+  <!-- ESTATÍSTICAS -->
+  <section id="stats" class="space hidden">
+    <div class="space-card">
+      <h2 data-i18n="stats_title">Estatísticas</h2>
+      <p><span data-i18n="days_presence">Dias de presença</span>: <b id="daysCount">0</b></p>
+      <p><span data-i18n="time_total">Tempo total</span>: <b id="timeSpent">0 min</b></p>
+      <button class="close" data-i18n="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- TAREFAS -->
+  <section id="tasks" class="space hidden">
+    <div class="space-card">
+      <h2 data-i18n="tasks_title">Tarefas humanas</h2>
+      <ul id="taskList"></ul>
+      <small data-i18n="tasks_note">
+        A presença conta mesmo sem cumprir tarefas.
+      </small>
+      <button class="close" data-i18n="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- CONVITES -->
+  <section id="invites" class="space hidden">
+    <div class="space-card">
+      <h2 data-i18n="invites_title">Convites humanos</h2>
+      <button id="createInvite" data-i18n="invite_btn">Convidar humano</button>
+      <button class="close" data-i18n="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- WALLET -->
+  <section id="wallet" class="space hidden">
+    <div class="space-card">
+      <h2>Wallet TON</h2>
+      <div id="ton-connect"></div>
+      <small data-i18n="wallet_note">
+        HUM é interno. TON pertence ao utilizador.
+      </small>
+      <button class="close" data-i18n="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- PROTOCOLO -->
+  <section id="about" class="space hidden">
+    <div class="space-card">
+      <h2>📜 Protocolo HUM</h2>
+
+      <p data-i18n="protocol_text_1">
+        HUM é um marcador de presença humana.
+      </p>
+
+      <p data-i18n="protocol_text_2">
+        Não é investimento, não promete retorno.
+      </p>
+
+      <p>
+        <b data-i18n="protocol_phase">Fase atual:</b>
+        <span id="protocolPhase">Fase 0 — Génese</span>
+      </p>
+
+      <button class="close" data-i18n="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- PERFIL -->
+  <section id="profile" class="space hidden">
+    <div class="space-card">
+      <h2 data-i18n="profile_title">Perfil humano</h2>
+      <input id="userName" placeholder="Nome"/>
+      <textarea id="userNote" placeholder="Nota humana (opcional)"></textarea>
+      <button class="close" data-i18n="close">Fechar</button>
+    </div>
+  </section>
 
 </div>
 

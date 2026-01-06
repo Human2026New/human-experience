@@ -176,3 +176,45 @@ textarea {
 .hidden {
   display: none;
 }
+
+/* =========================
+   HUMAN — subtle animations
+   ========================= */
+
+/* Respiração suave */
+@keyframes breathe {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* Fade por linha */
+@keyframes lineFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.breathe {
+  animation: breathe 3.6s ease-in-out infinite;
+}
+
+.fade-line {
+  opacity: 0;
+  animation: lineFade 1.2s ease forwards;
+}
+
+.fade-line.delay-1 { animation-delay: 0.4s; }
+.fade-line.delay-2 { animation-delay: 0.8s; }
+.fade-line.delay-3 { animation-delay: 1.2s; }
+
+/* Splash refinado */
+#mainnetSplash h2 {
+  animation: breathe 4s ease-in-out infinite;
+}
+
