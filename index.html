@@ -15,11 +15,11 @@
 </head>
 <body>
 
-<!-- SPLASH OFICIAL -->
+<!-- SPLASH / MANIFESTO -->
 <div id="mainnetSplash">
   <div class="mainnet-box">
     <h2>HUMAN</h2>
-    <p>Lançamento oficial</p>
+    <p>Oficialmente lançado</p>
     <small>Presença humana registada no tempo</small>
   </div>
 </div>
@@ -41,9 +41,6 @@
       <h2>HUM (presença acumulada)</h2>
       <div class="hum-value" id="humValue">0.00000 HUM</div>
 
-      <small id="humStatus">HUM guardado (dormente)</small><br>
-      <small id="conversionStatus">Conversão bloqueada até Fase 2</small>
-
       <div class="values">
         <span id="eurValue">€ 0.00</span>
         <span id="usdValue">$ 0.00</span>
@@ -51,58 +48,22 @@
       </div>
 
       <p>
-        <b><span id="presenceCount">1</span></b>
-        humanos presentes agora
+        <b id="presenceCount">1</b>
+        Humanos presentes agora
       </p>
 
-      <p>
-        Fase atual: <b id="phaseText">Fase 0 — Génese</b><br>
-        Percentagem minerada: <b id="minedPercent">0.000%</b>
-      </p>
+      <small id="phaseText">
+        Fase 0 — Génese<br>
+        HUM guardado (dormente)
+      </small>
     </div>
 
     <div class="menu">
       <button data-open="stats">📊 Estatísticas</button>
       <button data-open="tasks">🧭 Tarefas humanas</button>
-      <button data-open="invites">👥 Convites</button>
       <button data-open="wallet">💼 Wallet</button>
       <button data-open="protocol">📜 Protocolo HUM</button>
       <button data-open="profile">👤 Perfil</button>
-    </div>
-  </section>
-
-  <!-- PROTOCOLO HUM -->
-  <section id="protocol" class="space hidden">
-    <div class="space-card">
-      <h2>📜 Protocolo HUM</h2>
-
-      <p><b>Estado:</b> Fase 0 — Génese</p>
-
-      <p>
-        HUM não é investimento.<br>
-        HUM é presença registada.
-      </p>
-
-      <p>
-        O HUM é acumulado apenas por:
-      </p>
-      <ul>
-        <li>Presença humana real</li>
-        <li>Tarefas conscientes</li>
-        <li>Convites e continuidade</li>
-      </ul>
-
-      <p>
-        🔒 Conversão para TON está bloqueada<br>
-        até o sistema atingir maturidade coletiva.
-      </p>
-
-      <small>
-        Nada é prometido.<br>
-        Tudo é transparente.
-      </small>
-
-      <button class="close">Fechar</button>
     </div>
   </section>
 
@@ -112,7 +73,7 @@
       <h2>Estatísticas</h2>
       <p>Dias de presença: <b id="daysCount">0</b></p>
       <p>Tempo total: <b id="timeSpent">0 min</b></p>
-      <p>Estado humano: <b id="stateText">presença</b></p>
+      <p>Percentagem minerada: <b id="minedPercent">0%</b></p>
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -122,15 +83,7 @@
     <div class="space-card">
       <h2>Tarefas humanas</h2>
       <ul id="taskList"></ul>
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- CONVITES -->
-  <section id="invites" class="space hidden">
-    <div class="space-card">
-      <h2>Convites humanos</h2>
-      <button id="createInvite">Convidar humano</button>
+      <small>A presença conta mesmo sem tarefas.</small>
       <button class="close">Fechar</button>
     </div>
   </section>
@@ -139,9 +92,34 @@
   <section id="wallet" class="space hidden">
     <div class="space-card">
       <h2>Wallet TON</h2>
-      <div id="ton-connect"></div>
-      <code id="tonAddress">não ligada</code>
-      <small>HUM é interno. TON é do utilizador.</small>
+      <p>Conversão:</p>
+      <b id="conversionState">Bloqueada até Fase 2</b>
+      <small>HUM permanece interno até maturidade do sistema.</small>
+      <button class="close">Fechar</button>
+    </div>
+  </section>
+
+  <!-- PROTOCOLO HUM -->
+  <section id="protocol" class="space hidden">
+    <div class="space-card">
+      <h2>📜 Protocolo HUM</h2>
+      <p>
+        HUM não é investimento.<br>
+        HUM é presença acumulada.
+      </p>
+      <p>
+        O HUM nasce sem valor financeiro direto.<br>
+        Cresce com o tempo humano coletivo.
+      </p>
+      <p>
+        Fase 0 — Génese:<br>
+        HUM pode ser acumulado e comprado.<br>
+        Conversões permanecem bloqueadas.
+      </p>
+      <small>
+        Nada aqui promete retorno.<br>
+        Apenas regista existência.
+      </small>
       <button class="close">Fechar</button>
     </div>
   </section>
