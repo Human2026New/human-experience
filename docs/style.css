@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #000;
+  color: #fff;
+  line-height: 1.7;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1a1a1a, #000 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.hero-content {
+  max-width: 700px;
+}
+
+.coin {
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-size: 3.8rem;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.tagline {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* CONTENT */
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 60px 20px;
+}
+
+.block {
+  margin-bottom: 70px;
+}
+
+.block h2 {
+  font-size: 1.7rem;
+  margin-bottom: 15px;
+}
+
+.block p {
+  margin-bottom: 15px;
+}
+
+.block ul {
+  padding-left: 20px;
+}
+
+.block li {
+  margin-bottom: 8px;
+}
+
+.highlight {
+  background: #0b0b0b;
+  padding: 30px;
+  border-radius: 18px;
+  border: 1px solid #222;
+}
+
+.big {
+  font-size: 1.3rem;
+  color: #e6c97a;
+}
+
+pre {
+  background: #111;
+  padding: 15px;
+  border-radius: 10px;
+  color: #9cdcfe;
+  overflow-x: auto;
+}
+
+.legal {
+  border-top: 1px solid #222;
+  padding-top: 30px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  font-size: 0.8rem;
+  color: #555;
+  border-top: 1px solid #222;
+}
