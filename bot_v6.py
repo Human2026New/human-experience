@@ -88,10 +88,10 @@ async def handle_token_hum(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
         "🪙 Token HUMAN (HUM)\n\n"
         "Rede: TON Mainnet\n\n"
-        "Contrato oficial:\n"
+        "Endereço oficial do contrato:\n"
         f"{HUM_JETTON_ADDRESS}\n\n"
         "Este é o endereço oficial do token HUM.\n"
-        "Podes adicioná-lo manualmente na tua wallet TON."
+        "Podes adicioná-lo diretamente à tua wallet."
     )
 
     keyboard = InlineKeyboardMarkup([
@@ -190,9 +190,9 @@ async def handle_convert(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     text = (
         "🔄 Converter HUM → TON\n\n"
-        "Estado: ⏳ Indisponível\n\n"
-        "A conversão será ativada apenas quando\n"
-        "existirem condições seguras no sistema."
+        "Estado: ❌ Indisponível\n\n"
+        "A conversão será ativada quando\n"
+        "o sistema estiver preparado."
     )
 
     await query.edit_message_text(
@@ -259,7 +259,7 @@ def main():
     app.add_handler(CallbackQueryHandler(handle_convert, pattern="^convert$"))
     app.add_handler(CallbackQueryHandler(handle_my_nfts, pattern="^my_nfts$"))
 
-    print("🟢 HUMAN bot v6.5 ativo (base preservada).")
+    print("🟢 HUMAN bot v6.5 ativo.")
     app.run_polling()
 
 
