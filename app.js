@@ -1,147 +1,148 @@
-/* =========================
-   HUMAN — app.js (BACKEND)
-   ========================= */
+/* ==================================================
+   HUMAN — app.js (produção / excelência)
+   ================================================== */
 
-const STORAGE_KEY = "human_app_backend";
-const BACKEND_URL = "http://localhost:3000";
+/* ---------- CONFIG ---------- */
+const STORAGE_KEY = "human_app_state_v1";
+const BACKEND_URL = "http://localhost:3000"; // depois trocas para Render
+const DONATION_ADDRESS =
+  "UQC_QK4Kwcw68zJYKGYMKRhrWNAK7lYmniEgV-Kq9kCLkzlf";
+
+/* ---------- TELEGRAM SAFE ---------- */
+if (window.Telegram && Telegram.WebApp) {
+  Telegram.WebApp.ready();
+  Telegram.WebApp.expand();
+  document.body.style.height = "auto";
+  document.body.style.overflow = "auto";
+}
 
 /* ---------- STATE ---------- */
 let state = {
-  telegram_id: null,
+  started: false,
   hum: 0,
-  phase: 0,
-  mined_percent: 0,
-  can_buy: false,
-  can_convert: false,
-  can_withdraw: false,
-  message: ""
+  time: 0,
+  days: {},
+  lastTick: Date.now()
 };
+
+let humStatus = {
+  phase: 0,
+  phase_name: "Génese",
+  mined_percent: 0,
+  hum_price_eur: 0.05,
+  conversion_enabled: false,
+  withdraw_enabled: false
+};
+
+/* ---------- LOAD STATE ---------- */
+const saved = localStorage.getItem(STORAGE_KEY);
+if (saved) {
+  try {
+    state = { ...state, ...JSON.parse(saved) };
+  } catch {}
+}
 
 /* ---------- HELPERS ---------- */
 const $ = id => document.getElementById(id);
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
 
 /* ---------- ELEMENTS ---------- */
 const enterBtn = $("enterBtn");
 const dashboard = $("dashboard");
 const humValue = $("humValue");
 const eurValue = $("eurValue");
-const usdValue = $("usdValue");
-const tonValue = $("tonValue");
 const presenceCount = $("presenceCount");
-
-/* Exchange / Buy */
-const buyHumAmount = $("buyHumAmount");
-const buyTonEstimate = $("buyTonEstimate");
-const buyHumBtn = $("buyHumBtn");
-
-const exchangeHum = $("exchangeHum");
-const exchangeTon = $("exchangeTon");
-const humToTonBtn = $("humToTon");
-const tonToHumBtn = $("tonToHum");
-
-/* ---------- TELEGRAM ID ---------- */
-function resolveTelegramId() {
-  if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe?.user) {
-    return String(Telegram.WebApp.initDataUnsafe.user.id);
-  }
-  return "demo_user";
-}
-
-/* ---------- BACKEND ---------- */
-async function fetchStatus() {
-  const url = `${BACKEND_URL}/hum/status?telegram_id=${state.telegram_id}`;
-  const r = await fetch(url);
-  const d = await r.json();
-
-  state = { ...state, ...d };
-  save();
-  updateUI();
-}
-
-/* ---------- ENTER ---------- */
-if (enterBtn) {
-  enterBtn.onclick = async () => {
-    enterBtn.style.display = "none";
-    dashboard.classList.remove("hidden");
-
-    state.telegram_id = resolveTelegramId();
-    await fetchStatus();
-  };
-}
-
-/* ---------- UI ---------- */
-function updateUI() {
-  humValue.textContent = state.hum.toFixed(5) + " HUM";
-
-  presenceCount.textContent =
-    state.phase === 0
-      ? "Fase 0 — Génese"
-      : state.phase === 1
-      ? "Fase 1 — Maturação"
-      : "Fase 2 — Conversão ativa";
-
-  eurValue.textContent = "—";
-  usdValue.textContent = "—";
-  tonValue.textContent = "—";
-
-  if (exchangeHum)
-    exchangeHum.textContent = state.hum.toFixed(5) + " HUM";
-
-  if (exchangeTon)
-    exchangeTon.textContent = state.can_convert
-      ? "Conversão disponível"
-      : "Bloqueada até Fase 2";
-
-  // Comprar HUM
-  if (buyHumBtn) {
-    buyHumBtn.disabled = !state.can_buy;
-    buyHumBtn.textContent = state.can_buy
-      ? "Comprar HUM"
-      : "Compra indisponível";
-  }
-
-  // Conversão
-  if (humToTonBtn) {
-    humToTonBtn.disabled = !state.can_convert;
-  }
-}
-
-/* ---------- COMPRA HUM (placeholder) ---------- */
-if (buyHumBtn) {
-  buyHumBtn.onclick = () => {
-    if (!state.can_buy) {
-      alert("Compra de HUM indisponível nesta fase.");
-      return;
-    }
-
-    alert(
-      "Compra registada.\n\n" +
-      "O backend validará a transação TON\n" +
-      "e creditará HUM automaticamente."
-    );
-  };
-}
-
-/* ---------- CONVERSÃO ---------- */
-if (humToTonBtn) {
-  humToTonBtn.onclick = () => {
-    if (!state.can_convert) {
-      alert("Conversão bloqueada até Fase 2.");
-      return;
-    }
-
-    alert("Conversão HUM → TON será ativada na Fase 2.");
-  };
-}
-
-/* ---------- STORAGE ---------- */
-function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
 
 /* ---------- SPLASH ---------- */
 window.addEventListener("load", () => {
   const splash = $("mainnetSplash");
   if (!splash) return;
-  setTimeout(() => (splash.style.display = "none"), 2000);
+  setTimeout(() => {
+    splash.style.display = "none";
+    document.body.style.overflow = "auto";
+  }, 2000);
 });
+
+/* ---------- ENTER ---------- */
+let loopStarted = false;
+
+if (enterBtn) {
+  enterBtn.onclick = () => {
+    if (loopStarted) return;
+    loopStarted = true;
+
+    state.started = true;
+    enterBtn.style.display = "none";
+    dashboard.classList.remove("hidden");
+
+    startLoop();
+    save();
+  };
+}
+
+/* ---------- PRESENÇA (ANTI RESET) ---------- */
+function startLoop() {
+  setInterval(() => {
+    const now = Date.now();
+    const delta = Math.floor((now - state.lastTick) / 1000);
+    state.lastTick = now;
+
+    if (delta <= 0) return;
+
+    state.time += delta;
+    state.hum += delta * 0.00002;
+
+    if (state.time >= 300) {
+      state.days[today()] = true;
+    }
+
+    updateUI();
+    save();
+  }, 1000);
+}
+
+/* ---------- BACKEND STATUS ---------- */
+async function fetchHumStatus() {
+  try {
+    const r = await fetch(BACKEND_URL + "/hum/status");
+    const data = await r.json();
+    humStatus = data;
+    applyHumStatus();
+  } catch {
+    console.warn("Backend offline — modo local ativo");
+  }
+}
+
+function applyHumStatus() {
+  const statusBox = document.querySelector(".card.big small");
+  if (!statusBox) return;
+
+  statusBox.innerHTML = `
+    Fase: <b>Fase ${humStatus.phase} — ${humStatus.phase_name}</b><br>
+    Percentagem minerada: ${humStatus.mined_percent.toFixed(4)}%<br>
+    ${
+      humStatus.conversion_enabled
+        ? "Conversão ativa"
+        : "Conversão bloqueada até Fase 2"
+    }
+  `;
+}
+
+/* ---------- UI ---------- */
+function updateUI() {
+  humValue.textContent = state.hum.toFixed(5) + " HUM";
+  eurValue.textContent = "€ " + (state.hum * humStatus.hum_price_eur).toFixed(2);
+  presenceCount.textContent = Math.max(1, Math.floor(1 + state.time / 60));
+}
+
+/* ---------- INIT ---------- */
+updateUI();
+fetchHumStatus();
+setInterval(fetchHumStatus, 15000);
