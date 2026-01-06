@@ -23,14 +23,13 @@
   <h1>HUMAN</h1>
 
   <p class="tagline"
-     data-pt="Presença humana registada no tempo. Não é hardware. Não é promessa."
-     data-en="Human presence recorded over time. Not hardware. Not a promise.">
+     data-pt="Presença humana registada no tempo. Não é hardware. É promessa."
+     data-en="Human presence recorded over time. Not hardware. It promise.">
   </p>
 </header>
 
 <main>
 
-<!-- BLOCO -->
 <section class="card slide">
   <h2 data-pt="O que é o HUMAN?"
       data-en="What is HUMAN?"></h2>
@@ -120,6 +119,50 @@
   </ul>
 </section>
 
+<!-- 🔗 ON-CHAIN (AGORA NO SÍTIO CERTO) -->
+<section class="card slide">
+  <h2 data-pt="Informação On-Chain (Rede TON)"
+      data-en="On-Chain Information (TON Network)"></h2>
+
+  <p data-pt="O token HUM existe na blockchain TON. Abaixo estão os dados públicos e verificáveis do contrato."
+     data-en="The HUM token exists on the TON blockchain. Below are the public and verifiable contract details."></p>
+
+  <div class="chain-box">
+    <div class="chain-row">
+      <span class="label" data-pt="Rede" data-en="Network"></span>
+      <span class="value">TON (The Open Network)</span>
+    </div>
+
+    <div class="chain-row">
+      <span class="label" data-pt="Token" data-en="Token"></span>
+      <span class="value">HUM</span>
+    </div>
+
+    <div class="chain-row">
+      <span class="label" data-pt="Oferta total" data-en="Total supply"></span>
+      <span class="value">80,000,000 HUM</span>
+    </div>
+
+    <div class="chain-row">
+      <span class="label" data-pt="Contrato" data-en="Contract address"></span>
+      <span class="value mono">
+        EQCC2LH8-sEap7cfMZZIJOSVQ2aTWNUYIUEEKD8GeRYpB7oU
+      </span>
+    </div>
+
+    <div class="chain-row">
+      <span class="label" data-pt="Estado" data-en="Status"></span>
+      <span class="value"
+            data-pt="Contrato ativo na rede TON"
+            data-en="Contract active on TON network"></span>
+    </div>
+  </div>
+
+  <p class="note"
+     data-pt="Todos os dados acima podem ser verificados publicamente em exploradores da rede TON."
+     data-en="All data above can be publicly verified using TON blockchain explorers."></p>
+</section>
+
 <section class="card slide legal">
   <p data-pt="HUMAN é um instrumento financeiro. Existe promessa de retorno."
      data-en="HUMAN is a financial instrument. There is promise of return."></p>
@@ -133,7 +176,6 @@
 </footer>
 
 <script>
-  // Language
   function setLang(lang) {
     localStorage.setItem("human_lang", lang);
     document.querySelectorAll("[data-pt]").forEach(el => {
@@ -142,7 +184,6 @@
   }
   setLang(localStorage.getItem("human_lang") || "pt");
 
-  // Slide animation
   const slides = document.querySelectorAll(".slide");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -153,61 +194,5 @@
   slides.forEach(s => observer.observe(s));
 </script>
 
-  <section class="card slide">
-  <h2 data-pt="Informação On-Chain (Rede TON)"
-      data-en="On-Chain Information (TON Network)"></h2>
-
-  <p data-pt="O token HUM existe na blockchain TON. Abaixo estão os dados públicos e verificáveis do contrato."
-     data-en="The HUM token exists on the TON blockchain. Below are the public and verifiable contract details."></p>
-
-  <div class="chain-box">
-
-    <div class="chain-row">
-      <span class="label"
-            data-pt="Rede"
-            data-en="Network"></span>
-      <span class="value">TON (The Open Network)</span>
-    </div>
-
-    <div class="chain-row">
-      <span class="label"
-            data-pt="Token"
-            data-en="Token"></span>
-      <span class="value">HUM</span>
-    </div>
-
-    <div class="chain-row">
-      <span class="label"
-            data-pt="Oferta total"
-            data-en="Total supply"></span>
-      <span class="value">80,000,000 HUM</span>
-    </div>
-
-    <div class="chain-row">
-      <span class="label"
-            data-pt="Contrato"
-            data-en="Contract address"></span>
-      <span class="value mono">
-        EQCC2LH8-sEap7cfMZZIJOSVQ2aTWNUYIUEEKD8GeRYpB7oU
-
-      </span>
-    </div>
-
-    <div class="chain-row">
-      <span class="label"
-            data-pt="Estado"
-            data-en="Status"></span>
-      <span class="value"
-            data-pt="Contrato ativo na rede TON"
-            data-en="Contract active on TON network"></span>
-    </div>
-
-  </div>
-
-  <p class="note"
-     data-pt="Todos os dados acima podem ser verificados publicamente em exploradores da rede TON."
-     data-en="All data above can be publicly verified using TON blockchain explorers."></p>
-  </section>
-
 </body>
-    </html>
+  </html>
