@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HUMAN Protocol</title>
+
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -19,13 +22,10 @@
 <!-- HERO -->
 <header class="hero">
   <img src="hum-logo.png" alt="HUM Logo" class="logo">
-
   <h1>HUMAN</h1>
-
   <p class="tagline"
      data-pt="Presença humana registada no tempo. Não é hardware. Não é promessa."
-     data-en="Human presence recorded over time. Not hardware. Not a promise.">
-  </p>
+     data-en="Human presence recorded over time. Not hardware. Not a promise."></p>
 </header>
 
 <main>
@@ -106,92 +106,69 @@
   </ul>
 </section>
 
+<!-- PLATAFORMAS -->
 <section class="card slide">
-  <h2 data-pt="O que podes fazer agora?"
-      data-en="What can you do now?"></h2>
-  <ul>
-    <li data-pt="Marcar presença"
-        data-en="Mark presence"></li>
-    <li data-pt="Acumular HUM"
-        data-en="Accumulate HUM"></li>
-    <li data-pt="Acompanhar o crescimento do sistema"
-        data-en="Follow system growth"></li>
-  </ul>
+  <h2 data-pt="Disponível em"
+      data-en="Available on"></h2>
+
+  <div class="platforms">
+    <div class="platform">
+      <i class="fab fa-android"></i>
+      <span>Android</span>
+    </div>
+    <div class="platform">
+      <i class="fab fa-google"></i>
+      <span>Google</span>
+    </div>
+    <div class="platform">
+      <i class="fab fa-telegram"></i>
+      <span>Telegram</span>
+    </div>
+    <div class="platform">
+      <i class="fas fa-globe"></i>
+      <span>Web</span>
+    </div>
+  </div>
 </section>
 
 <!-- ON-CHAIN -->
 <section class="card slide">
-  <h2 data-pt="Informação On-Chain (Rede TON)"
-      data-en="On-Chain Information (TON Network)"></h2>
-
-  <p data-pt="O token HUM existe na blockchain TON. Abaixo estão os dados públicos e verificáveis do contrato."
-     data-en="The HUM token exists on the TON blockchain. Below are the public and verifiable contract details."></p>
+  <h2>Informação On-Chain (Rede TON)</h2>
 
   <div class="chain-box">
     <div class="chain-row">
       <span class="label">Rede</span>
       <span class="value">TON (The Open Network)</span>
     </div>
-
     <div class="chain-row">
       <span class="label">Token</span>
       <span class="value">HUM</span>
     </div>
-
     <div class="chain-row">
       <span class="label">Oferta total</span>
       <span class="value">80,000,000 HUM</span>
     </div>
-
     <div class="chain-row">
       <span class="label">Contrato</span>
       <span class="value mono" id="contractAddress" onclick="copyContract()">
         EQCC2LH8-sEap7cfMZZIJOSVQ2aTWNUYIUEEKD8GeRYpB7oU
       </span>
     </div>
-
     <div class="chain-row">
       <span class="label">Estado</span>
       <span class="value">Contrato ativo na rede TON</span>
     </div>
   </div>
 
-  <div style="margin-top:20px; text-align:center;">
+  <div class="center">
     <a class="ton-link"
        href="https://tonviewer.com/EQCC2LH8-sEap7cfMZZIJOSVQ2aTWNUYIUEEKD8GeRYpB7oU"
-       target="_blank">
-      🔍 Ver contrato no Tonviewer
-    </a>
+       target="_blank">🔍 Ver no Tonviewer</a>
   </div>
-
-  <p class="note">
-    Todos os dados acima podem ser verificados publicamente em exploradores da rede TON.
-  </p>
-</section>
-
-<!-- FAQ -->
-<section class="card slide">
-  <h2>Perguntas Frequentes (FAQ)</h2>
-
-  <p><b>Isto é mineração de hardware?</b><br>
-  Não. Não existe hardware, competição ou consumo energético.</p>
-
-  <p><b>Posso perder o meu HUM?</b><br>
-  O HUM representa presença. Não existe garantia de valorização.</p>
-
-  <p><b>Quando posso levantar ou trocar?</b><br>
-  Apenas após maturidade coletiva do sistema (Fase 1 e 2).</p>
-
-  <p><b>O preço pode cair?</b><br>
-  O preço é progressivo, mas não existe promessa de liquidez.</p>
-
-  <p><b>Quem controla o sistema?</b><br>
-  O protocolo define regras automáticas. Não existem atalhos.</p>
 </section>
 
 <section class="card slide legal">
-  <p data-pt="HUMAN é um instrumento financeiro. Existe promessa de retorno."
-     data-en="HUMAN is a financial instrument. There is promise of return."></p>
+  <p>HUMAN é um instrumento financeiro. Existe promessa de retorno.</p>
 </section>
 
 </main>
@@ -215,16 +192,14 @@ const observer = new IntersectionObserver(entries => {
     if (e.isIntersecting) e.target.classList.add("show");
   });
 }, { threshold: 0.2 });
-
 slides.forEach(s => observer.observe(s));
 
 function copyContract() {
   const el = document.getElementById("contractAddress");
-  const text = el.innerText.trim();
-  navigator.clipboard.writeText(text);
-  const original = el.innerText;
+  navigator.clipboard.writeText(el.innerText.trim());
+  const t = el.innerText;
   el.innerText = "✔ Contrato copiado";
-  setTimeout(() => el.innerText = original, 1500);
+  setTimeout(() => el.innerText = t, 1500);
 }
 </script>
 
