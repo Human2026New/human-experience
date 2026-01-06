@@ -10,13 +10,12 @@ body {
   overflow-x: hidden;
 }
 
-/* LANGUAGE SWITCH */
+/* LANGUAGE */
 .lang-switch {
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 10;
-  font-size: 0.9rem;
 }
 
 .lang-switch button {
@@ -25,10 +24,6 @@ body {
   color: #e6c97a;
   font-weight: bold;
   cursor: pointer;
-}
-
-.lang-switch span {
-  color: #666;
 }
 
 /* BACKGROUND */
@@ -43,7 +38,6 @@ body {
 }
 
 @keyframes drift {
-  from { transform: translateY(0); }
   to { transform: translateY(-200px); }
 }
 
@@ -51,22 +45,22 @@ body {
 .hero {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding: 40px 20px;
 }
 
-.coin {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  50% { transform: translateY(-12px); }
+.logo {
+  width: 160px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 30px rgba(230,201,122,0.4));
 }
 
 h1 {
   font-size: 3.5rem;
-  margin: 20px 0 0;
+  margin: 0;
 }
 
 .tagline {
@@ -75,39 +69,62 @@ h1 {
   color: #ccc;
 }
 
-/* CONTENT */
-main {
-  max-width: 900px;
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
   margin: auto;
   padding: 80px 20px;
 }
 
-.block {
-  margin-bottom: 80px;
+.card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid #222;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
 }
 
-.highlight {
-  background: rgba(255,255,255,0.03);
-  padding: 30px;
-  border-radius: 20px;
-  border: 1px solid #222;
+.icon {
+  font-size: 2rem;
+}
+
+.card h3 {
+  margin-top: 15px;
+}
+
+.card p {
+  color: #ccc;
+}
+
+/* STATE */
+.state {
+  text-align: center;
+  padding: 60px 20px;
 }
 
 .big {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #e6c97a;
 }
 
 /* LEGAL */
 .legal {
   border-top: 1px solid #222;
-  padding-top: 30px;
+  padding: 30px 20px;
+  font-size: 0.85rem;
   color: #aaa;
+  text-align: center;
 }
 
+/* FOOTER */
 footer {
   text-align: center;
   padding: 30px;
   font-size: 0.8rem;
   color: #555;
-}
+  border-top: 1px solid #222;
+  }
