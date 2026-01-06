@@ -53,8 +53,8 @@
       </p>
 
       <small>
-        HUM tem valor fixo de 0.05€.<br>
-        Conversão automática para TON.
+        HUM não é investimento.<br>
+        Conversões ainda desativadas.
       </small>
     </div>
 
@@ -63,11 +63,41 @@
       <button data-open="tasks">🧭 Tarefas humanas</button>
       <button data-open="invites">👥 Convites</button>
       <button data-open="wallet">💼 Wallet</button>
-      <button data-open="buy">💎 Comprar HUM</button>
-      <button data-open="exchange">🔁 Trocar HUM ↔ TON</button>
+      <button data-open="hum-token">🪙 Token HUM</button>
       <button data-open="donation">💚 Doação</button>
       <button data-open="about">ℹ️ Sobre</button>
       <button data-open="profile">👤 Perfil</button>
+    </div>
+  </section>
+
+  <!-- TOKEN HUM -->
+  <section id="hum-token" class="space hidden">
+    <div class="space-card">
+      <h2>🪙 Token HUM</h2>
+
+      <p><b>Contrato oficial (TON)</b></p>
+      <code style="word-break: break-all;">
+        EQCC2LH8-sEap7cfMZZIJOSVQ2aTWNUYIUEEKD8GeRYpB7oU
+      </code>
+
+      <button id="addHumTonkeeper">Adicionar à Tonkeeper</button>
+
+      <hr style="opacity:0.2;margin:12px 0">
+
+      <p><b>Estado atual</b></p>
+      <ul style="text-align:left;font-size:13px">
+        <li>✔️ HUM acumulado apenas por presença</li>
+        <li>❌ Compra desativada</li>
+        <li>❌ Conversão desativada</li>
+        <li>⏳ Mineração coletiva em curso</li>
+      </ul>
+
+      <small>
+        HUM não é investimento.<br>
+        É um marcador de presença humana no tempo.
+      </small>
+
+      <button class="close">Fechar</button>
     </div>
   </section>
 
@@ -124,52 +154,6 @@
       <small>
         HUM é interno.<br>
         TON pertence apenas ao utilizador.
-      </small>
-
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- COMPRAR HUM -->
-  <section id="buy" class="space hidden">
-    <div class="space-card">
-      <h2>💎 Comprar HUM</h2>
-
-      <p>Preço fixo:</p>
-      <b>1 HUM = 0.05 €</b>
-
-      <input id="buyHumAmount" type="number" min="1" value="10"/>
-
-      <p>Equivalente em TON:</p>
-      <b id="buyTonEstimate">0 TON</b>
-
-      <button id="buyHumBtn">Comprar com TON</button>
-
-      <small>
-        Compra registada internamente.<br>
-        Token on-chain será lançado na mainnet.
-      </small>
-
-      <button class="close">Fechar</button>
-    </div>
-  </section>
-
-  <!-- TROCA -->
-  <section id="exchange" class="space hidden">
-    <div class="space-card">
-      <h2>🔁 Troca HUM ↔ TON</h2>
-
-      <p>HUM disponível:</p>
-      <b id="exchangeHum">0 HUM</b>
-
-      <p>Equivalente em TON:</p>
-      <b id="exchangeTon">0 TON</b>
-
-      <button id="humToTon">HUM → TON</button>
-      <button id="tonToHum">TON → HUM</button>
-
-      <small>
-        Troca simbólica (pré-mainnet).
       </small>
 
       <button class="close">Fechar</button>
