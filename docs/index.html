@@ -9,155 +9,109 @@
 
 <body>
 
+<!-- LANGUAGE SWITCH -->
+<div class="lang-switch">
+  <button onclick="setLang('pt')">PT</button>
+  <span>|</span>
+  <button onclick="setLang('en')">EN</button>
+</div>
+
+<!-- BACKGROUND -->
+<div class="stars"></div>
+
 <!-- HERO -->
 <header class="hero">
   <div class="hero-content">
 
     <div class="coin">
-      <svg width="180" height="180" viewBox="0 0 200 200">
+      <svg width="200" height="200" viewBox="0 0 200 200">
         <defs>
           <radialGradient id="gold" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#fff3c4"/>
+            <stop offset="0%" stop-color="#fff9d6"/>
             <stop offset="60%" stop-color="#e6c97a"/>
-            <stop offset="100%" stop-color="#a67c00"/>
+            <stop offset="100%" stop-color="#8f6b00"/>
           </radialGradient>
         </defs>
-        <circle cx="100" cy="100" r="90" fill="url(#gold)" />
-        <circle cx="100" cy="100" r="78" fill="#0b0b0b"/>
+        <circle cx="100" cy="100" r="92" fill="url(#gold)" />
+        <circle cx="100" cy="100" r="78" fill="#060606"/>
         <text x="100" y="118" text-anchor="middle"
               font-size="48" fill="#e6c97a"
-              font-family="Arial, Helvetica, sans-serif"
-              font-weight="bold">
-          HUM
-        </text>
+              font-weight="bold">HUM</text>
       </svg>
     </div>
 
     <h1>HUMAN</h1>
-    <p class="tagline">
-      Não é mineração de hardware.<br>
-      Não é promessa.<br>
-      <b>É presença humana no tempo.</b>
+
+    <p class="tagline"
+       data-pt="Não é mineração de hardware. Não é promessa. É presença humana no tempo."
+       data-en="Not hardware mining. Not a promise. Human presence over time.">
     </p>
 
   </div>
 </header>
 
-<!-- CONTENT -->
 <main>
 
-  <section class="block">
-    <h2>O que é o HUMAN</h2>
-    <p>
-      HUMAN é um protocolo digital que regista <b>presença humana real</b>
-      ao longo do tempo.
-    </p>
-    <p>
-      Aqui não competem máquinas.<br>
-      Não ganham computadores.<br>
-      <b>Ganham as pessoas que estão presentes.</b>
-    </p>
+  <section class="block fade">
+    <h2 data-pt="Presença, não máquinas"
+        data-en="Presence, not machines"></h2>
+    <p data-pt="HUMAN regista presença humana real. Aqui não ganham computadores."
+       data-en="HUMAN records real human presence. Machines do not compete here."></p>
+    <p data-pt="Todas as pessoas contam da mesma forma."
+       data-en="All humans count equally."></p>
   </section>
 
-  <section class="block highlight">
-    <h2>80.000.000 HUM</h2>
-    <p class="big">
-      Oferta total fixa. Definitiva. Imutável.
-    </p>
+  <section class="block highlight fade">
+    <h2 data-pt="80.000.000 HUM"
+        data-en="80,000,000 HUM"></h2>
+    <p class="big"
+       data-pt="Oferta fixa. Definitiva. Imutável."
+       data-en="Fixed supply. Final. Immutable."></p>
     <ul>
-      <li>Nenhuma moeda pode ser criada a mais</li>
-      <li>Nenhuma moeda pode ser queimada</li>
-      <li>Não existe inflação futura</li>
+      <li data-pt="Não podem ser criadas mais moedas"
+          data-en="No new coins can be created"></li>
+      <li data-pt="Não podem ser queimadas moedas"
+          data-en="Coins cannot be burned"></li>
+      <li data-pt="Escassez permanente"
+          data-en="Permanent scarcity"></li>
     </ul>
-    <p>
-      A escassez não é marketing.<br>
-      <b>Está definida para sempre.</b>
-    </p>
   </section>
 
-  <section class="block">
-    <h2>O que é o HUM</h2>
-    <p>
-      HUM é uma unidade simbólica de presença humana.
-    </p>
-    <p>
-      Representa tempo, continuidade e participação.<br>
-      Não representa promessas.
-    </p>
+  <section class="block fade">
+    <h2 data-pt="Preço inicial"
+        data-en="Initial price"></h2>
+    <p class="big"
+       data-pt="0,05 € por HUM"
+       data-en="€0.05 per HUM"></p>
+    <p data-pt="O preço cresce com a maturidade do sistema."
+       data-en="The price grows as the system matures."></p>
   </section>
 
-  <section class="block highlight">
-    <h2>Preço inicial</h2>
-    <p class="big">
-      0,05 € por HUM
-    </p>
-    <p>
-      O preço cresce automaticamente à medida que:
-    </p>
-    <ul>
-      <li>mais HUM é distribuído</li>
-      <li>mais pessoas entram</li>
-      <li>a oferta disponível diminui</li>
-    </ul>
-    <p>
-      Quanto mais o sistema amadurece,<br>
-      <b>mais valioso se torna o HUM.</b>
-    </p>
-  </section>
-
-  <section class="block">
-    <h2>Regra transparente</h2>
-    <pre>
-Preço = Preço Base × (1 + percentagem distribuída)
-    </pre>
-    <p>
-      Sem surpresas.<br>
-      Sem decisões escondidas.<br>
-      <b>Tudo previsível.</b>
-    </p>
-  </section>
-
-  <section class="block highlight">
-    <h2>Por que entrar agora</h2>
-    <ul>
-      <li>O sistema ainda está no início</li>
-      <li>O preço base é baixo</li>
-      <li>O tempo conta</li>
-      <li>A maturidade é coletiva</li>
-    </ul>
-    <p class="big">
-      No HUMAN, quem chega cedo<br>
-      <b>não corre — permanece.</b>
-    </p>
-  </section>
-
-  <section class="block">
-    <h2>Estado atual</h2>
-    <p class="big">
-      Fase 0 — Génese
-    </p>
-    <p>
-      O protocolo está a nascer.<br>
-      HUM encontra-se dormente.<br>
-      Conversões ainda bloqueadas.
-    </p>
-  </section>
-
-  <section class="legal">
-    <h2>Aviso legal</h2>
-    <p>
-      HUMAN não é um instrumento financeiro.<br>
-      Não representa investimento nem promessa de retorno.<br>
-      A participação é voluntária e experimental.
-    </p>
+  <section class="legal fade">
+    <h2 data-pt="Aviso legal"
+        data-en="Legal notice"></h2>
+    <p data-pt="HUMAN  é um instrumento financeiro. A participação é voluntária."
+       data-en="HUMAN is a financial instrument. Participation is voluntary."></p>
   </section>
 
 </main>
 
 <footer>
-  <p>HUMAN Protocol — presença humana no tempo</p>
+  <p data-pt="HUMAN Protocol — presença humana no tempo"
+     data-en="HUMAN Protocol — human presence over time"></p>
 </footer>
+
+<script>
+  function setLang(lang) {
+    localStorage.setItem("human_lang", lang);
+    document.querySelectorAll("[data-pt]").forEach(el => {
+      el.textContent = el.dataset[lang];
+    });
+  }
+
+  const savedLang = localStorage.getItem("human_lang") || "pt";
+  setLang(savedLang);
+</script>
 
 </body>
   </html>
-
