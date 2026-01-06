@@ -1,131 +1,138 @@
 /* =========================
-   HUMAN — app.js (stable)
+   HUMAN — app.js FINAL
+   Backend-synced
    ========================= */
 
+const API_BASE = "https://TEU_BACKEND_RENDER_URL"; // 🔴 ALTERA SÓ ISTO
 const STORAGE_KEY = "human_app_state_v1";
 
 /* ---------- STATE ---------- */
 let state = {
-  started: true,
+  telegram_id: null,
   hum: 0,
-  time: 0,
-  days: {},
-  tasks: [],
-  taskDay: null,
-  phase: 0,           // 0 | 1 | 2
-  minedPercent: 0     // backend futuramente
+  phase: 0,
+  phase_name: "Génese",
+  mined_percent: 0,
+  hum_price_eur: 0,
+  can_buy: false,
+  can_convert: false,
+  mining_active: false
 };
-
-/* ---------- LOAD ---------- */
-const saved = localStorage.getItem(STORAGE_KEY);
-if (saved) {
-  try {
-    state = { ...state, ...JSON.parse(saved) };
-  } catch {}
-}
 
 /* ---------- HELPERS ---------- */
 const $ = id => document.getElementById(id);
+
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
-function today() {
-  return new Date().toISOString().slice(0, 10);
+
+function load() {
+  const s = localStorage.getItem(STORAGE_KEY);
+  if (s) {
+    try {
+      state = { ...state, ...JSON.parse(s) };
+    } catch {}
+  }
 }
 
-/* ---------- ELEMENTS ---------- */
-const humValue = $("humValue");
-const presenceCount = $("presenceCount");
-const daysCount = $("daysCount");
-const timeSpent = $("timeSpent");
-const stateText = $("stateText");
-const phaseText = $("phaseText");
-const taskList = $("taskList");
-
-/* ---------- START LOOP ---------- */
-let loopStarted = false;
-if (!loopStarted) {
-  loopStarted = true;
-  startMiningLoop();
+/* ---------- TELEGRAM ---------- */
+if (window.Telegram && Telegram.WebApp) {
+  Telegram.WebApp.ready();
+  state.telegram_id = String(Telegram.WebApp.initDataUnsafe?.user?.id || "");
 }
 
-/* ---------- MINING LOOP ---------- */
-function startMiningLoop() {
-  setInterval(() => {
-    state.time++;
-    state.hum += 0.00002;
+/* ---------- FETCH STATUS ---------- */
+async function fetchStatus() {
+  if (!state.telegram_id) return;
 
-    if (state.time >= 300) {
-      state.days[today()] = true;
-    }
+  try {
+    const r = await fetch(
+      `${API_BASE}/hum/status?telegram_id=${state.telegram_id}`
+    );
+    const d = await r.json();
 
-    updatePhase();
+    state.phase = d.phase;
+    state.phase_name = d.phase_name;
+    state.mined_percent = d.mined_percent;
+    state.hum_price_eur = d.hum_price_eur;
+    state.can_buy = d.can_buy;
+    state.can_convert = d.can_convert;
+    state.hum = d.user?.hum || state.hum;
+
     updateUI();
     save();
-  }, 1000);
-}
-
-/* ---------- PHASE LOGIC ---------- */
-function updatePhase() {
-  if (state.minedPercent >= 20) state.phase = 1;
-  if (state.minedPercent >= 40) state.phase = 2;
+  } catch (e) {
+    console.error("STATUS ERROR", e);
+  }
 }
 
 /* ---------- UI ---------- */
 function updateUI() {
-  humValue.textContent = state.hum.toFixed(5) + " HUM";
-  daysCount.textContent = Object.keys(state.days).length;
-  timeSpent.textContent = Math.floor(state.time / 60) + " min";
-  stateText.textContent = Object.keys(state.days).length >= 7
-    ? "consistência"
-    : "presença";
+  $("humValue").textContent = state.hum.toFixed(5) + " HUM";
 
-  presenceCount.textContent = Math.max(1, Math.floor(state.time / 60));
+  $("phaseText").textContent =
+    `Fase ${state.phase} — ${state.phase_name}`;
 
-  phaseText.innerHTML =
-    state.phase === 0
-      ? "Fase 0 — Génese<br>HUM guardado (dormente)"
-      : state.phase === 1
-      ? "Fase 1 — Maturação<br>Levantamentos limitados"
-      : "Fase 2 — Conversão ativa";
+  $("percentText").textContent =
+    state.mined_percent.toFixed(4) + "% minerado";
 
-  renderTasks();
+  $("priceText").textContent =
+    state.hum_price_eur.toFixed(4) + " € / HUM";
+
+  $("buyStatus").textContent = state.can_buy
+    ? "Compra ativa"
+    : "Compra bloqueada";
+
+  $("convertStatus").textContent = state.can_convert
+    ? "Conversão ativa"
+    : "Conversão bloqueada";
+
+  $("humState").textContent =
+    state.can_convert
+      ? "HUM ativo"
+      : "HUM guardado (dormente)";
 }
 
-/* ---------- TASKS ---------- */
-const TASK_POOL = [
-  { text: "Entrar com presença", hum: 0.001 },
-  { text: "Permanecer 3 minutos", hum: 0.0015 },
-  { text: "Permanecer 7 minutos", hum: 0.0025 }
-];
+/* ---------- COMPRA HUM ---------- */
+$("buyHumBtn").onclick = async () => {
+  const amount = Number($("buyHumAmount").value);
 
-function renderTasks() {
-  taskList.innerHTML = "";
-  TASK_POOL.forEach(t => {
-    const li = document.createElement("li");
-    li.textContent = "✔️ " + t.text;
-    taskList.appendChild(li);
-  });
-}
+  if (!amount || amount <= 0) {
+    alert("Quantidade inválida");
+    return;
+  }
 
-/* ---------- MODALS ---------- */
-document.querySelectorAll("[data-open]").forEach(btn => {
-  btn.onclick = () =>
-    document.getElementById(btn.dataset.open).classList.remove("hidden");
-});
-document.querySelectorAll(".close").forEach(btn => {
-  btn.onclick = () =>
-    document.querySelectorAll(".space").forEach(s =>
-      s.classList.add("hidden")
-    );
-});
+  if (!state.can_buy) {
+    alert("Compra bloqueada nesta fase");
+    return;
+  }
 
-/* ---------- SPLASH ---------- */
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    const splash = $("mainnetSplash");
-    if (splash) splash.style.display = "none";
-  }, 2000);
-});
+  try {
+    const r = await fetch(`${API_BASE}/hum/buy`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        telegram_id: state.telegram_id,
+        hum_amount: amount
+      })
+    });
 
-updateUI();
+    const d = await r.json();
+
+    if (d.status === "ok") {
+      state.hum += amount;
+      updateUI();
+      save();
+      alert("HUM creditado com sucesso");
+    } else {
+      alert("Erro na compra");
+    }
+  } catch {
+    alert("Erro de ligação");
+  }
+};
+
+/* ---------- INIT ---------- */
+load();
+fetchStatus();
+setInterval(fetchStatus, 10_000);
