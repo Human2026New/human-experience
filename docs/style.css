@@ -1,253 +1,136 @@
-/* =====================================================
-   HUMAN PROTOCOL — STYLE SYSTEM
-   Filosofia: calma, profundidade, presença, confiança
-   ===================================================== */
-
-/* RESET BÁSICO */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* BODY — FUNDO ZEN */
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: system-ui, sans-serif;
   color: #f2f2f2;
-  line-height: 1.7;
-  overflow-x: hidden;
-
   background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.78),
-      rgba(0, 0, 0, 0.88)
-    ),
-    url("zen-bg.jpg") no-repeat center center fixed;
-
-  background-size: cover;
+    linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,.9)),
+    url("zen-bg.jpg") center/cover fixed;
+  line-height: 1.7;
 }
 
-/* SELETOR DE IDIOMA */
 .lang-switch {
   position: fixed;
   top: 18px;
   right: 20px;
-  z-index: 20;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
+  z-index: 10;
 }
 
 .lang-switch button {
   background: none;
   border: none;
   color: #e6c97a;
-  font-weight: 600;
   cursor: pointer;
-  padding: 2px 6px;
 }
 
-.lang-switch span {
-  color: #666;
-}
-
-/* HERO */
 .hero {
   min-height: 100vh;
-  padding: 60px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-
-  backdrop-filter: blur(2px);
 }
 
-/* LOGO */
 .logo {
   width: 180px;
-  max-width: 70%;
-  margin-bottom: 28px;
-
-  filter:
-    drop-shadow(0 0 20px rgba(230, 201, 122, 0.35))
-    drop-shadow(0 0 40px rgba(230, 201, 122, 0.15));
-
-  animation: breathe 7s ease-in-out infinite;
+  margin-bottom: 20px;
+  animation: breathe 6s ease-in-out infinite;
 }
 
-/* RESPIRAÇÃO DO LOGO */
 @keyframes breathe {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.05)}
 }
 
-/* TÍTULO PRINCIPAL */
-h1 {
-  font-size: clamp(2.8rem, 6vw, 3.8rem);
-  letter-spacing: 4px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-/* TAGLINE */
-.tagline {
-  max-width: 640px;
-  font-size: 1.15rem;
-  color: #d6d6d6;
-  opacity: 0.9;
-}
-
-/* CONTEÚDO */
 main {
   max-width: 980px;
-  margin: 0 auto;
-  padding: 40px 20px 80px;
+  margin: auto;
+  padding: 40px 20px;
 }
 
-/* CARDS / BLOCOS */
 .card {
-  background: rgba(0, 0, 0, 0.58);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 22px;
-
-  padding: 36px 34px;
-  margin-bottom: 38px;
-
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.65),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
-
-  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,.6);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 32px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.6);
+  transition: transform .3s;
 }
 
-/* TÍTULOS DOS BLOCOS */
+.card:hover {
+  transform: translateY(-4px);
+}
+
 .card h2 {
-  font-size: 1.5rem;
-  margin-bottom: 14px;
   color: #f0e4b8;
-  font-weight: 500;
-}
-
-/* TEXTO NORMAL */
-.card p {
-  color: #dddddd;
   margin-bottom: 10px;
 }
 
-/* LISTAS */
-.card ul {
-  margin-top: 10px;
-  padding-left: 20px;
-}
-
-.card li {
-  margin-bottom: 8px;
-  color: #cccccc;
-}
-
-/* TEXTO GRANDE (DESTAQUES) */
 .big {
-  font-size: 1.45rem;
+  font-size: 1.4rem;
   color: #e6c97a;
-  margin-bottom: 6px;
 }
-
-/* BLOCO DE ESTADO */
-.state {
-  text-align: center;
-  padding: 60px 20px;
-}
-
-/* AVISO LEGAL */
-.legal {
-  background: rgba(0, 0, 0, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 18px;
-
-  padding: 28px 26px;
-  font-size: 0.85rem;
-  color: #aaaaaa;
-  text-align: center;
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 32px 20px;
-  font-size: 0.8rem;
-  color: #666;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-/* =========================
-   ANIMAÇÕES DE SCROLL
-   ========================= */
 
 .slide {
   opacity: 0;
-  transform: translateY(45px);
-  transition:
-    opacity 0.9s ease,
-    transform 0.9s ease;
+  transform: translateY(40px);
+  transition: .9s;
 }
 
 .slide.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
-/* =========================
-   RESPONSIVO
-   ========================= */
-
-@media (max-width: 600px) {
-  .card {
-    padding: 30px 24px;
-  }
-
-  h1 {
-    letter-spacing: 2px;
-  }
-  }
-/* ON-CHAIN INFO */
-.chain-box {
-  margin-top: 20px;
+/* plataformas */
+.platforms {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
 }
 
+.platform {
+  text-align: center;
+  color: #e6c97a;
+}
+
+.platform i {
+  font-size: 2.2rem;
+}
+
+/* on-chain */
 .chain-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.chain-row:last-child {
-  border-bottom: none;
-}
-
-.label {
-  color: #aaa;
-  font-size: 0.9rem;
-}
-
-.value {
-  color: #f0e4b8;
-  font-size: 0.95rem;
-  text-align: right;
-  max-width: 60%;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  padding: 10px 0;
 }
 
 .mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.85rem;
-  word-break: break-all;
+  font-family: monospace;
+  cursor: pointer;
 }
 
-.note {
-  margin-top: 14px;
-  font-size: 0.85rem;
-  color: #999;
-                   }
+.center {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.ton-link {
+  color: #e6c97a;
+  text-decoration: none;
+  border: 1px solid #e6c97a;
+  padding: 8px 18px;
+  border-radius: 30px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
