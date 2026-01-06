@@ -1,136 +1,87 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:system-ui,sans-serif;
+  color:#f2f2f2;
+  background:linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.92)),url("zen-bg.jpg") center/cover fixed;
+  line-height:1.7;
 }
 
-body {
-  font-family: system-ui, sans-serif;
-  color: #f2f2f2;
-  background:
-    linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,.9)),
-    url("zen-bg.jpg") center/cover fixed;
-  line-height: 1.7;
+.lang-switch{position:fixed;top:18px;right:20px;z-index:10}
+.lang-switch button{background:none;border:none;color:#e6c97a;cursor:pointer}
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
 
-.lang-switch {
-  position: fixed;
-  top: 18px;
-  right: 20px;
-  z-index: 10;
+.logo{
+  width:180px;
+  margin-bottom:20px;
+  animation:breathe 6s ease-in-out infinite;
 }
 
-.lang-switch button {
-  background: none;
-  border: none;
-  color: #e6c97a;
-  cursor: pointer;
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+main{max-width:980px;margin:auto;padding:40px 20px}
+
+.card{
+  background:rgba(0,0,0,.6);
+  border-radius:22px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 10px 40px rgba(0,0,0,.6);
+  transition:.4s;
 }
 
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.card:hover{transform:translateY(-4px)}
+
+h1{letter-spacing:4px}
+
+h2{color:#f0e4b8;margin-bottom:14px}
+
+.big{font-size:1.4rem;color:#e6c97a}
+
+.center{text-align:center}
+.center-text{text-align:center;font-size:1.1rem}
+
+.slide{opacity:0;transform:translateY(40px);transition:.9s}
+.slide.show{opacity:1;transform:none}
+
+.steps{display:flex;justify-content:space-around;margin-top:20px}
+.step{text-align:center}
+.step span{font-size:1.8rem;color:#e6c97a}
+
+.cta{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 28px;
+  border-radius:30px;
+  border:1px solid #e6c97a;
+  color:#e6c97a;
+  text-decoration:none;
 }
 
-.logo {
-  width: 180px;
-  margin-bottom: 20px;
-  animation: breathe 6s ease-in-out infinite;
+.platforms{display:flex;justify-content:center;gap:30px}
+.platform{text-align:center;color:#e6c97a}
+.platform i{font-size:2.2rem}
+
+.chain-row{
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  padding:10px 0;
 }
 
-@keyframes breathe {
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.05)}
-}
+.mono{font-family:monospace;cursor:pointer}
 
-main {
-  max-width: 980px;
-  margin: auto;
-  padding: 40px 20px;
-}
+.roadmap{display:flex;justify-content:space-around;margin-top:20px}
+.phase{opacity:.4}
+.phase.active{opacity:1;color:#e6c97a}
 
-.card {
-  background: rgba(0,0,0,.6);
-  border-radius: 20px;
-  padding: 32px;
-  margin-bottom: 32px;
-  box-shadow: 0 10px 40px rgba(0,0,0,.6);
-  transition: transform .3s;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-}
-
-.card h2 {
-  color: #f0e4b8;
-  margin-bottom: 10px;
-}
-
-.big {
-  font-size: 1.4rem;
-  color: #e6c97a;
-}
-
-.slide {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: .9s;
-}
-
-.slide.show {
-  opacity: 1;
-  transform: none;
-}
-
-/* plataformas */
-.platforms {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-}
-
-.platform {
-  text-align: center;
-  color: #e6c97a;
-}
-
-.platform i {
-  font-size: 2.2rem;
-}
-
-/* on-chain */
-.chain-row {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(255,255,255,.1);
-  padding: 10px 0;
-}
-
-.mono {
-  font-family: monospace;
-  cursor: pointer;
-}
-
-.center {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.ton-link {
-  color: #e6c97a;
-  text-decoration: none;
-  border: 1px solid #e6c97a;
-  padding: 8px 18px;
-  border-radius: 30px;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #777;
-}
+.legal{font-size:.85rem;color:#aaa;text-align:center}
+footer{text-align:center;color:#777;padding:20px}
