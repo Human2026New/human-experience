@@ -5,9 +5,17 @@
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: #000;
   color: #fff;
   overflow-x: hidden;
+
+  background:
+    linear-gradient(
+      rgba(0,0,0,0.75),
+      rgba(0,0,0,0.85)
+    ),
+    url("zen-bg.jpg") no-repeat center center fixed;
+
+  background-size: cover;
 }
 
 /* LANGUAGE */
@@ -16,6 +24,7 @@ body {
   top: 20px;
   right: 20px;
   z-index: 10;
+  font-size: 0.9rem;
 }
 
 .lang-switch button {
@@ -24,21 +33,6 @@ body {
   color: #e6c97a;
   font-weight: bold;
   cursor: pointer;
-}
-
-/* BACKGROUND */
-.stars {
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
-    radial-gradient(1px 1px at 80% 40%, #aaa, transparent);
-  animation: drift 60s linear infinite;
-  z-index: -1;
-}
-
-@keyframes drift {
-  to { transform: translateY(-200px); }
 }
 
 /* HERO */
@@ -50,23 +44,32 @@ body {
   justify-content: center;
   text-align: center;
   padding: 40px 20px;
+  backdrop-filter: blur(2px);
 }
 
 .logo {
-  width: 160px;
-  margin-bottom: 20px;
-  filter: drop-shadow(0 0 30px rgba(230,201,122,0.4));
+  width: 170px;
+  margin-bottom: 25px;
+  filter: drop-shadow(0 0 35px rgba(230,201,122,0.45));
+  animation: breathe 6s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
 }
 
 h1 {
-  font-size: 3.5rem;
+  font-size: 3.6rem;
   margin: 0;
+  letter-spacing: 3px;
 }
 
 .tagline {
-  margin-top: 15px;
+  margin-top: 18px;
   font-size: 1.2rem;
-  color: #ccc;
+  color: #ddd;
 }
 
 /* GRID */
@@ -80,20 +83,20 @@ h1 {
 }
 
 .card {
-  background: rgba(255,255,255,0.04);
+  background: rgba(0,0,0,0.55);
   border: 1px solid #222;
-  border-radius: 20px;
-  padding: 30px;
+  border-radius: 22px;
+  padding: 35px;
   text-align: center;
-  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+  box-shadow: 0 0 50px rgba(0,0,0,0.6);
 }
 
 .icon {
-  font-size: 2rem;
+  font-size: 2.2rem;
 }
 
 .card h3 {
-  margin-top: 15px;
+  margin-top: 18px;
 }
 
 .card p {
@@ -107,14 +110,14 @@ h1 {
 }
 
 .big {
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   color: #e6c97a;
 }
 
 /* LEGAL */
 .legal {
   border-top: 1px solid #222;
-  padding: 30px 20px;
+  padding: 35px 20px;
   font-size: 0.85rem;
   color: #aaa;
   text-align: center;
@@ -127,4 +130,4 @@ footer {
   font-size: 0.8rem;
   color: #555;
   border-top: 1px solid #222;
-  }
+    }
