@@ -211,3 +211,43 @@ footer {
     letter-spacing: 2px;
   }
   }
+/* ON-CHAIN INFO */
+.chain-box {
+  margin-top: 20px;
+}
+
+.chain-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.chain-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.value {
+  color: #f0e4b8;
+  font-size: 0.95rem;
+  text-align: right;
+  max-width: 60%;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.note {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #999;
+                   }
