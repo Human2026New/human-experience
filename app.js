@@ -1,82 +1,53 @@
-/* =========================
-   HUMAN — app.js v8
-   ========================= */
+const STORAGE_KEY = "human_app_final";
 
-const STORAGE_KEY = "human_app_v8";
+/* CONFIGURAÇÃO DE FASE */
+const HUM_PHASE = 0; // 0 = Génese | 1 = Formação | 2 = Conversão ativa
 
-/* ---------- I18N ---------- */
-const LANG = detectLang();
-
-const TEXT = {
-  pt: {
-    splash_line_1: "Presença humana registada no tempo",
-    splash_line_2: "Não é investimento. Não é promessa.",
-    splash_line_3: "Lançado oficialmente — fase génese",
-
-    phase_0: "Fase 0 — Génese",
-    phase_1: "Fase 1 — Evolução",
-    phase_2: "Fase 2 — Maturidade"
-  },
-  en: {
-    splash_line_1: "Human presence recorded over time",
-    splash_line_2: "Not an investment. Not a promise.",
-    splash_line_3: "Officially launched — genesis phase",
-
-    phase_0: "Phase 0 — Genesis",
-    phase_1: "Phase 1 — Evolution",
-    phase_2: "Phase 2 — Maturity"
-  }
-};
-
-/* ---------- PROTOCOLO ---------- */
-const PROTOCOL = {
-  totalHum: 80000000,
-  minedHum: 0
-};
-
-/* ---------- STATE ---------- */
+/* STATE */
 let state = {
   started: false,
   hum: 0,
   time: 0,
-  days: {}
+  days: {},
+  tasks: [],
+  taskDay: null
 };
 
-/* ---------- LOAD ---------- */
+/* LOAD */
 const saved = localStorage.getItem(STORAGE_KEY);
 if (saved) {
   try { state = { ...state, ...JSON.parse(saved) }; } catch {}
 }
 
-/* ---------- HELPERS ---------- */
 const $ = id => document.getElementById(id);
 
-/* ---------- AUDIO (OPCIONAL) ---------- */
-let heartbeatPlayed = false;
-const heartbeat = new Audio(
-  "https://assets.mixkit.co/sfx/preview/mixkit-heartbeat-fast-483.mp3"
-);
-heartbeat.volume = 0.05;
+/* ELEMENTOS */
+const enterBtn = $("enterBtn");
+const dashboard = $("dashboard");
+const humValue = $("humValue");
+const eurValue = $("eurValue");
+const usdValue = $("usdValue");
+const tonValue = $("tonValue");
+const presenceCount = $("presenceCount");
+const phaseText = $("phaseText");
+const minedPercent = $("minedPercent");
 
-/* ---------- ENTER ---------- */
-$("enterBtn").onclick = () => {
-  $("enterBtn").style.display = "none";
-  $("dashboard").classList.remove("hidden");
+/* ENTER */
+if (enterBtn) {
+  enterBtn.onclick = () => {
+    state.started = true;
+    enterBtn.style.display = "none";
+    dashboard.classList.remove("hidden");
+    startLoop();
+    save();
+  };
+}
 
-  if (!heartbeatPlayed) {
-    heartbeat.play().catch(() => {});
-    heartbeatPlayed = true;
-  }
-
-  startLoop();
-};
-
-/* ---------- LOOP ---------- */
+/* LOOP */
 function startLoop() {
   setInterval(() => {
     state.time++;
     state.hum += 0.00002;
-    PROTOCOL.minedHum += 0.00002;
 
     if (state.time >= 300) {
       state.days[today()] = true;
@@ -87,53 +58,31 @@ function startLoop() {
   }, 1000);
 }
 
-/* ---------- UI ---------- */
+/* UI */
 function updateUI() {
-  $("humValue").textContent = state.hum.toFixed(5) + " HUM";
-  $("daysCount").textContent = Object.keys(state.days).length;
-  $("timeSpent").textContent = Math.floor(state.time / 60) + " min";
+  humValue.textContent = state.hum.toFixed(5) + " HUM";
 
-  const percent =
-    Math.min(100, (PROTOCOL.minedHum / PROTOCOL.totalHum) * 100);
+  eurValue.textContent = "€ 0.00";
+  usdValue.textContent = "$ 0.00";
+  tonValue.textContent = "—";
 
-  let phaseKey = "phase_0";
-  if (percent >= 20) phaseKey = "phase_1";
-  if (percent >= 60) phaseKey = "phase_2";
+  presenceCount.textContent = Math.max(1, Math.floor(state.time / 60));
 
-  $("phaseText").textContent = TEXT[LANG][phaseKey];
-  $("protocolPhase").textContent = TEXT[LANG][phaseKey];
-  $("protocolPercent").textContent = percent.toFixed(4) + "%";
+  phaseText.textContent =
+    HUM_PHASE === 0 ? "Fase 0 — Génese" :
+    HUM_PHASE === 1 ? "Fase 1 — Formação" :
+    "Fase 2 — Conversão";
+
+  minedPercent.textContent = "0.000%";
+
+  $("humStatus").textContent = "HUM guardado (dormente)";
+  $("conversionStatus").textContent =
+    HUM_PHASE < 2
+      ? "Conversão bloqueada até Fase 2"
+      : "Conversão disponível";
 }
 
-/* ---------- I18N APPLY ---------- */
-function applyI18n() {
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.dataset.i18n;
-    if (TEXT[LANG][key]) el.textContent = TEXT[LANG][key];
-  });
-}
-
-/* ---------- UTILS ---------- */
-function today() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
-function detectLang() {
-  try {
-    if (window.Telegram && Telegram.WebApp?.initDataUnsafe?.user?.language_code) {
-      return Telegram.WebApp.initDataUnsafe.user.language_code.startsWith("pt")
-        ? "pt"
-        : "en";
-    }
-  } catch {}
-  return navigator.language.startsWith("pt") ? "pt" : "en";
-}
-
-/* ---------- MODALS ---------- */
+/* MODALS */
 document.querySelectorAll("[data-open]").forEach(btn => {
   btn.onclick = () =>
     document.getElementById(btn.dataset.open).classList.remove("hidden");
@@ -146,11 +95,19 @@ document.querySelectorAll(".close").forEach(btn => {
     );
 });
 
-/* ---------- SPLASH ---------- */
+/* UTILS */
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+/* SPLASH */
 window.addEventListener("load", () => {
-  applyI18n();
   setTimeout(() => {
-    const splash = $("mainnetSplash");
+    const splash = document.getElementById("mainnetSplash");
     if (splash) splash.style.display = "none";
   }, 2000);
 });
