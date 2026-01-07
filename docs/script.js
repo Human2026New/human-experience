@@ -1,130 +1,67 @@
-/***********************
- 🌍 IDIOMA
-************************/
-function setLang(l){
-  localStorage.setItem("l",l);
-  document.querySelectorAll("[data-pt]").forEach(e=>e.innerHTML=e.dataset[l]);
-}
-setLang(localStorage.getItem("l")||"pt");
+let currentLang = "pt";
 
-/***********************
- 🎵 AUDIO
-************************/
-function toggleAudio(){
-  const a=document.getElementById("bgm");
-  a.muted=!a.muted;
-  document.querySelector(".audio-toggle").textContent=a.muted?"🔈":"🔊";
+async function loadLang(lang) {
+    const res = await fetch(`assets/lang/${lang}.json`);
+    const data = await res.json();
+
+    // Apply text directly to matching IDs
+    const keys = Object.keys(data);
+    keys.forEach(k => {
+        const el = document.getElementById(k);
+        if (el) el.innerHTML = data[k];
+    });
+
+    // Fill explore blocks automatically
+    const infoBlocks = document.getElementById("info-blocks");
+    infoBlocks.innerHTML = "";
+    for (let i = 1; i <= 11; i++) {
+        const div = document.createElement("div");
+        div.className = "info-block";
+        div.innerHTML = `<h3>${data[`section_${i}`]}</h3><p>${data[`section_${i}_p`]}</p>`;
+        infoBlocks.appendChild(div);
+    }
+
+    // FAQ
+    const faq = document.getElementById("faq-container");
+    faq.innerHTML = "";
+    for (let f = 1; f <= 6; f++) {
+        const div = document.createElement("div");
+        div.className = "faq-item";
+        div.innerHTML = `<p>${data[`faq_${f}`]}</p>`;
+        faq.appendChild(div);
+    }
+
+    // Whitepaper button:
+    const wp = document.createElement("div");
+    wp.className = "info-block";
+    wp.innerHTML = `
+       <h3>Whitepaper</h3>
+       <button onclick="window.open('whitepaper.pdf','_blank')">
+         ${data.whitepaper}
+       </button>`;
+    infoBlocks.appendChild(wp);
 }
 
-/***********************
- ⚡ DUAL THEME (BTN)
-************************/
-const toggle=document.getElementById("themeToggle");
-toggle.onclick=()=>{
-  document.body.classList.toggle("cyber");
-  localStorage.setItem("cyber",document.body.classList.contains("cyber"));
-}
-if(localStorage.getItem("cyber")==="true")document.body.classList.add("cyber");
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadLang(currentLang);
 
-/***********************
- 📈 GRÁFICO AO VIVO
-************************/
-const ctx=document.getElementById('humChart').getContext('2d');
-let dataPoints=[5,12,22,32,45,50];
-const chart=new Chart(ctx,{
-  type:"line",
-  data:{labels:dataPoints.map((_,i)=>i),
-    datasets:[{label:"Distribuição %",data:dataPoints,borderWidth:2}]},
-  options:{animation:false,scales:{y:{min:0,max:100}}}
+    // Language buttons
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            currentLang = btn.dataset.lang;
+            await loadLang(currentLang);
+        });
+    });
+
+    // Explore system toggle
+    document.getElementById("explore-btn").addEventListener("click", () => {
+        document.querySelector(".hero").classList.add("hidden");
+        document.getElementById("explore-section").classList.remove("hidden");
+    });
+
+    // Back button
+    document.getElementById("back").addEventListener("click", () => {
+        document.getElementById("explore-section").classList.add("hidden");
+        document.querySelector(".hero").classList.remove("hidden");
+    });
 });
-setInterval(()=>{
-  let v=Math.random()*100;
-  dataPoints.push(v);
-  if(dataPoints.length>20)dataPoints.shift();
-  chart.data.labels=dataPoints.map((_,i)=>i);
-  chart.data.datasets[0].data=dataPoints;
-  chart.update();
-  if(v>60)spawnDrop();
-},3000);
-
-/***********************
- 🌌 PARTICLES HUMAN
-************************/
-const pCanvas=document.getElementById("particles");
-const pctx=pCanvas.getContext("2d");
-function resize(){pCanvas.width=innerWidth;pCanvas.height=innerHeight;}
-resize();addEventListener("resize",resize);
-
-let particles=[];
-for(let i=0;i<100;i++)particles.push({
-  x:Math.random()*innerWidth,
-  y:Math.random()*innerHeight,
-  s:Math.random()*2+1});
-
-function drawParticles(){
-  pctx.clearRect(0,0,innerWidth,innerHeight);
-  pctx.fillStyle="rgba(230,201,122,.8)";
-  particles.forEach(p=>{
-    p.y-=p.s*0.2;
-    if(p.y<0)p.y=innerHeight;
-    pctx.fillRect(p.x,p.y,p.s,p.s);
-  });
-  requestAnimationFrame(drawParticles);
-}
-drawParticles();
-
-/***********************
- 💸 AIRDROP VISUAL
-************************/
-const aCanvas=document.getElementById("airdrop");
-const actx=aCanvas.getContext("2d");
-function resize2(){aCanvas.width=innerWidth;aCanvas.height=innerHeight;}
-resize2();addEventListener("resize",resize2);
-
-let drops=[];
-function spawnDrop(){
-  for(let i=0;i<10;i++){
-    drops.push({x:Math.random()*innerWidth,y:0,s:Math.random()*3+1});
-  }
-}
-
-function drawDrops(){
-  actx.clearRect(0,0,innerWidth,innerHeight);
-  actx.fillStyle="rgba(255,215,81,.9)";
-  drops.forEach(d=>{d.y+=d.s*2;actx.fillRect(d.x,d.y,3,3);});
-  drops=drops.filter(d=>d.y<innerHeight);
-  requestAnimationFrame(drawDrops);
-}
-drawDrops();
-
-/***********************
- 🌀 FRACTAL CAÓTICO
-************************/
-const fCanvas=document.getElementById("fractal");
-const fctx=fCanvas.getContext("2d");
-function resize3(){fCanvas.width=innerWidth;fCanvas.height=innerHeight;}
-resize3();addEventListener("resize",resize3);
-
-let t=0;
-function fractal(){
-  t+=0.01;
-  fctx.clearRect(0,0,innerWidth,innerHeight);
-  for(let i=0;i<200;i++){
-    let angle=i+t;
-    let x=(innerWidth/2)+Math.sin(angle*3)*100*Math.sin(t+i);
-    let y=(innerHeight/2)+Math.cos(angle*2)*120*Math.cos(t+i*0.5);
-    fctx.fillStyle= document.body.classList.contains("cyber")
-      ? `rgba(0,255,255,${0.3+Math.sin(i+t)*0.2})`
-      : `rgba(230,201,122,${0.3+Math.sin(i+t)*0.2})`;
-    fctx.fillRect(x,y,2,2);
-  }
-  requestAnimationFrame(fractal);
-}
-fractal();
-
-/***********************
- ✨ SCROLL APPEAR
-************************/
-const slides=document.querySelectorAll(".slide");
-const ob=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add("show")));
-slides.forEach(s=>ob.observe(s));
