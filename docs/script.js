@@ -1,15 +1,15 @@
-/* FRASES MÍSTICAS */
+/* LISTA DE FRASES */
 const frases = [
     "A tua presença molda o tempo.",
-    "Nada é mais valioso do que o agora.",
-    "Só existe o momento que escolhes estar.",
-    "O HUM nasce do humano.",
+    "Não existe futuro sem agora.",
+    "O HUM nasce onde estás consciente.",
+    "Cada dia regressado é um tijolo eterno.",
     "Tu és o pulso do sistema.",
-    "O tempo escuta quem permanece.",
-    "A consciência é a verdadeira moeda.",
-    "Cada dia é um tijolo eterno.",
-    "O mundo muda quando tu marcas presença.",
-    "Humanos são o blockchain original."
+    "A presença é a verdadeira riqueza.",
+    "O mundo escuta quem permanece.",
+    "A humanidade é um só campo vivo.",
+    "Tempo é energia investida.",
+    "HUM é o humano em ação."
 ];
 
 /* PORTAL */
@@ -18,29 +18,30 @@ const ascenderBtn = document.getElementById("ascenderBtn");
 ascenderBtn.addEventListener("click", () => {
     portal.style.opacity = "0";
     portal.style.pointerEvents = "none";
-    setTimeout(()=> portal.style.display="none", 1000);
+    setTimeout(()=> portal.style.display="none", 1200);
 });
 
-/* HERO FRASE */
+/* FRASE RANDOM */
 document.getElementById("heroPhrase").innerText =
     frases[Math.floor(Math.random()*frases.length)];
 
-/* SCROLL REVEAL */
-const sections = document.querySelectorAll("section");
-window.addEventListener("scroll", () => {
-    sections.forEach(sec=>{
-        const top = sec.getBoundingClientRect().top;
-        if(top < window.innerHeight - 120) sec.classList.add("visible");
-    });
-});
-
-/* RADAR FAKE */
+/* RADAR */
 const canvas = document.getElementById("radarCanvas");
 const ctx = canvas.getContext("2d");
-setInterval(()=>{
+function drawRadar(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    for(let i=0;i<80;i++){
-        ctx.fillStyle="rgba(255,255,255,"+(Math.random()+.1)+")";
+    for(let i=0;i<100;i++){
+        ctx.fillStyle=`rgba(255,255,255,${Math.random()})`;
         ctx.fillRect(Math.random()*canvas.width, Math.random()*canvas.height,2,2);
     }
-},500);
+}
+setInterval(drawRadar, 400);
+
+/* REVEAL ON SCROLL */
+const blocks = document.querySelectorAll(".block");
+window.addEventListener("scroll", () => {
+    blocks.forEach(b=>{
+        const top = b.getBoundingClientRect().top;
+        if(top < window.innerHeight - 100) b.style.opacity=1;
+    });
+});
