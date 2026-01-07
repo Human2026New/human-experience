@@ -2,147 +2,185 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HUMAN Protocol</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-<!-- 🎵 AUDIO AMBIENTE -->
+<!-- 🎵 AUDIO -->
 <audio id="bgm" autoplay loop>
   <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Oddio_Overplay/Monplaisir/Land_of_Bliss/Monplaisir_-_07_-_Moon_Bshine.mp3" type="audio/mpeg">
 </audio>
 <div class="audio-toggle" onclick="toggleAudio()">🔊</div>
 
-<!-- LANGUAGE SWITCH -->
+<!-- LANG -->
 <div class="lang-switch">
-  <button onclick="setLang('pt')">PT</button>
-  <span>|</span>
+  <button onclick="setLang('pt')">PT</button> |
   <button onclick="setLang('en')">EN</button>
 </div>
 
 <!-- HERO -->
 <header class="hero">
-  <img src="hum-logo.png" alt="HUM Logo" class="logo">
+  <img src="hum-logo.png" class="logo" alt="HUM" />
   <h1>HUMAN</h1>
   <p class="tagline"
-     data-pt="Presença humana registada no tempo."
-     data-en="Human presence recorded across time."></p>
+     data-pt="Presença humana registada no tempo. Não é hardware. Não é promessa."
+     data-en="Human presence recorded through time. Not hardware. Not a promise."></p>
 </header>
 
 <main>
 
-<!-- (resto é igual… manifesto, intent, o que é, etc…) -->
-
-<!-- 🔥 GRÁFICO LIVE -->
-<section class="card slide">
-  <h2 data-pt="Distribuição ao Vivo"
-      data-en="Live Distribution"></h2>
-  <canvas id="humChart" width="400" height="200"></canvas>
+<section class="card slide manifesto">
+  <p data-pt="Este sistema acompanha o tempo humano."
+     data-en="This system follows human time."></p>
 </section>
 
-<!-- 📱 APPS (igual ao anterior) -->
+<section class="card slide intent">
+  <h2 data-pt="Escolhe como queres entrar"
+      data-en="Choose your entry path"></h2>
 
-<!-- 🌱 FUTURO (igual) -->
+  <div class="intent-grid">
+    <div class="intent-box">
+      <h3 data-pt="Compreender" data-en="Understand"></h3>
+      <p data-pt="Ler regras.<br>Conhecer o sistema."
+         data-en="Read rules.<br>Learn the system."></p>
+      <a href="#whitepaper" class="intent-btn secondary"
+         data-pt="Explorar"
+         data-en="Explore"></a>
+    </div>
 
-<!-- 🧠 TERMINAL SECRETO -->
+    <div class="intent-box active">
+      <h3 data-pt="Participar" data-en="Participate"></h3>
+      <p data-pt="Marcar presença.<br>Acumular HUM."
+         data-en="Mark presence.<br>Collect HUM."></p>
+      <a href="https://human2026new.github.io/human-experience/app/index.html"
+         class="intent-btn primary"
+         data-pt="Entrar"
+         data-en="Enter"></a>
+    </div>
+  </div>
+</section>
+
 <section class="card slide">
-  <h2 data-en="Secret Terminal" data-pt="Terminal Secreto"></h2>
-  <p data-pt="Prima ~ para abrir."
-     data-en="Press ~ to open."></p>
+  <h2 data-pt="O que é?" data-en="What is it?"></h2>
+  <p data-pt="HUM regista presença humana real."
+     data-en="HUM records real human presence."></p>
+</section>
+
+<section class="card slide flow">
+  <h2 data-pt="Como funciona" data-en="How it works"></h2>
+  <div class="flow-steps">
+    <div class="step">Telegram</div><div class="arrow">↓</div>
+    <div class="step" data-pt="Presença" data-en="Presence"></div><div class="arrow">↓</div>
+    <div class="step">HUM</div>
+  </div>
+</section>
+
+<!-- 📈 LIVE GRAPH -->
+<section class="card slide">
+  <h2 data-pt="Distribuição ao Vivo" data-en="Live Distribution"></h2>
+  <canvas id="humChart" height="200"></canvas>
+</section>
+
+<!-- 📱 APPS -->
+<section class="card slide apps">
+  <h2 data-pt="Aplicações" data-en="Apps"></h2>
+  <div class="app-grid">
+    <div class="app-box">
+      <img src="https://cdn-icons-png.flaticon.com/512/888/888857.png" class="app-icon">
+      <span data-pt="Android (Em breve)" data-en="Android (Soon)"></span>
+    </div>
+    <div class="app-box">
+      <img src="https://cdn-icons-png.flaticon.com/512/831/831276.png" class="app-icon">
+      <span data-pt="iOS (Em breve)" data-en="iOS (Soon)"></span>
+    </div>
+    <div class="app-box">
+      <img src="https://cdn-icons-png.flaticon.com/512/888/888859.png" class="app-icon">
+      <span data-pt="Web App" data-en="Web App"></span>
+    </div>
+  </div>
+</section>
+
+<!-- 🌱 FUTURO -->
+<section class="card slide future">
+  <h2 data-pt="Evolução" data-en="Evolution"></h2>
+  <p data-pt="Mercado só com significado humano real."
+     data-en="Markets only with real human meaning."></p>
+</section>
+
+<!-- ⚡ TERMINAL -->
+<section class="card slide">
+  <h2 data-pt="Terminal Secreto" data-en="Secret Terminal"></h2>
+  <p data-pt="Pressiona ~" data-en="Press ~"></p>
+</section>
+
+<section class="card slide legal conscious" id="whitepaper">
+  <h2 data-pt="Aviso" data-en="Notice"></h2>
+  <p data-pt="Não é instrumento financeiro. Sem garantias."
+     data-en="Not a financial instrument. No guarantees."></p>
 </section>
 
 </main>
 
 <footer>
-  <p data-pt="HUMAN Protocol — presença humana no tempo"
-     data-en="HUMAN Protocol — human presence over time"></p>
+  <p data-pt="HUMAN — presença humana no tempo"
+     data-en="HUMAN — human presence over time"></p>
 </footer>
 
 <!-- TERMINAL UI -->
 <div id="terminal" class="terminal hidden">
   <pre id="term-output"></pre>
-  <input id="term-input" type="text" autocomplete="off" placeholder="> comando">
+  <input id="term-input" type="text" autocomplete="off">
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-// 🌍 Multi-idioma
-function setLang(lang) {
-  localStorage.setItem("human_lang", lang);
-  document.querySelectorAll("[data-pt]").forEach(el => el.innerHTML = el.dataset[lang]);
-}
-setLang(localStorage.getItem("human_lang") || "pt");
+// 🌍 Idioma
+function setLang(l){localStorage.setItem("l",l);
+document.querySelectorAll("[data-pt]").forEach(e=>e.innerHTML=e.dataset[l]);}
+setLang(localStorage.getItem("l")||"pt");
 
-// 🎵 Música ON/OFF
-function toggleAudio(){
-  const a=document.getElementById('bgm');
-  a.muted=!a.muted;
-  document.querySelector('.audio-toggle').textContent=a.muted?"🔈":"🔊";
-}
+// 🎵 Música
+function toggleAudio(){const a=document.getElementById("bgm");
+a.muted=!a.muted;document.querySelector(".audio-toggle").textContent=a.muted?"🔈":"🔊";}
 
-// 📈 GRÁFICO REALTIME
+// 📈 Gráfico ao vivo
 const ctx=document.getElementById('humChart').getContext('2d');
-let dataPoints=[1,2,3,4,5].map(()=>Math.random()*20);
+let dataPoints=[5,10,15,20,30,40];
+const chart=new Chart(ctx,{type:"line",data:{labels:dataPoints.map((_,i)=>i),
+datasets:[{label:"Distribuição %",data:dataPoints,borderWidth:2}]},
+options:{animation:false,scales:{y:{min:0,max:100}}}});
+setInterval(()=>{let v=Math.random()*100;
+dataPoints.push(v); if(dataPoints.length>20)dataPoints.shift();
+chart.data.labels=dataPoints.map((_,i)=>i);
+chart.data.datasets[0].data=dataPoints; chart.update();},3000);
 
-const chart=new Chart(ctx,{
-  type:"line",
-  data:{
-    labels:dataPoints.map((_,i)=>i),
-    datasets:[{
-      label:"HUM Distribuído (%)",
-      data:dataPoints,
-      borderWidth:2
-    }]
-  },
-  options:{
-    animation:false,
-    scales:{y:{min:0,max:100}}
-  }
-});
+// 💻 Terminal
+const term=document.getElementById("terminal"),out=document.getElementById("term-output"),inp=document.getElementById("term-input");
+document.addEventListener("keydown",e=>{if(e.key==="~"){term.classList.toggle("hidden");inp.focus();}});
+inp.addEventListener("keydown",e=>{if(e.key==="Enter"){let c=inp.value.trim();
+out.textContent+=`\n> ${c}`;
+if(c==="help")out.textContent+="\nhelp, supply, hum, exit";
+else if(c==="supply")out.textContent+="\nSupply: 80M HUM";
+else if(c==="hum")out.textContent+=`\nDistribuição: ${dataPoints.at(-1).toFixed(2)}%`;
+else if(c==="exit")term.classList.add("hidden");
+else out.textContent+="\nComando desconhecido";
+inp.value=""; out.scrollTop=out.scrollHeight;}});
 
-// Simulação enquanto backend não está público
-setInterval(async()=>{
-  try{
-    let v = Math.random()*100; // substitui por fetch("/hum/status")
-    dataPoints.push(v);
-    if(dataPoints.length>20) dataPoints.shift();
-    chart.data.labels=dataPoints.map((_,i)=>i);
-    chart.data.datasets[0].data=dataPoints;
-    chart.update();
-  }catch(e){}
-},3000);
-
-// 💻 TERMINAL SECRETO
-const terminal=document.getElementById("terminal");
-const output=document.getElementById("term-output");
-const input=document.getElementById("term-input");
-
+// 🔮 Cyber Mode CTRL+N
 document.addEventListener("keydown",e=>{
-  if(e.key==="~"){ terminal.classList.toggle("hidden"); input.focus(); }
-});
+if(e.ctrlKey&&e.key==="n"){document.body.classList.toggle("cyber");
+localStorage.setItem("cyber",document.body.classList.contains("cyber"));}});
+if(localStorage.getItem("cyber")==="true")document.body.classList.add("cyber");
 
-input.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){
-    const cmd=input.value.trim();
-    output.textContent+=`\n> ${cmd}`;
-    if(cmd==="help") output.textContent+=`\ncomandos: help, supply, hum, exit`;
-    else if(cmd==="supply") output.textContent+=`\nTotal: 80,000,000 HUM`;
-    else if(cmd==="hum") output.textContent+=`\nDistribuído: ${dataPoints.at(-1).toFixed(2)}%`;
-    else if(cmd==="exit") terminal.classList.add("hidden");
-    else output.textContent+=`\nComando desconhecido.`;
-    input.value="";
-    output.scrollTop=output.scrollHeight;
-  }
-});
-
-// ✨ Scroll Animations
+// ✨ Scroll effects
 const slides=document.querySelectorAll(".slide");
 const ob=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add("show")));
 slides.forEach(s=>ob.observe(s));
 </script>
 
 </body>
-</html>
+        </html>
