@@ -1,76 +1,54 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HUMAN Network</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUMAN — 2026</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<!-- Boot screen -->
-<div id="boot">
-  <h1 class="boot-title">HUMAN</h1>
-  <button id="ascend-btn">ASCENDER</button>
-</div>
-
-<!-- Portal burst -->
-<div id="portal"></div>
-
-<!-- Mini-language swap -->
-<div id="lang-toggle">
-  <span id="pt-swap">PT</span> | <span id="en-swap">EN</span>
-</div>
-
-<!-- HUD -->
-<div id="hud">
-  <span id="hud-days"></span> |
-  <span id="hud-moon"></span>
-</div>
-
-<!-- Fractal background -->
-<canvas id="fractal"></canvas>
-
-<!-- Main -->
-<section id="main-content" class="hidden">
-  <img src="hum-logo.png" class="hero-logo" alt="HUMAN logo" />
-  <canvas id="avatar" width="120" height="120"></canvas>
-  <button id="save-avatar" class="btn">Guardar Avatar</button>
-
-  <h1 id="choose_how"></h1>
-
-  <div class="card-container">
-    <div class="card">
-      <h2 id="understand"></h2>
-      <p id="read_protocol"></p>
-      <button id="explore-btn" class="btn"></button>
+    <!-- Boot Screen -->
+    <div id="boot-screen">
+        <h1 class="boot-title">HUMAN</h1>
+        <button id="ascender-btn">ASCENDER</button>
     </div>
 
-    <div class="card">
-      <h2 id="participate"></h2>
-      <p id="participate_desc"></p>
-      <button id="app-btn" class="btn">Participar</button>
+    <!-- Main App Container -->
+    <div id="app" class="hidden">
+        
+        <!-- HUD -->
+        <div id="hud">
+            <span id="days-counter">0D</span>
+            <span id="moon-phase">🌕</span>
+            <span id="lang-toggle">PT | EN</span>
+        </div>
+
+        <!-- Hero -->
+        <section id="hero">
+            <div class="hero-content">
+                <h2 data-i18n="choose">Escolhe como queres entrar</h2>
+
+                <div class="card" id="understand-card">
+                    <h3 data-i18n="understandTitle">Compreender</h3>
+                    <p data-i18n="understandText">Aprende o protocolo e o funcionamento.</p>
+                    <button class="open-btn" id="learn-btn" data-i18n="exploreBtn">Explorar</button>
+                </div>
+
+                <div class="card" id="participate-card">
+                    <h3 data-i18n="participateTitle">Participar</h3>
+                    <p data-i18n="participateText">Marca presença e acumula HUM.</p>
+                    <button class="open-btn" id="enter-btn" data-i18n="enterBtn">Entrar</button>
+                </div>
+
+                <button id="radar-btn" class="big-btn" data-i18n="radarBtn">Radar Humano</button>
+                <button id="apps-btn" class="big-btn" data-i18n="appsBtn">Escolher Plataforma</button>
+            </div>
+        </section>
+
     </div>
 
-    <div class="card">
-      <h2 id="create_title"></h2>
-      <p id="create_desc"></p>
-      <button id="explore2-btn" class="btn">Criar</button>
-    </div>
-  </div>
+    <canvas id="particles"></canvas>
 
-  <button id="radar-btn" class="btn small">Ver Radar Humano</button>
-</section>
-
-<!-- Explore section -->
-<section id="explore" class="hidden">
-  <h2 id="explore_title"></h2>
-  <div id="info"></div>
-  <h2 id="faq_title"></h2>
-  <div id="faq"></div>
-  <button id="back" class="btn">Voltar</button>
-</section>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
-    </html>
+</html>
