@@ -2,43 +2,22 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Escolher Plataforma</title>
 <link rel="stylesheet" href="../style.css">
-<style>
-body {
-  background:black;
-  color:#f2d7a6;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  gap:20px;
-  text-align:center;
-}
-a.app-link {
-  padding:12px 22px;
-  background:#f7e6c6;
-  color:black;
-  border-radius:8px;
-  font-weight:bold;
-  text-decoration:none;
-  width:60%;
-  max-width:250px;
-}
-</style>
 </head>
-<body>
+<body class="mini-page">
 
-<h2>Escolhe como entrar</h2>
+<h2>Como queres participar?</h2>
 
-<a class="app-link" href="https://t.me/human_app_bot">Telegram</a>
-<a class="app-link" href="#">Play Store (brevemente)</a>
-<a class="app-link" href="#">Apple App Store (brevemente)</a>
-<a class="app-link" href="../index.html">Web App (agora)</a>
+<div class="picker">
+  <a class="pick-btn" href="https://t.me/human_app_bot" target="_blank">Telegram</a>
+  <a class="pick-btn" href="#">Play Store (em breve)</a>
+  <a class="pick-btn" href="#">App Store (em breve)</a>
+  <a class="pick-btn" href="../index.html">Web App (já)</a>
+</div>
 
-<button class="big-btn" onclick="window.location.href='../index.html'">⬅ Voltar</button>
+<button class="back-btn" onclick="location.href='../index.html'">⬅ Voltar</button>
 
 </body>
 </html>
