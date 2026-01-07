@@ -1,76 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HUMAN Network</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUMAN 2026</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<!-- Boot screen -->
-<div id="boot">
-  <h1 class="boot-title">HUMAN</h1>
-  <button id="ascend-btn">ASCENDER</button>
-</div>
-
-<!-- Portal burst -->
-<div id="portal"></div>
-
-<!-- Mini-language swap -->
-<div id="lang-toggle">
-  <span id="pt-swap">PT</span> | <span id="en-swap">EN</span>
-</div>
-
-<!-- HUD -->
-<div id="hud">
-  <span id="hud-days"></span> |
-  <span id="hud-moon"></span>
-</div>
-
-<!-- Fractal background -->
-<canvas id="fractal"></canvas>
-
-<!-- Main -->
-<section id="main-content" class="hidden">
-  <img src="hum-logo.png" class="hero-logo" alt="HUMAN logo" />
-  <canvas id="avatar" width="120" height="120"></canvas>
-  <button id="save-avatar" class="btn">Guardar Avatar</button>
-
-  <h1 id="choose_how"></h1>
-
-  <div class="card-container">
-    <div class="card">
-      <h2 id="understand"></h2>
-      <p id="read_protocol"></p>
-      <button id="explore-btn" class="btn"></button>
-    </div>
-
-    <div class="card">
-      <h2 id="participate"></h2>
-      <p id="participate_desc"></p>
-      <button id="app-btn" class="btn">Participar</button>
-    </div>
-
-    <div class="card">
-      <h2 id="create_title"></h2>
-      <p id="create_desc"></p>
-      <button id="explore2-btn" class="btn">Criar</button>
-    </div>
+  <!-- LOADING PORTAL -->
+  <div id="portal">
+    <h1>HUMAN</h1>
+    <button id="ascender">ASCENDER</button>
   </div>
 
-  <button id="radar-btn" class="btn small">Ver Radar Humano</button>
-</section>
+  <!-- MAIN WRAPPER -->
+  <div id="main" class="hidden">
+    
+    <!-- TOP BAR -->
+    <header>
+      <span id="moon-phase">○</span>
+      <span id="lang-switch">
+        <button data-lang="pt">PT</button> |
+        <button data-lang="en">EN</button>
+      </span>
+    </header>
 
-<!-- Explore section -->
-<section id="explore" class="hidden">
-  <h2 id="explore_title"></h2>
-  <div id="info"></div>
-  <h2 id="faq_title"></h2>
-  <div id="faq"></div>
-  <button id="back" class="btn">Voltar</button>
-</section>
+    <!-- HERO COIN + TITLE -->
+    <section id="hero">
+      <img src="hum-logo.png" alt="HUM" id="coin">
+      <h2 class="t-hero" data-key="title">Escolhe a tua jornada</h2>
+      <p class="t-sub" data-key="subtitle">Caminho, disciplina e presença</p>
+    </section>
 
-<script src="script.js"></script>
+    <!-- ACTION BUTTONS -->
+    <section id="actions">
+      <button id="btn-understand" class="action t-btn" data-key="btnUnderstand">Compreender</button>
+      <button id="btn-participate" class="action t-btn" data-key="btnParticipate">Participar</button>
+    </section>
+
+    <!-- BIG CHOICE -->
+    <section id="big-choice" class="hidden">
+      <div class="card">
+        <h3 class="t-hero-sm" data-key="understandTitle"></h3>
+        <p class="t-body" data-key="understandDesc"></p>
+        <a href="whitepaper.pdf" class="t-btn small" target="_blank" data-key="btnWhitepaper"></a>
+      </div>
+
+      <div class="card">
+        <h3 class="t-hero-sm" data-key="participateTitle"></h3>
+        <p class="t-body" data-key="participateDesc"></p>
+        <button id="btn-app" class="t-btn small" data-key="btnChooseApp"></button>
+      </div>
+
+      <div class="nav-row">
+        <button id="btn-radar" class="t-btn small" data-key="btnRadar"></button>
+        <a href="human-experience" class="t-btn small" data-key="btnWebApp"></a>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
