@@ -1,244 +1,102 @@
-/* ==========
-   RESET
-========== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Montserrat", sans-serif;
+/* GLOBAL */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family: Arial, sans-serif;
+    color:#f7e6c4;
+    text-align:center;
+    background:black;
+    overflow-x:hidden;
 }
 
-/* ==========
-   GLOBAL
-========== */
-body {
-    background: #000;
-    overflow-x: hidden;
-    color: #f7e6c4;
+/* BACKGROUND IMAGE */
+body:not(.portal-active){
+    background:url("zen-bg.jpg") no-repeat center center fixed;
+    background-size:cover;
 }
 
-/* ==========
-   PORTAL INTRO
-========== */
-#intro-screen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100vh;
-    background: #000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: opacity 1s ease, transform .8s ease;
+/* PORTAL */
+#portal-screen{
+    position:fixed;
+    top:0;left:0;
+    width:100vw;height:100vh;
+    background:black;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    opacity:1;
+    transition:opacity 1.5s ease-out;
+    z-index:10000;
+}
+#portal-screen h1{
+    font-size:3.5rem;
+    letter-spacing:4px;
+}
+#ascender-btn{
+    margin-top:30px;
+    padding:15px 30px;
+    background:#f7e6c4;
+    color:black;
+    border:none;
+    border-radius:10px;
+    font-size:1.2rem;
+    cursor:pointer;
 }
 
-.intro-title {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: #f7e6c4;
-    animation: pulseTitle 2.2s infinite ease-in-out;
+/* MAIN CONTENT HIDDEN UNTIL PORTAL EXIT */
+#main-content{
+    opacity:0;
+    transition:opacity 1.4s ease-in;
 }
 
-@keyframes pulseTitle {
-    0% { opacity: .4; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.08); }
-    100% { opacity: .4; transform: scale(1); }
+/* TOP BAR */
+.top-bar{
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-weight:bold;
 }
 
-#ascend-btn {
-    padding: 12px 32px;
-    font-size: 1.1rem;
-    background: #f7e6c4;
-    border: none;
-    border-radius: 12px;
-    color: #000;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all .3s;
+/* HERO */
+.hero-logo{
+    width:180px;
+    margin-top:20px;
+    animation:pulse 6s infinite;
 }
-#ascend-btn:hover {
-    transform: scale(1.05);
-    background: #ffeecf;
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.08);}
+    100%{transform:scale(1);}
 }
 
-/* ==========
-   MAIN SCREEN
-========== */
-.hidden { display: none; }
-
-#main-screen {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    background-image: url("assets/zen-bg.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding-bottom: 50px;
-    animation: fadeIn 1.4s ease forwards;
+/* CARDS */
+.options{
+    padding:30px 15px;
+}
+.card{
+    background:rgba(0,0,0,0.65);
+    padding:22px;
+    border-radius:15px;
+    margin:15px auto;
+    width:90%;
+    max-width:450px;
+    backdrop-filter:blur(6px);
+}
+.btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:10px 18px;
+    background:#f7e6c4;
+    color:black;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(1.06);}
-    to { opacity: 1; transform: scale(1);}
+/* FOOTER */
+footer{
+    margin:30px 0;
+    font-size:1rem;
+    opacity:0.8;
 }
-
-/* ==========
-   HUD
-========== */
-.hud {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 14px 18px;
-    font-size: 0.9rem;
-}
-
-.lang-btn {
-    background: rgba(0,0,0,0.4);
-    color: #f7e6c4;
-    border: 1px solid #f7e6c4;
-    padding: 3px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    margin-left: 5px;
-}
-.lang-btn:hover {
-    background: rgba(255,255,255,0.2);
-}
-
-/* ==========
-   LOGO
-========== */
-.logo {
-    width: 160px;
-    display: block;
-    margin: 40px auto 20px;
-    filter: drop-shadow(0px 0px 6px #f7e6c4);
-}
-
-/* ==========
-   TEXT
-========== */
-#title-main {
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-top: 10px;
-}
-
-#subtitle-main {
-    text-align: center;
-    font-size: 1rem;
-    opacity: 0.9;
-    margin-bottom: 24px;
-}
-
-/* ==========
-   CARDS
-========== */
-.options {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 28px;
-    padding: 0 20px;
-}
-
-.card {
-    background: rgba(10,10,10,0.4);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 24px;
-    width: 100%;
-    max-width: 340px;
-    border-radius: 18px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0,0,0,.4);
-    animation: floatUp 1s ease;
-}
-
-@keyframes floatUp {
-    from { opacity: 0; transform: translateY(40px);}
-    to { opacity: 1; transform: translateY(0);}
-}
-
-.card-btn {
-    margin-top: 12px;
-    padding: 10px 24px;
-    background: #f7e6c4;
-    color: #000;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all .3s;
-}
-.card-btn:hover {
-    background: #fff0d3;
-    transform: scale(1.05);
-}
-
-/* ==========
-   FOOTER
-========== */
-.footer {
-    text-align: center;
-    font-size: 1.1rem;
-    margin-top: 30px;
-    font-weight: 600;
-    text-shadow: 0px 0px 8px rgba(0,0,0,.6);
-}
-
-/* ==========
-   PARTICLES CANVAS
-========== */
-#particles {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* ==========
-   MINI-PAGES
-========== */
-.mini-page {
-    background: rgba(0,0,0,0.85);
-    color: #f7e6c4;
-    text-align: center;
-    padding: 50px 20px;
-}
-
-.picker, .info-list {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.pick-btn, .back-btn {
-    background: #f7e6c4;
-    color: black;
-    border-radius: 10px;
-    padding: 12px;
-    font-weight: bold;
-    border: none;
-    text-decoration: none;
-    font-size: 1.1rem;
-    cursor: pointer;
-    display:block;
-}
-.pick-btn:hover, .back-btn:hover {
-    background: #ffefc8;
-}
-
-.intro-text {
-    opacity: 0.9;
-    font-size: 1rem;
-    margin-bottom: 20px;
-       }
