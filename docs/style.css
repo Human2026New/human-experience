@@ -13,11 +13,11 @@ html {
     scroll-behavior: smooth;
 }
 
-/* BLUR FOR BACKGROUND CONTENT */
+/* LIGHT BLUR */
 section {
     padding-top: 80px;
     padding-bottom: 80px;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(1px); /* reduced blur */
 }
 
 .hidden { display: none; }
@@ -55,8 +55,8 @@ h1, h2, h3 {
 }
 
 #current-lang img {
-    width: 40px;
-    height: 28px;
+    width: 36px;
+    height: 24px;
     border-radius: 4px;
 }
 
@@ -73,8 +73,8 @@ h1, h2, h3 {
 }
 
 .flag-option {
-    width: 40px;
-    height: 28px;
+    width: 36px;
+    height: 24px;
     border-radius: 4px;
     cursor: pointer;
     transition: transform .2s;
@@ -105,7 +105,7 @@ h1, h2, h3 {
     z-index: 9999;
 }
 
-/* CARDS */
+/* CARDS & CONTENT — transparency reduced */
 .choice-container {
     display: flex;
     flex-direction: column;
@@ -113,7 +113,7 @@ h1, h2, h3 {
 }
 
 .choice-card, .faq-item, .back-btn, .info-block {
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.20); /* was 0.50 */
     border: 1px solid rgba(255,218,127,0.4);
     border-radius: 12px;
     padding: 20px;
@@ -163,4 +163,4 @@ button {
     .choice-card {
         width: 45%;
     }
-    }
+}
