@@ -3,38 +3,84 @@ body {
     font-family: Arial, sans-serif;
     background: #0a0704;
     color: #f4d99b;
+    transition: all .2s ease-in-out;
 }
 
 .hidden { display: none; }
 
-h1, h2, h3 { text-shadow: 0 0 12px #8f6b2b; }
+h1, h2, h3 {
+    text-shadow: 0 0 12px #8f6b2b;
+}
 
 .hero, #explore-section {
     padding: 40px 20px;
     text-align: center;
 }
 
-.lang-selector {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px;
+/* Language dropdown */
+.lang-wrapper {
+    position: fixed;
+    top: 15px;
+    right: 15px;
 }
 
-.lang-btn {
+#current-lang {
     background: none;
-    color: #f4d99b;
-    border: 1px solid #f4d99b;
-    padding: 5px 10px;
-    margin-left: 10px;
-    border-radius: 6px;
+    border: none;
     cursor: pointer;
 }
 
-.lang-btn:hover {
-    background: #f4d99b;
-    color: #0a0704;
+#current-lang img {
+    width: 36px;
+    height: 24px;
+    border-radius: 4px;
 }
 
+#lang-dropdown {
+    margin-top: 5px;
+    background: rgba(30,20,5,0.9);
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #f4d99b88;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    animation: fadeIn .2s ease-in-out;
+}
+
+.flag-option {
+    width: 36px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.flag-option:hover {
+    transform: scale(1.15);
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+    from { opacity:0; transform: translateY(-5px); }
+    to { opacity:1; transform: translateY(0); }
+}
+
+/* Mini banner */
+#lang-banner {
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    background: #f4d99b;
+    color: #0a0704;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    box-shadow: 0 0 12px #f4d99b;
+    animation: fadeIn .3s ease-in-out;
+}
+
+/* Cards and blocks */
 .choice-container {
     display: flex;
     flex-direction: column;
@@ -47,11 +93,23 @@ h1, h2, h3 { text-shadow: 0 0 12px #8f6b2b; }
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 0 15px rgba(255,215,130,0.3);
-    transition: transform .3s;
+    position: relative;
 }
 
+/* TTS icon */
+.tts-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    opacity: .8;
+    font-size: 18px;
+}
+
+/* Hover wiggle */
 .choice-card:hover, .info-block:hover {
     transform: scale(1.03);
+    transition: .3s;
 }
 
 button {
@@ -70,12 +128,8 @@ button {
     width: 100%;
 }
 
-#info-blocks, #faq-container {
-    margin-top: 20px;
-    text-align: left;
-}
-
-@media(min-width: 750px) {
+/* Desktop layout */
+@media(min-width: 700px) {
     .choice-container {
         flex-direction: row;
         justify-content: center;
