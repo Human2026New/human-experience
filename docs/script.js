@@ -61,7 +61,6 @@ async function loadLang(lang) {
     const res = await fetch(`assets/lang/${lang}.json`);
     const data = await res.json();
 
-    // Variantes fractais
     const pick = (key) =>
         data.variants?.[key]
         ? data.variants[key][Math.floor(Math.random()*data.variants[key].length)]
@@ -69,13 +68,11 @@ async function loadLang(lang) {
 
     updateHtmlLang(lang, data.dir==="rtl");
 
-    // Map simple elements
     for (let key in data) {
         const el = document.getElementById(key);
         if (el && typeof data[key] === "string") el.innerHTML = pick(key);
     }
 
-    // Info blocks
     const info = document.getElementById("info-blocks");
     info.innerHTML = "";
     for (let i=1; i<=11; i++) {
@@ -91,7 +88,6 @@ async function loadLang(lang) {
         }
     }
 
-    // Whitepaper block
     const div = document.createElement("div");
     div.className = "info-block";
     div.innerHTML = `
@@ -102,7 +98,6 @@ async function loadLang(lang) {
        </button>`;
     info.appendChild(div);
 
-    // FAQ
     const faq = document.getElementById("faq-container");
     faq.innerHTML = "";
     for (let f=1; f<=6; f++) {
@@ -117,7 +112,6 @@ async function loadLang(lang) {
         }
     }
 
-    // Update flag
     document.getElementById("current-flag").src = `assets/flags/${lang}.png`;
     showBanner(`${lang.toUpperCase()}`);
     localStorage.setItem("lang", lang);
@@ -139,8 +133,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
-    // SCROLL instead of hide
-    const hero = document.querySelector(".hero");
     const explorer = document.getElementById("explore-section");
 
     document.getElementById("explore-btn").addEventListener("click",()=>{
