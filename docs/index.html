@@ -2,63 +2,78 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HUMAN — Presença</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HUMAN 2026</title>
 <link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
 </head>
 
 <body class="portal-active">
 
-<!-- PORTAL SCREEN -->
-<section id="portal-screen">
-    <h1>HUMAN</h1>
-    <button id="ascender-btn">ASCENDER</button>
-</section>
-
-<!-- MAIN SITE -->
-<div id="main-content">
-
-    <!-- TOP BAR -->
-    <header class="top-bar">
-        <div id="day-counter">0D</div>
-        <div id="moon-phase"></div>
-        <div id="lang-switch">
-            <button data-lang="pt">PT</button> |
-            <button data-lang="en">EN</button>
-        </div>
-    </header>
-
-    <!-- HERO -->
-    <section id="hero">
-        <img src="hum-logo.png" class="hero-logo" alt="HUM">
-        <h2 data-i18n="hero_title">Escolhe a tua jornada</h2>
-        <p data-i18n="hero_sub">Caminho, disciplina e presença</p>
-    </section>
-
-    <!-- BUTTON BOXES -->
-    <section class="options">
-        <div class="card">
-            <h3 data-i18n="learn_title">Compreender</h3>
-            <p data-i18n="learn_desc">Ler o protocolo. Entender as regras. Conhecer o funcionamento.</p>
-            <a class="btn" href="app/info.html" data-i18n="btn_learn">Explorar</a>
-        </div>
-
-        <div class="card">
-            <h3 data-i18n="join_title">Participar</h3>
-            <p data-i18n="join_desc">Marcar presença. Acumular HUM. Fazer parte do processo.</p>
-            <a class="btn" href="app/choose.html" data-i18n="btn_join">Entrar</a>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-        HUMAN — 2026
-    </footer>
+<!-- ==========================================
+     PORTAL ASCENDER (Tela preta com Zoom-Luz)
+=========================================== -->
+<div id="portal">
+    <h1 id="portal-title">HUMAN</h1>
+    <button id="portal-btn">ASCENDER</button>
 </div>
 
-<!-- AUDIO -->
-<audio id="portal-sound" src="assets/sound/portal.mp3"></audio>
+<!-- ==========================================
+     HERO PRINCIPAL (Logo + frase aleatória)
+=========================================== -->
+<section id="hero" class="section">
+    <img src="hum-logo.png" class="hero-logo" alt="HUM Logo">
+    <h1 id="hero-title">HUMAN</h1>
+    <p id="mystic-line" class="mystic-text"></p>
+    <div class="scroll-down">▼</div>
+</section>
 
-<script src="script.js"></script>
+<!-- ==========================================
+     HUD 365 CONSTELAÇÃO
+=========================================== -->
+<section id="hud" class="section hidden">
+    <h2 class="section-title">A tua presença</h2>
+    <div id="progress-container">
+        <div id="progress-line"></div>
+    </div>
+</section>
+
+<!-- ==========================================
+     APP PICKER (Escolhe destino)
+=========================================== -->
+<section id="apps" class="section hidden">
+    <h2 class="section-title">Escolhe a tua plataforma</h2>
+    <div class="app-grid">
+        <a href="https://t.me/HumanPresenceBot" class="app-btn">Telegram</a>
+        <a href="#" class="app-btn inactive">Play Store (brevemente)</a>
+        <a href="#" class="app-btn inactive">App Store (brevemente)</a>
+        <a href="#" class="app-btn">Web App</a>
+    </div>
+</section>
+
+<!-- ==========================================
+     RADAR HUMANO (Visual Simples)
+=========================================== -->
+<section id="radar" class="section hidden">
+    <h2 class="section-title">Rede Humana Global</h2>
+    <canvas id="radar-canvas"></canvas>
+    <p class="radar-text">Milhares de humanos presentes no tempo.</p>
+</section>
+
+<!-- ==========================================
+     AVATAR FRACTAL (no canto)
+=========================================== -->
+<div id="avatar">
+    <img src="avatar.svg" alt="Avatar Fractal">
+</div>
+
+<!-- ==========================================
+     TOP-RIGHT LANGUAGE SWITCH
+=========================================== -->
+<div id="lang-switch">
+    <button class="lang-btn" data-lang="pt">PT</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+</div>
+
 </body>
-    </html>
+</html>
