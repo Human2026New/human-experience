@@ -1,70 +1,205 @@
-/* RESET */
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+/* ==========
+   RESET
+========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
 
-/* COLORS */
-:root { --gold:#ecd8a1; --glass:rgba(0,0,0,0.55) }
-
+/* ==========
+   GLOBAL
+========== */
 body {
-  background: url("zen-bg.jpg") no-repeat center center fixed;
-  background-size: cover;
-  color: var(--gold);
-  text-shadow: 0 0 8px black;
-  overflow-x:hidden;
+    background: #000;
+    overflow-x: hidden;
+    color: #f7e6c4;
 }
 
-/* PORTAL SCREEN */
-#portal {
-  height:100vh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  background:black;
+/* ==========
+   PORTAL INTRO
+========== */
+#intro-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 1s ease;
 }
 
-#portal h1 {font-size:48px;letter-spacing:6px}
-#portal button {
-  margin-top:30px;padding:14px 26px;
-  background:var(--gold);color:black;border:0;
-  border-radius:10px;font-size:18px;
-}
-.hidden {display:none}
-
-/* TOP BAR */
-header {
-  width:100%;padding:10px 18px;
-  display:flex;justify-content:space-between;align-items:center;
+.intro-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #f7e6c4;
+    animation: pulseTitle 2.2s infinite ease-in-out;
 }
 
-/* HERO */
-#hero{text-align:center;padding-top:50px;margin-bottom:35px}
-#coin{width:180px;animation:float 5s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-
-.t-hero{font-size:28px;margin-top:20px}
-.t-sub{opacity:0.85;margin-top:6px}
-
-/* CARDS */
-#actions{text-align:center;margin-top:20px}
-.action{margin:10px 0;font-size:20px}
-
-#big-choice{padding:22px;text-align:center}
-.card{
-  background:var(--glass);backdrop-filter:blur(12px);
-  border-radius:18px;padding:22px;margin-bottom:18px;
+@keyframes pulseTitle {
+    0% { opacity: .4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
+    100% { opacity: .4; transform: scale(1); }
 }
 
-/* BUTTONS */
-.t-btn{
-  background:var(--gold);color:black;
-  padding:10px 20px;border-radius:10px;border:0;
-  font-weight:bold;margin-top:10px;
+#ascend-btn {
+    padding: 12px 32px;
+    font-size: 1.1rem;
+    background: #f7e6c4;
+    border: none;
+    border-radius: 12px;
+    color: #000;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all .3s;
 }
-.small{font-size:15px}
+#ascend-btn:hover {
+    transform: scale(1.05);
+    background: #ffeecf;
+}
 
-/* NAV ROW */
-.nav-row {
-  display:flex;justify-content:center;gap:14px;margin-top:8px;
+/* ==========
+   MAIN SCREEN
+========== */
+.hidden { display: none; }
+
+#main-screen {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-image: url("assets/zen-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-bottom: 50px;
+    animation: fadeIn 1.4s ease forwards;
 }
 
-/* MOBILE */
-@media(max-width:480px){
-  #coin{width:150px}
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(1.06);}
+    to { opacity: 1; transform: scale(1);}
 }
+
+/* ==========
+   HUD
+========== */
+.hud {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 18px;
+    font-size: 0.9rem;
+}
+
+.lang-btn {
+    background: rgba(0,0,0,0.4);
+    color: #f7e6c4;
+    border: 1px solid #f7e6c4;
+    padding: 3px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 5px;
+}
+.lang-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* ==========
+   LOGO
+========== */
+.logo {
+    width: 160px;
+    display: block;
+    margin: 40px auto 20px;
+    filter: drop-shadow(0px 0px 6px #f7e6c4);
+}
+
+/* ==========
+   TEXT
+========== */
+#title-main {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+#subtitle-main {
+    text-align: center;
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 24px;
+}
+
+/* ==========
+   CARDS
+========== */
+.options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 0 20px;
+}
+
+.card {
+    background: rgba(10,10,10,0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 24px;
+    width: 100%;
+    max-width: 340px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,.4);
+    animation: floatUp 1s ease;
+}
+
+@keyframes floatUp {
+    from { opacity: 0; transform: translateY(40px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+.card-btn {
+    margin-top: 12px;
+    padding: 10px 24px;
+    background: #f7e6c4;
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .3s;
+}
+.card-btn:hover {
+    background: #fff0d3;
+    transform: scale(1.05);
+}
+
+/* ==========
+   FOOTER
+========== */
+.footer {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 30px;
+    font-weight: 600;
+    text-shadow: 0px 0px 8px rgba(0,0,0,.6);
+}
+
+/* ==========
+   PARTICLES CANVAS
+========== */
+#particles {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
