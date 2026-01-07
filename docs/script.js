@@ -1,65 +1,46 @@
-const phrases = [
-"Tu és HUMAN porque estás presente.",
-"A tua presença molda o tempo.",
-"O futuro nasce nos teus dias.",
-"A disciplina revela a consciência.",
-"O tempo humano é ouro invisível.",
-"A constância vence o caos.",
-"O caminho cria quem caminha.",
-"Nada muda se tu não mudares.",
-"A presença é a chave do legado.",
-"A jornada é o destino.",
-"A luz nasce na repetição.",
-"O invisível registra-te.",
-"O hábito cria o humano.",
-"Um dia de cada vez, para sempre.",
-"Existir é participar.",
-"A tua marca permanece.",
-"O tempo é o espelho da vontade.",
-"A Humanidade conta contigo."
+/* FRASES MÍSTICAS */
+const frases = [
+    "A tua presença molda o tempo.",
+    "Nada é mais valioso do que o agora.",
+    "Só existe o momento que escolhes estar.",
+    "O HUM nasce do humano.",
+    "Tu és o pulso do sistema.",
+    "O tempo escuta quem permanece.",
+    "A consciência é a verdadeira moeda.",
+    "Cada dia é um tijolo eterno.",
+    "O mundo muda quando tu marcas presença.",
+    "Humanos são o blockchain original."
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
-    const ascenderBtn = document.getElementById("ascenderBtn");
-    const portal = document.getElementById("portal");
-    const hero = document.getElementById("hero");
-    const heroPhrase = document.getElementById("heroPhrase");
-    const avatar = document.getElementById("avatar");
-    const radarBox = document.getElementById("radarBox");
-    const platformBox = document.getElementById("platformBox");
-
-    ascenderBtn.addEventListener("click", () => {
-        portal.classList.add("fade-out");
-        setTimeout(() => {
-            portal.style.display = "none";
-            hero.classList.remove("hidden");
-        }, 800);
-
-        const random = phrases[Math.floor(Math.random() * phrases.length)];
-        heroPhrase.textContent = random;
-    });
-
-    // Scroll reveal
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) e.target.classList.remove("hidden");
-        });
-    }, { threshold: 0.2 });
-
-    document.querySelectorAll("section, footer").forEach(sec => {
-        observer.observe(sec);
-    });
-
-    // Show HUD items at scroll
-    const hudObserver = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                avatar.classList.remove("hidden");
-                radarBox.classList.remove("hidden");
-                platformBox.classList.remove("hidden");
-            }
-        });
-    }, { threshold: 0.5 });
-
-    hudObserver.observe(document.body);
+/* PORTAL */
+const portal = document.getElementById("portal");
+const ascenderBtn = document.getElementById("ascenderBtn");
+ascenderBtn.addEventListener("click", () => {
+    portal.style.opacity = "0";
+    portal.style.pointerEvents = "none";
+    setTimeout(()=> portal.style.display="none", 1000);
 });
+
+/* HERO FRASE */
+document.getElementById("heroPhrase").innerText =
+    frases[Math.floor(Math.random()*frases.length)];
+
+/* SCROLL REVEAL */
+const sections = document.querySelectorAll("section");
+window.addEventListener("scroll", () => {
+    sections.forEach(sec=>{
+        const top = sec.getBoundingClientRect().top;
+        if(top < window.innerHeight - 120) sec.classList.add("visible");
+    });
+});
+
+/* RADAR FAKE */
+const canvas = document.getElementById("radarCanvas");
+const ctx = canvas.getContext("2d");
+setInterval(()=>{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let i=0;i<80;i++){
+        ctx.fillStyle="rgba(255,255,255,"+(Math.random()+.1)+")";
+        ctx.fillRect(Math.random()*canvas.width, Math.random()*canvas.height,2,2);
+    }
+},500);
