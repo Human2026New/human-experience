@@ -1,116 +1,71 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HUMAN 2026</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+/* RESET */
+* {margin:0;padding:0;box-sizing:border-box;}
+body {font-family:Arial, sans-serif;color:#f7e6c4;background:black;overflow-x:hidden;}
+html {scroll-behavior:smooth;}
 
-<body>
+.hidden {opacity:0;transform:translateY(40px);transition:1s ease;}
+.visible {opacity:1;transform:translateY(0);}
 
-    <!-- PORTAL -->
-    <div id="portal">
-        <h1 class="portal-title">HUMAN</h1>
-        <button id="ascenderBtn">ASCENDER</button>
-    </div>
+/* PORTAL */
+#portal {
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background:black;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;z-index:9999;
+}
 
-    <!-- HERO -->
-    <section id="hero">
-        <div class="hero-inner">
-            <img src="hum-logo.png" class="hero-logo">
-            <h1>HUMAN</h1>
-            <p id="heroPhrase"></p>
-            <div class="scroll-indicator">⬇</div>
-        </div>
-    </section>
+.portal-title {
+    font-size:3.5rem;font-weight:bold;
+    color:#f7e6c4;
+    text-shadow:0 0 20px #d4b47c;
+    animation:portalGlow 2s infinite alternate;
+}
 
-    <!-- HUD AVATAR -->
-    <img id="avatar" src="assets/icons/avatar-fractal.png">
+#ascenderBtn {
+    margin-top:30px;background:#f7e6c4;color:black;
+    padding:14px 30px;border-radius:12px;font-weight:bold;
+    cursor:pointer;border:none;font-size:1.2rem;
+    box-shadow:0 0 20px rgba(255,220,150,0.5);
+}
+#ascenderBtn:hover {transform:scale(1.05);}
 
-    <!-- BLOCO PLATFORMAS -->
-    <section class="hidden">
-        <div class="card big">
-            <h2>Escolhe a tua plataforma</h2>
-            <button class="button" onclick="window.open('https://t.me/HUMBot','_blank')">Telegram</button>
-            <button class="button disabled">Play Store (brevemente)</button>
-            <button class="button disabled">Apple (brevemente)</button>
-        </div>
-    </section>
+/* KEYFRAMES */
+@keyframes portalGlow {0%{opacity:.7}100%{opacity:1}}
 
-    <!-- BLOCO RADAR -->
-    <section class="hidden">
-        <div class="card big">
-            <h2>Rede Humana Global</h2>
-            <p>Milhares de humanos presentes no tempo.</p>
-            <canvas id="radarCanvas" width="800" height="300"></canvas>
-        </div>
-    </section>
+/* HERO */
+#hero {
+    background:url('zen-bg.jpg') center/cover no-repeat fixed;
+    height:100vh;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:20px;
+}
 
-    <!-- BLOCO INFORMAÇÃO -->
-    <section class="hidden">
+.hero-inner {color:#f7e6c4;text-shadow:0 0 15px black;}
+.hero-logo {width:120px;margin-bottom:10px;}
+.scroll-indicator {margin-top:10px;animation:float 2s infinite ease-in-out;}
+@keyframes float {0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
 
-        <div class="card big">
-            <h2>O que é o HUMAN?</h2>
-            <p>HUMAN é um sistema digital que regista presença humana real ao longo do tempo.</p>
-            <p>Não é mineração de hardware. Não é competição. Não é jogo.</p>
-        </div>
+/* CARDS */
+section {padding:60px 20px;display:flex;flex-direction:column;gap:30px;}
+.card {
+    background:rgba(0,0,0,0.75);
+    border-radius:16px;padding:30px;color:#f7e6c4;
+    backdrop-filter:blur(8px);
+    border:1px solid rgba(255,220,150,0.25);
+    max-width:900px;margin:auto;text-align:center;
+}
+.big {padding:40px;}
 
-        <div class="card big">
-            <h2>Para que serve o HUM?</h2>
-            <p>HUM é um marcador digital de presença — tempo humano consciente registado.</p>
-            <p>Não representa ações, juros ou promessas financeiras.</p>
-        </div>
+.button {
+    margin:10px auto;padding:14px 20px;font-weight:bold;
+    border-radius:10px;border:none;background:#f7e6c4;color:black;
+    cursor:pointer;max-width:300px;display:block;
+}
+.disabled {opacity:.4;cursor:default;}
 
-        <div class="card big">
-            <h2>Como funciona</h2>
-            <div class="chips">
-                <span class="chip">Telegram</span>
-                <span class="chip">Presença</span>
-                <span class="chip">HUM</span>
-            </div>
-            <p>O sistema acompanha a presença diária humana e evolui com o coletivo.</p>
-        </div>
+/* HUD AVATAR */
+#avatar {
+    position:fixed;bottom:18px;right:18px;width:60px;
+    opacity:.9;transition:.5s;
+}
 
-        <div class="card big">
-            <h2>Pulso do Sistema</h2>
-            <p><strong>Estado:</strong> Ativo</p>
-            <p><strong>Fase:</strong> Génese</p>
-            <p><strong>Distribuição:</strong> Em progresso</p>
-            <p><strong>Conversão:</strong> Bloqueada</p>
-        </div>
-
-        <div class="card big">
-            <h2>Oferta total</h2>
-            <p>80.000.000 HUM</p>
-            <p>Não podem ser criadas ou queimadas moedas.</p>
-        </div>
-
-        <div class="card big">
-            <h2>Preço do HUM</h2>
-            <p>Preço inicial: 0,05 € por HUM.</p>
-            <p>O preço aumenta com percentagem distribuída.</p>
-        </div>
-
-        <div class="card big">
-            <h2>Fases do sistema</h2>
-            <ul>
-                <li>Fase 0 — Génese</li>
-                <li>Fase 1 — Presença</li>
-                <li>Fase 2 — Circulação (futuro)</li>
-            </ul>
-        </div>
-
-        <div class="card big">
-            <h2>Aviso de Consciência</h2>
-            <p>HUMAN não é instrumento financeiro.</p>
-            <p>É um registo temporal de presença humana.</p>
-        </div>
-
-    </section>
-
-    <footer>HUMAN — 2026</footer>
-
-    <script src="script.js"></script>
-</body>
-</html>
+/* FOOTER */
+footer {text-align:center;padding:40px 10px;color:#f7e6c4;font-size:1.1rem;}
