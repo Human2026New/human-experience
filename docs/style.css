@@ -1,9 +1,23 @@
+/* GLOBAL */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #0a0704;
+    background: url("zen-bg.jpg") no-repeat center center fixed;
+    background-size: cover;
     color: #f4d99b;
     transition: all .2s ease-in-out;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* BLUR FOR BACKGROUND CONTENT */
+section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    backdrop-filter: blur(3px);
 }
 
 .hidden { display: none; }
@@ -12,16 +26,26 @@ h1, h2, h3 {
     text-shadow: 0 0 12px #8f6b2b;
 }
 
-.hero, #explore-section {
-    padding: 40px 20px;
-    text-align: center;
+/* HERO LOGO FLOAT */
+.hero-logo {
+    width: 160px;
+    display: block;
+    margin: 0 auto 25px auto;
+    filter: drop-shadow(0 0 18px #f4d99b);
+    animation: float 3s ease-in-out infinite alternate;
 }
 
-/* Language dropdown */
+@keyframes float {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-10px); }
+}
+
+/* FLAG DROPDOWN */
 .lang-wrapper {
     position: fixed;
     top: 15px;
     right: 15px;
+    z-index: 9999;
 }
 
 #current-lang {
@@ -31,13 +55,13 @@ h1, h2, h3 {
 }
 
 #current-lang img {
-    width: 36px;
-    height: 24px;
+    width: 40px;
+    height: 28px;
     border-radius: 4px;
 }
 
 #lang-dropdown {
-    margin-top: 5px;
+    margin-top: 6px;
     background: rgba(30,20,5,0.9);
     padding: 8px;
     border-radius: 6px;
@@ -49,8 +73,8 @@ h1, h2, h3 {
 }
 
 .flag-option {
-    width: 36px;
-    height: 24px;
+    width: 40px;
+    height: 28px;
     border-radius: 4px;
     cursor: pointer;
     transition: transform .2s;
@@ -66,21 +90,22 @@ h1, h2, h3 {
     to { opacity:1; transform: translateY(0); }
 }
 
-/* Mini banner */
+/* MINI BANNER */
 #lang-banner {
     position: fixed;
     top: 60px;
     right: 10px;
     background: #f4d99b;
     color: #0a0704;
-    padding: 6px 10px;
+    padding: 6px 12px;
     border-radius: 6px;
     font-weight: bold;
     box-shadow: 0 0 12px #f4d99b;
     animation: fadeIn .3s ease-in-out;
+    z-index: 9999;
 }
 
-/* Cards and blocks */
+/* CARDS */
 .choice-container {
     display: flex;
     flex-direction: column;
@@ -88,7 +113,7 @@ h1, h2, h3 {
 }
 
 .choice-card, .faq-item, .back-btn, .info-block {
-    background: rgba(255,255,255,0.05);
+    background: rgba(0,0,0,0.5);
     border: 1px solid rgba(255,218,127,0.4);
     border-radius: 12px;
     padding: 20px;
@@ -96,7 +121,13 @@ h1, h2, h3 {
     position: relative;
 }
 
-/* TTS icon */
+/* HOVER */
+.choice-card:hover, .info-block:hover {
+    transform: scale(1.03);
+    transition: .3s;
+}
+
+/* TTS ICON */
 .tts-btn {
     position: absolute;
     top: 10px;
@@ -106,12 +137,7 @@ h1, h2, h3 {
     font-size: 18px;
 }
 
-/* Hover wiggle */
-.choice-card:hover, .info-block:hover {
-    transform: scale(1.03);
-    transition: .3s;
-}
-
+/* BUTTONS */
 button {
     margin-top: 10px;
     padding: 10px 15px;
@@ -128,7 +154,7 @@ button {
     width: 100%;
 }
 
-/* Desktop layout */
+/* Desktop spacing */
 @media(min-width: 700px) {
     .choice-container {
         flex-direction: row;
@@ -137,4 +163,4 @@ button {
     .choice-card {
         width: 45%;
     }
-        }
+    }
