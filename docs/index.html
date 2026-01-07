@@ -9,6 +9,16 @@
 
 <body>
 
+<!-- Boot Screen -->
+<div id="boot">
+  <div id="boot-logo">HUMAN</div>
+  <div id="boot-sub">Awakening...</div>
+</div>
+
+<!-- Portal -->
+<div id="portal"></div>
+
+<!-- Language Flags -->
 <header>
   <div class="lang-bar">
     <img class="flag-option" data-lang="pt" src="assets/flags/pt.png">
@@ -22,28 +32,45 @@
   </div>
 </header>
 
+<!-- Fractal Background -->
 <canvas id="fractal-canvas"></canvas>
 
-<div id="lang-banner" class="hidden"></div>
+<!-- Mini HUD -->
+<div id="mini-hud">
+  <span id="hud-presence"></span> | 
+  <span id="hud-moon"></span> | 
+  <span id="hud-energy"></span>
+</div>
 
+<!-- Radar -->
+<canvas id="city-map"></canvas>
+
+<!-- Main -->
 <section class="hero">
     <img src="hum-logo.png" class="hero-logo" alt="HUMAN Logotipo">
     <canvas id="avatar-canvas"></canvas>
+    <button id="export-avatar" class="save-btn">Guardar Avatar</button>
 
     <h1 id="choose_how"></h1>
 
     <div class="choice-container">
-        <div class="choice-card">
-            <h2 id="understand"></h2>
-            <p id="read_protocol"></p>
-            <button id="explore-btn"></button>
-        </div>
+      <div class="choice-card" id="explore-card">
+        <h2 id="understand"></h2>
+        <p id="read_protocol"></p>
+        <button id="explore-btn"></button>
+      </div>
 
-        <div class="choice-card">
-            <h2 id="participate"></h2>
-            <p id="participate_desc"></p>
-            <button id="enter-button"></button>
-        </div>
+      <div class="choice-card" id="participate-card">
+        <h2 id="participate"></h2>
+        <p id="participate_desc"></p>
+        <button id="enter-button"></button>
+      </div>
+
+      <div class="choice-card" id="create-card">
+        <h2 id="create_title">Criar</h2>
+        <p id="create_desc">Junta-te ao movimento — arte, código, intenção.</p>
+        <button id="create-btn">Criar</button>
+      </div>
     </div>
 </section>
 
@@ -57,8 +84,7 @@
     <button class="back-btn" id="back"></button>
 </section>
 
-<div id="presence-counter" class="hud hidden"></div>
-<div id="moon-phase" class="hud hidden"></div>
+<div id="lang-banner" class="hidden"></div>
 
 <script src="script.js"></script>
 </body>
