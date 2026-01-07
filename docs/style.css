@@ -30,7 +30,7 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    transition: opacity 1s ease;
+    transition: opacity 1s ease, transform .8s ease;
 }
 
 .intro-title {
@@ -202,4 +202,43 @@ body {
     width: 100%; height: 100%;
     pointer-events: none;
     z-index: 0;
-  }
+}
+
+/* ==========
+   MINI-PAGES
+========== */
+.mini-page {
+    background: rgba(0,0,0,0.85);
+    color: #f7e6c4;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.picker, .info-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pick-btn, .back-btn {
+    background: #f7e6c4;
+    color: black;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: bold;
+    border: none;
+    text-decoration: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display:block;
+}
+.pick-btn:hover, .back-btn:hover {
+    background: #ffefc8;
+}
+
+.intro-text {
+    opacity: 0.9;
+    font-size: 1rem;
+    margin-bottom: 20px;
+       }
