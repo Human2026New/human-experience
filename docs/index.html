@@ -1,65 +1,133 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HUMAN 2026</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HUMAN Protocol</title>
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-  <!-- LOADING PORTAL -->
-  <div id="portal">
-    <h1>HUMAN</h1>
-    <button id="ascender">ASCENDER</button>
+
+<!-- 🎵 MÚSICA -->
+<audio id="bgm" autoplay loop>
+  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Oddio_Overplay/Monplaisir/Land_of_Bliss/Monplaisir_-_07_-_Moon_Bshine.mp3">
+</audio>
+
+<!-- 🔊 AUDIO TOGGLE -->
+<div class="audio-toggle" onclick="toggleAudio()">🔊</div>
+
+<!-- 🌐 IDIOMA -->
+<div class="lang-switch">
+  <button onclick="setLang('pt')">PT</button> |
+  <button onclick="setLang('en')">EN</button>
+</div>
+
+<!-- 🎨 TEMA -->
+<button id="themeToggle" class="theme-btn">⚡</button>
+
+<!-- 🌌 FRACTAL -->
+<canvas id="fractal"></canvas>
+
+<!-- 🌠 PARTÍCULAS -->
+<canvas id="particles"></canvas>
+
+<!-- 💸 AIRDROP -->
+<canvas id="airdrop"></canvas>
+
+<header class="hero">
+  <img src="hum-logo.png" class="logo" />
+  <h1>HUMAN</h1>
+  <p class="tagline"
+     data-pt="Presença humana registada no tempo. Não é hardware. Não é promessa."
+     data-en="Human presence recorded over time. Not hardware. Not a promise.">
+  </p>
+</header>
+
+<main>
+
+<section class="card slide manifesto">
+  <p data-pt="Este sistema foi criado para acompanhar o tempo humano. Não para acelerar ganhos."
+     data-en="This system was created to accompany human time. Not accelerate gains."></p>
+</section>
+
+<section class="card slide intent">
+  <h2 data-pt="Escolhe como queres entrar" data-en="Choose how you want to enter"></h2>
+  <div class="intent-grid">
+    <div class="intent-box">
+      <h3 data-pt="Compreender" data-en="Understand"></h3>
+      <p data-pt="Ler o protocolo.<br>Entender as regras.<br>Conhecer o funcionamento."
+         data-en="Read the protocol.<br>Understand the rules.<br>Learn how it works."></p>
+      <a href="#whitepaper" class="intent-btn secondary"
+         data-pt="Explorar o sistema" data-en="Explore the system"></a>
+    </div>
+
+    <div class="intent-box active">
+      <h3 data-pt="Participar" data-en="Participate"></h3>
+      <p data-pt="Marcar presença.<br>Acumular HUM.<br>Fazer parte do processo."
+         data-en="Mark presence.<br>Accumulate HUM.<br>Be part of the process."></p>
+      <a href="https://human2026new.github.io/human-experience/app/index.html"
+         class="intent-btn primary"
+         data-pt="Entrar na HUMAN"
+         data-en="Enter HUMAN"></a>
+    </div>
   </div>
+</section>
 
-  <!-- MAIN WRAPPER -->
-  <div id="main" class="hidden">
-    
-    <!-- TOP BAR -->
-    <header>
-      <span id="moon-phase">○</span>
-      <span id="lang-switch">
-        <button data-lang="pt">PT</button> |
-        <button data-lang="en">EN</button>
-      </span>
-    </header>
+<section class="card slide">
+  <h2 data-pt="O que é o HUMAN?" data-en="What is HUMAN?"></h2>
+  <p data-pt="HUMAN é um sistema digital que regista presença humana real ao longo do tempo."
+     data-en="HUMAN is a digital system that records real human presence over time."></p>
+</section>
 
-    <!-- HERO COIN + TITLE -->
-    <section id="hero">
-      <img src="hum-logo.png" alt="HUM" id="coin">
-      <h2 class="t-hero" data-key="title">Escolhe a tua jornada</h2>
-      <p class="t-sub" data-key="subtitle">Caminho, disciplina e presença</p>
-    </section>
-
-    <!-- ACTION BUTTONS -->
-    <section id="actions">
-      <button id="btn-understand" class="action t-btn" data-key="btnUnderstand">Compreender</button>
-      <button id="btn-participate" class="action t-btn" data-key="btnParticipate">Participar</button>
-    </section>
-
-    <!-- BIG CHOICE -->
-    <section id="big-choice" class="hidden">
-      <div class="card">
-        <h3 class="t-hero-sm" data-key="understandTitle"></h3>
-        <p class="t-body" data-key="understandDesc"></p>
-        <a href="whitepaper.pdf" class="t-btn small" target="_blank" data-key="btnWhitepaper"></a>
-      </div>
-
-      <div class="card">
-        <h3 class="t-hero-sm" data-key="participateTitle"></h3>
-        <p class="t-body" data-key="participateDesc"></p>
-        <button id="btn-app" class="t-btn small" data-key="btnChooseApp"></button>
-      </div>
-
-      <div class="nav-row">
-        <button id="btn-radar" class="t-btn small" data-key="btnRadar"></button>
-        <a href="human-experience" class="t-btn small" data-key="btnWebApp"></a>
-      </div>
-    </section>
+<section class="card slide flow">
+  <h2 data-pt="Como funciona" data-en="How it works"></h2>
+  <div class="flow-steps">
+    <div class="step">Telegram</div><div class="arrow">↓</div>
+    <div class="step" data-pt="Presença" data-en="Presence"></div><div class="arrow">↓</div>
+    <div class="step">HUM</div>
   </div>
+</section>
 
-  <script src="script.js"></script>
+<!-- 📈 Gráfico -->
+<section class="card slide">
+  <h2 data-pt="Distribuição ao Vivo" data-en="Live Distribution"></h2>
+  <canvas id="humChart" height="200"></canvas>
+</section>
+
+<!-- 📱 APPS -->
+<section class="card slide apps">
+  <h2 data-pt="Aplicações" data-en="Apps"></h2>
+  <div class="app-grid">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googleplay.svg">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/apple.svg">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/chrome.svg">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoftedge.svg">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/windows.svg">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/telegram.svg">
+  </div>
+</section>
+
+<section class="card slide future">
+  <h2 data-pt="Evolução futura" data-en="Future evolution"></h2>
+  <p data-pt="O HUM poderá ganhar vida no mercado quando existir presença humana suficiente."
+     data-en="HUM may enter markets when human presence is strong enough."></p>
+</section>
+
+<section class="card slide legal conscious" id="whitepaper">
+  <h2 data-pt="Aviso" data-en="Notice"></h2>
+  <p data-pt="Sem promessas. Sem garantias. Apenas presença humana real."
+     data-en="No promises. No guarantees. Only human presence."></p>
+</section>
+
+</main>
+
+<footer>
+  <p data-pt="HUMAN — presença humana no tempo"
+     data-en="HUMAN — human presence over time"></p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
