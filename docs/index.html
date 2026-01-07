@@ -10,27 +10,25 @@
 <body>
 
 <header>
-    <div class="lang-wrapper">
-        <button id="current-lang">
-            <img id="current-flag" src="assets/flags/pt.png">
-        </button>
-        <div id="lang-dropdown" class="hidden">
-            <img class="flag-option" data-lang="pt" src="assets/flags/pt.png">
-            <img class="flag-option" data-lang="en" src="assets/flags/en.png">
-            <img class="flag-option" data-lang="es" src="assets/flags/es.png">
-            <img class="flag-option" data-lang="fr" src="assets/flags/fr.png">
-            <img class="flag-option" data-lang="de" src="assets/flags/de.png">
-            <img class="flag-option" data-lang="ru" src="assets/flags/ru.png">
-            <img class="flag-option" data-lang="zh" src="assets/flags/zh.png">
-            <img class="flag-option" data-lang="ar" src="assets/flags/ar.png">
-        </div>
-    </div>
+  <div class="lang-bar">
+    <img class="flag-option" data-lang="pt" src="assets/flags/pt.png">
+    <img class="flag-option" data-lang="en" src="assets/flags/en.png">
+    <img class="flag-option" data-lang="es" src="assets/flags/es.png">
+    <img class="flag-option" data-lang="fr" src="assets/flags/fr.png">
+    <img class="flag-option" data-lang="de" src="assets/flags/de.png">
+    <img class="flag-option" data-lang="ru" src="assets/flags/ru.png">
+    <img class="flag-option" data-lang="zh" src="assets/flags/zh.png">
+    <img class="flag-option" data-lang="ar" src="assets/flags/ar.png">
+  </div>
 </header>
+
+<canvas id="fractal-canvas"></canvas>
 
 <div id="lang-banner" class="hidden"></div>
 
 <section class="hero">
     <img src="hum-logo.png" class="hero-logo" alt="HUMAN Logotipo">
+    <canvas id="avatar-canvas"></canvas>
 
     <h1 id="choose_how"></h1>
 
@@ -59,6 +57,9 @@
     <button class="back-btn" id="back"></button>
 </section>
 
+<div id="presence-counter" class="hud hidden"></div>
+<div id="moon-phase" class="hud hidden"></div>
+
 <script src="script.js"></script>
 </body>
-                </html>
+</html>
