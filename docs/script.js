@@ -1,182 +1,212 @@
-/* GLOBAL STATE */
-let lang = localStorage.getItem("lang") || navigator.language.slice(0,2);
-const supported = ["pt","en","es","fr","de"];
-if(!supported.includes(lang)) lang="en";
+/* ---------------------------
+   LANGUAGE SETUP
+---------------------------- */
+let lang = localStorage.getItem("lang")
+        || navigator.language.slice(0,2);
 
-/* BOOT */
-const boot=document.getElementById("boot");
-const ascend=document.getElementById("ascend-btn");
-ascend.onclick=()=>{
-  openPortal(); boot.classList.add("hidden");
-  document.getElementById("main-content").classList.remove("hidden");
+const supported = ["pt","en","es","fr","de"];
+if(!supported.includes(lang)) lang = "en";
+
+/* ---------------------------
+   BOOT + PORTAL TRANSITION
+---------------------------- */
+const boot = document.getElementById("boot-screen");
+const app = document.getElementById("app");
+
+document.getElementById("ascender-btn").onclick = () => {
+    boot.style.opacity = "0";
+    setTimeout(() => {
+        boot.classList.add("hidden");
+        app.classList.remove("hidden");
+        app.style.opacity = "1";
+    }, 900);
+    startAudio();
 };
 
-/* PORTAL ANIMATION */
-function openPortal(){
-  const p=document.getElementById("portal");
-  p.style.opacity="1"; p.style.width="150vw"; p.style.height="150vw";
-  setTimeout(()=>p.style.opacity="0",400);
-  setTimeout(()=>{p.style.width="0"; p.style.height="0";},800);
+/* ---------------------------
+   LOAD LANGUAGE FILE
+---------------------------- */
+async function loadLang(l) {
+    const res = await fetch(`assets/lang/${l}.json`);
+    const data = await res.json();
+
+    const set = (attr, text) => {
+        document.querySelectorAll(`[data-i18n="${attr}"]`)
+            .forEach(el => el.innerHTML = text);
+    };
+
+    set("choose", data.choose);
+    set("understandTitle", data.understandTitle);
+    set("understandText", data.understandText);
+    set("exploreBtn", data.exploreBtn);
+    set("participateTitle", data.participateTitle);
+    set("participateText", data.participateText);
+    set("enterBtn", data.enterBtn);
+    set("radarBtn", data.radarBtn);
+    set("appsBtn", data.appsBtn);
 }
 
-/* LANG LOAD */
-async function loadLang(l){
-  const res = await fetch(`assets/lang/${l}.json`);
-  const data = await res.json();
-
-  const set=(id,val)=>{ let el=document.getElementById(id); if(el) el.innerHTML=val; };
-
-  set("choose_how",data.choose_how);
-  set("understand",data.understand);
-  set("read_protocol",data.read_protocol);
-  set("participate",data.participate);
-  set("participate_desc",data.participate_desc);
-  set("create_title",data.create_title);
-  set("create_desc",data.create_desc);
-  set("explore_title",data.explore_title);
-  set("faq_title",data.faq_title);
-
-  const info=document.getElementById("info");
-  info.innerHTML="";
-  data.sections.forEach(s=>{
-    let d=document.createElement("div");
-    d.className="card";
-    d.innerHTML=`<h3>${s.t}</h3><p>${s.p}</p>`;
-    info.appendChild(d);
-  });
-
-  const faq=document.getElementById("faq");
-  faq.innerHTML="";
-  data.faq.forEach(s=>{
-    let d=document.createElement("div");
-    d.className="card";
-    d.innerHTML=`<p>${s}</p>`;
-    faq.appendChild(d);
-  });
-
-  localStorage.setItem("lang",l);
-}
 loadLang(lang);
 
-/* SWAP LANG */
-document.getElementById("pt-swap").onclick=()=>{lang="pt";loadLang(lang);};
-document.getElementById("en-swap").onclick=()=>{lang="en";loadLang(lang);};
+/* Swap PT/EN */
+document.getElementById("lang-toggle").onclick = () => {
+    lang = (lang === "pt") ? "en" : "pt";
+    localStorage.setItem("lang", lang);
+    loadLang(lang);
+};
 
-/* BUTTONS */
-document.getElementById("explore-btn").onclick=()=>{
-  openPortal();
-  document.getElementById("explore").classList.remove("hidden");
-};
-document.getElementById("explore2-btn").onclick=()=>{
-  openPortal();
-  document.getElementById("explore").classList.remove("hidden");
-};
-document.getElementById("back").onclick=()=>{
-  openPortal();
-  document.getElementById("explore").classList.add("hidden");
-  window.scrollTo(0,0);
-};
-document.getElementById("app-btn").onclick=()=>openPortal(window.location.href='app/index.html');
-document.getElementById("radar-btn").onclick=()=>openPortal(window.location.href='radar.html');
-
-/* HUD PRESENCE + MOON */
-function days(){
-  let d=parseInt(localStorage.getItem("days")||"0");
-  document.getElementById("hud-days").innerText=d+"D";
+/* ---------------------------
+   DAYS + MOON HUD
+---------------------------- */
+function updateDays(){
+    let d = Number(localStorage.getItem("days") || 0);
+    document.getElementById("days-counter").innerText = d + "D";
 }
-function inc(){let d=parseInt(localStorage.getItem("days")||"0");localStorage.setItem("days",d+1);days();}
-days();
-setInterval(inc,60000);
-
-function moon(){
-  const syn=29.53;
-  const base=new Date("2025-01-06").getTime();
-  const ph=((Date.now()-base)/86400000)%syn;
-  let face="🌑";
-  if(ph<1)face="🌑"; else if(ph<8)face="🌒";
-  else if(ph<15)face="🌕"; else if(ph<22)face="🌖";
-  document.getElementById("hud-moon").innerText=face;
+function tickDay(){
+    let d = Number(localStorage.getItem("days") || 0);
+    localStorage.setItem("days", d + 1);
+    updateDays();
 }
-moon(); setInterval(moon, 30000);
+updateDays();
+setInterval(tickDay, 60000);
 
-/* FRACTAL */
-const fc=document.getElementById("fractal");
-const fctx=fc.getContext("2d");
-function resize(){fc.width=innerWidth;fc.height=innerHeight;}
-resize(); window.onresize=resize;
+function moonPhase(){
+    const syn = 29.53;
+    const base = new Date("2025-01-06").getTime();
+    const ph = ((Date.now() - base) / 86400000) % syn;
+    let m="🌑";
+    if(ph<1)m="🌑"; else if(ph<8)m="🌒";
+    else if(ph<15)m="🌕"; else if(ph<22)m="🌖";
+    document.getElementById("moon-phase").innerText = m;
+}
+moonPhase();
+setInterval(moonPhase, 30000);
 
-let particles=[];
-for(let i=0;i<70;i++)particles.push({
-  x:Math.random()*fc.width,
-  y:Math.random()*fc.height,
-  vx:(Math.random()-0.5)*1,
-  vy:(Math.random()-0.5)*1
-});
+/* ---------------------------
+   BUTTONS
+---------------------------- */
+document.getElementById("learn-btn")
+    .onclick = ()=> window.location.href = "radar.html"; // placeholder content
 
-function fractal(){
-  fctx.clearRect(0,0,fc.width,fc.height);
-  particles.forEach((p,i)=>{
-    p.x+=p.vx; p.y+=p.vy;
-    if(p.x<0||p.x>fc.width)p.vx*=-1;
-    if(p.y<0||p.y>fc.height)p.vy*=-1;
-    fctx.beginPath();
-    fctx.fillStyle="rgba(255,235,180,0.8)";
-    fctx.arc(p.x,p.y,1.5,0,Math.PI*2);
-    fctx.fill();
-    for(let j=i+1;j<particles.length;j++){
-      let m=particles[j],dist=Math.hypot(p.x-m.x,p.y-m.y);
-      if(dist<140){
-        fctx.strokeStyle=`rgba(255,235,180,${1-dist/140})`;
-        fctx.beginPath();
-        fctx.moveTo(p.x,p.y);fctx.lineTo(m.x,m.y);fctx.stroke();
-      }
+document.getElementById("enter-btn")
+    .onclick = ()=> window.location.href = "app/index.html";
+
+document.getElementById("radar-btn")
+    .onclick = ()=> window.location.href = "radar.html";
+
+document.getElementById("apps-btn")
+    .onclick = ()=> window.location.href = "app/index.html";
+
+/* ---------------------------
+   FRACTAL PARTICLES
+---------------------------- */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+window.onresize = resize;
+
+let pts = [];
+for(let i=0;i<60;i++){
+    pts.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        vx:(Math.random()-0.5)*0.7,
+        vy:(Math.random()-0.5)*0.7
+    });
+}
+
+function loop(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    pts.forEach((p,i)=>{
+        p.x += p.vx;
+        p.y += p.vy;
+        if(p.x<0||p.x>canvas.width)p.vx*=-1;
+        if(p.y<0||p.y>canvas.height)p.vy*=-1;
+
+        ctx.fillStyle = "rgba(255,215,150,0.8)";
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,1.5,0,Math.PI*2);
+        ctx.fill();
+
+        for(let j=i+1;j<pts.length;j++){
+            let m = pts[j];
+            let dist = Math.hypot(p.x-m.x,p.y-m.y);
+            if(dist < 130){
+                ctx.strokeStyle = `rgba(255,220,180,${1-dist/130})`;
+                ctx.beginPath();
+                ctx.moveTo(p.x,p.y);
+                ctx.lineTo(m.x,m.y);
+                ctx.stroke();
+            }
+        }
+    });
+
+    requestAnimationFrame(loop);
+}
+loop();
+
+/* ---------------------------
+   AMBIENT SOUND (mobile safe)
+---------------------------- */
+let audioCtx, osc, gain, audioStarted=false;
+function startAudio(){
+    if(audioStarted)return;
+    audioCtx=new AudioContext();
+    osc=audioCtx.createOscillator();
+    gain=audioCtx.createGain();
+    osc.frequency.value=62;
+    osc.type="sine";
+    gain.gain.value=0.03;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    audioStarted=true;
+}
+document.addEventListener("touchstart", startAudio);
+document.addEventListener("click", startAudio);
+
+/* ---------------------------
+   AVATAR FRACTAL (seeded)
+---------------------------- */
+try {
+    const av=document.createElement("canvas");
+    av.width=120; av.height=120;
+    const ac=av.getContext("2d");
+    let seed=localStorage.getItem("seed");
+    if(!seed){
+        seed=Math.floor(Math.random()*999999);
+        localStorage.setItem("seed",seed);
     }
-  });
-  requestAnimationFrame(fractal);
-}
-fractral=fractal(); // typo patch
-fractal();
+    let s=seed;
+    const rand=()=>{s=(s*16807)%2147483647;return (s-1)/2147483646;}
+    let t=0;
+    function draw(){
+        t+=0.02;
+        ac.clearRect(0,0,120,120);
+        ac.fillStyle="rgba(0,0,0,0.4)";
+        ac.beginPath(); ac.arc(60,60,58,0,Math.PI*2); ac.fill();
+        for(let i=0;i<12;i++){
+            ac.beginPath();
+            let hue = Math.floor(rand()*60)+30+Math.sin(t+i)*40;
+            ac.strokeStyle=`hsla(${hue},80%,70%,${0.5+Math.sin(t+i)*0.4})`;
+            let x1=60+Math.cos(i+t+rand()*2)*(20+rand()*25);
+            let y1=60+Math.sin(i+t+rand()*2)*(20+rand()*25);
+            let x2=60+Math.cos(i*2+t+rand()*4)*(rand()*50);
+            let y2=60+Math.sin(i*2+t+rand()*4)*(rand()*50);
+            ac.moveTo(x1,y1); ac.lineTo(x2,y2); ac.stroke();
+        }
+        requestAnimationFrame(draw);
+    }
+    draw();
 
-/* AUDIO */
-let ctxA,osc,gain,started=false;
-function audioStart(){
-  if(started)return;
-  ctxA=new AudioContext();osc=ctxA.createOscillator();gain=ctxA.createGain();
-  osc.type="sine"; osc.frequency.value=60;
-  gain.gain.value=0.02;
-  osc.connect(gain); gain.connect(ctxA.destination);
-  osc.start();
-  started=true;
-}
-document.addEventListener("click",audioStart);
-document.addEventListener("touchstart",audioStart);
+    document.querySelector('#hero').appendChild(av);
 
-/* AVATAR FRACTAL */
-const av=document.getElementById("avatar"),ac=av.getContext("2d");
-let seed=localStorage.getItem("seed");
-if(!seed){seed=Math.floor(Math.random()*999999);localStorage.setItem("seed",seed);}
-let s=seed; function r(){s=(s*16807)%2147483647; return (s-1)/2147483646;}
-let t=0;
-function drawAvatar(){
-  t+=0.02; ac.clearRect(0,0,120,120);
-  ac.fillStyle=`rgba(0,0,0,0.4)`;ac.beginPath();ac.arc(60,60,58,0,Math.PI*2);ac.fill();
-  for(let i=0;i<12;i++){
-    ac.beginPath();
-    let hue=Math.floor(r()*60)+30+Math.sin(t+i)*40;
-    ac.strokeStyle=`hsla(${hue},80%,70%,${0.5+Math.sin(t+i)*0.4})`;
-    let x1=60+Math.cos(i+t+r()*2)*(20+r()*25);
-    let y1=60+Math.sin(i+t+r()*2)*(20+r()*25);
-    let x2=60+Math.cos(i*2+t+r()*4)*(r()*50);
-    let y2=60+Math.sin(i*2+t+r()*4)*(r()*50);
-    ac.moveTo(x1,y1);ac.lineTo(x2,y2);ac.stroke();
-  }
-  requestAnimationFrame(drawAvatar);
+} catch(e){
+    console.warn("Avatar error:",e);
 }
-drawAvatar();
-
-document.getElementById("save-avatar").onclick=()=>{
-  let link=document.createElement("a");
-  link.download=`HUMAN-${seed}.png`;
-  link.href=av.toDataURL("image/png");
-  link.click();
-};
