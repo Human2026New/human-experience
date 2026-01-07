@@ -1,253 +1,222 @@
 /* RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    background: #000;
-    font-family: "Montserrat", sans-serif;
-    color: #f7e6c4;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+html, body {
+    height: 100%;
     overflow-x: hidden;
+    background: black;
+    color: #f7e6c4;
 }
 
-/* ============================================
-   PORTAL PRETO + ZOOM + EXPLOSÃO DOURADA
-============================================ */
-body.portal-active #portal {
-    display: flex;
-}
+/* PORTAL */
 #portal {
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    background:#000;
-    display: none;
+    inset: 0;
+    background: black;
+    display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    z-index:10000;
-    color:#f7e6c4;
+    align-items: center;
+    z-index: 9999;
+}
+.portal-title {
+    font-size: 3rem;
+    color: #f7e6c4;
+    letter-spacing: 8px;
+    text-shadow: 0 0 8px #f7e6c4, 0 0 18px #d8bf7d;
+    animation: pulse 2s infinite;
+}
+#ascenderBtn {
+    margin-top: 24px;
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: none;
+    background: #f7e6c4;
+    color: black;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(247,230,196,0.8);
+    transition: 0.3s;
+}
+#ascenderBtn:hover {
+    transform: scale(1.1);
+}
+.fade-out {
+    animation: fadeOutPortal 0.8s forwards;
+}
+@keyframes fadeOutPortal {
+    to { opacity: 0; }
+}
+@keyframes pulse {
+    0%,100% { text-shadow: 0 0 6px #f7e6c4, 0 0 12px #d8bf7d; }
+    50% { text-shadow: 0 0 20px #f7e6c4, 0 0 40px #e8cf99; }
 }
 
-#portal-title {
-    font-size: 4rem;
-    letter-spacing:6px;
-    text-shadow:0 0 18px #f2d47a;
-    animation:pulseGlow 4s infinite;
+/* HERO SECTION */
+#hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    background-image: url('zen-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    padding: 0 10px;
 }
-@keyframes pulseGlow {
-    0%{ text-shadow:0 0 6px #e5c869; opacity:.7;}
-    50%{ text-shadow:0 0 26px #fadf94; opacity:1;}
-    100%{ text-shadow:0 0 6px #e5c869; opacity:.7;}
+.hero-inner {
+    animation: heroAppear 1.2s ease-out;
 }
-
-#portal-btn {
-    margin-top: 30px;
-    padding: 13px 32px;
-    background:#f7e6c4;
-    border:none;
-    font-size:1.2rem;
-    border-radius:12px;
-    color:#000;
-    cursor:pointer;
-    font-weight:600;
-    box-shadow:0 0 12px #f7e6c4;
-    transition:.3s;
+@keyframes heroAppear {
+    from { opacity: 0; transform: scale(1.2); }
+    to { opacity: 1; transform: scale(1); }
 }
-#portal-btn:hover {
-    transform:scale(1.07);
-    background:#fff3c9;
-}
-
-/* EXPLOSÃO DOURADA */
-.portal-blast {
-    animation:zoomBlast 1s ease forwards;
-}
-@keyframes zoomBlast {
-    0% { transform:scale(1); opacity:1; }
-    60%{ transform:scale(2.6); opacity:.8; filter:blur(3px);}
-    100%{ transform:scale(6); opacity:0; filter:blur(6px);}
-}
-
-/* ============================================
-   HERO SECTION
-============================================ */
-.section {
-    width:100%;
-    padding:70px 20px;
-    min-height: 100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    opacity:0;
-    transform:translateY(40px);
-    transition:opacity 1s ease, transform 1s ease;
-}
-
-.section.visible {
-    opacity:1;
-    transform:translateY(0);
-}
-
-/* Background only after portal */
-body:not(.portal-active) {
-    background:url("zen-bg.jpg") no-repeat center center fixed;
-    background-size:cover;
-}
-
 .hero-logo {
-    width: 200px;
+    width: 140px;
+    margin-bottom: 10px;
+}
+#heroTitle {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #f7e6c4;
+    margin-bottom: 6px;
+}
+#heroPhrase {
+    font-size: 1.1rem;
+    opacity: 0.9;
     margin-bottom: 20px;
-    filter: drop-shadow(0 0 10px #e6c87d);
-    animation:pulseLogo 6s infinite;
 }
-@keyframes pulseLogo {
-    0%{ transform:scale(1);}
-    50%{ transform:scale(1.05);}
-    100%{ transform:scale(1);}
-}
-
-#mystic-line {
-    margin-top:16px;
-    font-size:1.2rem;
-    max-width: 360px;
-    opacity:.9;
-}
-
-.scroll-down {
-    margin-top:40px;
-    font-size:2rem;
-    animation:float 2s infinite ease;
-    opacity:.7;
+.scroll-indicator {
+    font-size: 1.6rem;
+    animation: float 1.5s infinite;
 }
 @keyframes float {
-    0%{ transform:translateY(0);}
-    50%{ transform:translateY(8px);}
-    100%{ transform:translateY(0);}
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
 }
 
-/* ============================================
-   HUD CONSTELAÇÃO
-============================================ */
-.section-title {
-    font-size:1.6rem;
-    margin-bottom:20px;
-    text-shadow:0 0 8px #000;
+/* HIDDEN */
+.hidden {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+}
+section:not(.hidden), footer:not(.hidden), #radarBox:not(.hidden), #platformBox:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-#progress-container{
-    display:flex;
-    justify-content:center;
-    width:90%;
-}
-#progress-line {
-    display:flex;
-    flex-wrap:wrap;
-    gap:4px;
-    justify-content:center;
-    padding:8px 0;
-}
-.progress-dot {
-    width:6px; height:6px;
-    border-radius:50%;
-    background:rgba(255,255,255,0.15);
-    transition:.3s;
-}
-.progress-dot.active {
-    background:#f7e6c4;
-    box-shadow:0 0 6px #d8c48c;
-    transform:scale(1.25);
-}
-.progress-dot.milestone {
-    background:#ffe49e;
-    box-shadow:0 0 10px gold;
-    transform:scale(1.5);
+/* GLOBAL SECTION STYLE */
+section {
+    width: 100%;
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* ============================================
-   APP PICKER
-============================================ */
-.app-grid {
-    width:90%;
-    max-width:500px;
-    display:flex;
-    flex-direction:column;
-    gap:16px;
+/* CARD GLASS STYLE */
+.card {
+    background: rgba(0,0,0,0.55);
+    border-radius: 18px;
+    padding: 30px;
+    max-width: 800px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
-.app-btn {
-    background:#f7e6c4;
-    color:black;
-    padding:12px;
-    border-radius:12px;
-    text-decoration:none;
-    font-weight:bold;
-    transition:.3s;
-}
-.app-btn:hover {
-    transform:scale(1.03);
-    background:#fff1c6;
-}
-.app-btn.inactive {
-    opacity:.4;
-    pointer-events:none;
+.big {
+    width: 90%;
 }
 
-/* ============================================
-   RADAR PLACEHOLDER
-============================================ */
-#radar-canvas{
-    width:80vw;
-    height:50vh;
-    background:rgba(0,0,0,0.4);
-    border-radius:20px;
-    margin-top:20px;
-    box-shadow:0 0 20px rgba(0,0,0,0.5);
+/* BUTTONS */
+.button, .pick-btn {
+    display: inline-block;
+    padding: 12px 22px;
+    margin-top: 15px;
+    background: #f7e6c4;
+    color: black;
+    font-weight: bold;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.25s;
+    cursor: pointer;
+    border: none;
+}
+.button:hover, .pick-btn:hover {
+    transform: scale(1.07);
+}
+.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
-/* ============================================
-   AVATAR FRACTAL
-============================================ */
+/* CHIPS */
+.chips {
+    display: flex;
+    gap: 14px;
+    margin-top: 12px;
+}
+.chip {
+    background: rgba(247,230,196,0.15);
+    border: 1px solid rgba(247,230,196,0.3);
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+/* HUD ELEMENTS */
 #avatar {
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    width:80px;
-    z-index:50;
-    opacity:.85;
-    animation:ringPulse 4s infinite ease-in-out;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 90px;
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
-@keyframes ringPulse {
-    0%{ transform:scale(1);}
-    50%{ transform:scale(1.08);}
-    100%{ transform:scale(1);}
+#avatar:not(.hidden) {
+    opacity: 1;
+    transform: scale(1.05);
+}
+#radarBox, #platformBox {
+    width: 80%;
+    max-width: 900px;
+    margin: 50px auto;
+    background: rgba(0,0,0,0.45);
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    backdrop-filter: blur(6px);
 }
 
-/* ============================================
-   LANGUAGE SWITCH
-============================================ */
-#lang-switch {
-    position:fixed;
-    top:12px;
-    right:12px;
-    display:flex;
-    gap:6px;
-    z-index:9999;
+/* TEXT */
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    text-align: center;
 }
-.lang-btn{
-    background:rgba(0,0,0,0.4);
-    border:1px solid #f7e6c4;
-    color:#f7e6c4;
-    padding:3px 8px;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:.8rem;
+p, li {
+    font-size: 1rem;
+    opacity: 0.95;
+    line-height: 1.5rem;
 }
-.lang-btn:hover {
-    background:rgba(255,255,255,0.15);
+
+/* FOOTER */
+footer {
+    padding: 30px;
+    font-size: 1rem;
+    text-align: center;
+    opacity: 0.8;
 }
 
 /* MOBILE */
-@media(max-width:480px){
-    .hero-logo { width:150px; }
+@media screen and (max-width: 600px) {
+    #heroTitle { font-size: 2rem; }
+    #heroPhrase { font-size: 1rem; }
+    .card { width: 95%; padding: 22px; }
+    .hero-logo { width: 110px; }
 }
