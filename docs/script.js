@@ -1,47 +1,67 @@
-/* LISTA DE FRASES */
-const frases = [
-    "A tua presença molda o tempo.",
-    "Não existe futuro sem agora.",
-    "O HUM nasce onde estás consciente.",
-    "Cada dia regressado é um tijolo eterno.",
-    "Tu és o pulso do sistema.",
-    "A presença é a verdadeira riqueza.",
-    "O mundo escuta quem permanece.",
-    "A humanidade é um só campo vivo.",
-    "Tempo é energia investida.",
-    "HUM é o humano em ação."
-];
+let currentLang = "pt";
 
-/* PORTAL */
-const portal = document.getElementById("portal");
-const ascenderBtn = document.getElementById("ascenderBtn");
-ascenderBtn.addEventListener("click", () => {
-    portal.style.opacity = "0";
-    portal.style.pointerEvents = "none";
-    setTimeout(()=> portal.style.display="none", 1200);
-});
+async function loadLang(lang) {
+    const res = await fetch(`assets/lang/${lang}.json`);
+    const data = await res.json();
 
-/* FRASE RANDOM */
-document.getElementById("heroPhrase").innerText =
-    frases[Math.floor(Math.random()*frases.length)];
+    // Apply text directly to matching IDs
+    const keys = Object.keys(data);
+    keys.forEach(k => {
+        const el = document.getElementById(k);
+        if (el) el.innerHTML = data[k];
+    });
 
-/* RADAR */
-const canvas = document.getElementById("radarCanvas");
-const ctx = canvas.getContext("2d");
-function drawRadar(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    for(let i=0;i<100;i++){
-        ctx.fillStyle=`rgba(255,255,255,${Math.random()})`;
-        ctx.fillRect(Math.random()*canvas.width, Math.random()*canvas.height,2,2);
+    // Fill explore blocks automatically
+    const infoBlocks = document.getElementById("info-blocks");
+    infoBlocks.innerHTML = "";
+    for (let i = 1; i <= 11; i++) {
+        const div = document.createElement("div");
+        div.className = "info-block";
+        div.innerHTML = `<h3>${data[`section_${i}`]}</h3><p>${data[`section_${i}_p`]}</p>`;
+        infoBlocks.appendChild(div);
     }
-}
-setInterval(drawRadar, 400);
 
-/* REVEAL ON SCROLL */
-const blocks = document.querySelectorAll(".block");
-window.addEventListener("scroll", () => {
-    blocks.forEach(b=>{
-        const top = b.getBoundingClientRect().top;
-        if(top < window.innerHeight - 100) b.style.opacity=1;
+    // FAQ
+    const faq = document.getElementById("faq-container");
+    faq.innerHTML = "";
+    for (let f = 1; f <= 6; f++) {
+        const div = document.createElement("div");
+        div.className = "faq-item";
+        div.innerHTML = `<p>${data[`faq_${f}`]}</p>`;
+        faq.appendChild(div);
+    }
+
+    // Whitepaper button:
+    const wp = document.createElement("div");
+    wp.className = "info-block";
+    wp.innerHTML = `
+       <h3>Whitepaper</h3>
+       <button onclick="window.open('whitepaper.pdf','_blank')">
+         ${data.whitepaper}
+       </button>`;
+    infoBlocks.appendChild(wp);
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadLang(currentLang);
+
+    // Language buttons
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            currentLang = btn.dataset.lang;
+            await loadLang(currentLang);
+        });
+    });
+
+    // Explore system toggle
+    document.getElementById("explore-btn").addEventListener("click", () => {
+        document.querySelector(".hero").classList.add("hidden");
+        document.getElementById("explore-section").classList.remove("hidden");
+    });
+
+    // Back button
+    document.getElementById("back").addEventListener("click", () => {
+        document.getElementById("explore-section").classList.add("hidden");
+        document.querySelector(".hero").classList.remove("hidden");
     });
 });
