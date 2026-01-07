@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,41 +8,55 @@
 </head>
 
 <body>
-    <header>
-        <div class="lang-selector">
-            <button class="lang-btn" data-lang="pt">PT</button>
-            <button class="lang-btn" data-lang="en">EN</button>
+
+<header>
+    <div class="lang-wrapper">
+        <button id="current-lang">
+            <img id="current-flag" src="assets/flags/pt.png">
+        </button>
+        <div id="lang-dropdown" class="hidden">
+            <img class="flag-option" data-lang="pt" src="assets/flags/pt.png">
+            <img class="flag-option" data-lang="en" src="assets/flags/en.png">
+            <img class="flag-option" data-lang="es" src="assets/flags/es.png">
+            <img class="flag-option" data-lang="fr" src="assets/flags/fr.png">
+            <img class="flag-option" data-lang="de" src="assets/flags/de.png">
+            <img class="flag-option" data-lang="ru" src="assets/flags/ru.png">
+            <img class="flag-option" data-lang="zh" src="assets/flags/zh.png">
+            <img class="flag-option" data-lang="ar" src="assets/flags/ar.png">
         </div>
-    </header>
+    </div>
+</header>
 
-    <section class="hero">
-        <h1 id="choose_how"></h1>
+<div id="lang-banner" class="hidden"></div>
 
-        <div class="choice-container">
-            <div class="choice-card">
-                <h2 id="understand"></h2>
-                <p id="read_protocol"></p>
-                <button id="explore-btn"></button>
-            </div>
+<section class="hero">
+    <h1 id="choose_how"></h1>
 
-            <div class="choice-card">
-                <h2 id="participate"></h2>
-                <p id="participate_desc"></p>
-                <button id="enter-button"></button>
-            </div>
+    <div class="choice-container">
+        <div class="choice-card">
+            <h2 id="understand"></h2>
+            <p id="read_protocol"></p>
+            <button id="explore-btn"></button>
         </div>
-    </section>
 
-    <section id="explore-section" class="hidden">
-        <h2 id="explore_title"></h2>
+        <div class="choice-card">
+            <h2 id="participate"></h2>
+            <p id="participate_desc"></p>
+            <button id="enter-button"></button>
+        </div>
+    </div>
+</section>
 
-        <div id="info-blocks"></div>
+<section id="explore-section" class="hidden">
+    <h2 id="explore_title"></h2>
 
-        <h2 id="faq_title" class="faq-title"></h2>
-        <div id="faq-container"></div>
+    <div id="info-blocks"></div>
 
-        <button class="back-btn" id="back"></button>
-    </section>
+    <h2 id="faq_title" class="faq-title"></h2>
+    <div id="faq-container"></div>
+
+    <button class="back-btn" id="back"></button>
+</section>
 
 <script src="script.js"></script>
 </body>
