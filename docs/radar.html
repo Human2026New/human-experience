@@ -1,39 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Radar Humano</title>
 <link rel="stylesheet" href="style.css">
+<style>
+body {
+  background:black;
+  overflow:hidden;
+}
+#back-btn {
+  position:fixed;
+  top:12px; left:12px;
+  z-index:2000;
+}
+</style>
 </head>
 <body>
-<button onclick="window.location.href='index.html'" class="btn">Voltar</button>
-<canvas id="map" style="width:100vw;height:100vh;"></canvas>
+
+<button id="back-btn" class="big-btn" onclick="window.location.href='index.html'">
+  ⬅ Voltar
+</button>
+
+<canvas id="map"></canvas>
+
 <script>
 const c=document.getElementById("map");
 const ctx=c.getContext("2d");
-function size(){c.width=innerWidth;c.height=innerHeight;} size();onresize=size;
+function resize(){c.width=innerWidth;c.height=innerHeight;} resize();onresize=resize;
 
 let nodes=JSON.parse(localStorage.getItem("nodes")||"[]");
-if(nodes.length<40){
+if(nodes.length<60){
   nodes.push({x:Math.random()*c.width,y:Math.random()*c.height,t:Date.now()});
   localStorage.setItem("nodes",JSON.stringify(nodes));
 }
 setInterval(()=>{
-  if(nodes.length>=120)return;
+  if(nodes.length>=250)return;
   nodes.push({x:Math.random()*c.width,y:Math.random()*c.height,t:Date.now()});
   localStorage.setItem("nodes",JSON.stringify(nodes));
-},20000);
+},15000);
 
 function draw(){
   ctx.clearRect(0,0,c.width,c.height);
   nodes.forEach((n,i)=>{
-    ctx.beginPath();ctx.fillStyle="rgba(255,235,180,0.8)";
-    ctx.arc(n.x,n.y,3,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();
+    ctx.fillStyle="rgba(255,225,150,0.9)";
+    ctx.arc(n.x,n.y,2.5,0,Math.PI*2);
+    ctx.fill();
     for(let j=i+1;j<nodes.length;j++){
       let m=nodes[j],dist=Math.hypot(n.x-m.x,n.y-m.y);
       if(dist<150){
-        ctx.strokeStyle=`rgba(255,235,180,${1-dist/150})`;
+        ctx.strokeStyle=`rgba(255,225,150,${1-dist/150})`;
         ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);ctx.stroke();
       }
     }
