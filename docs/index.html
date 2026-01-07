@@ -2,78 +2,126 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HUMAN 2026</title>
 <link rel="stylesheet" href="style.css">
 <script defer src="script.js"></script>
 </head>
 
-<body class="portal-active">
+<body>
 
-<!-- ==========================================
-     PORTAL ASCENDER (Tela preta com Zoom-Luz)
-=========================================== -->
+<!-- PORTAL -->
 <div id="portal">
-    <h1 id="portal-title">HUMAN</h1>
-    <button id="portal-btn">ASCENDER</button>
+    <h1 class="portal-title">HUMAN</h1>
+    <button id="ascenderBtn">ASCENDER</button>
 </div>
 
-<!-- ==========================================
-     HERO PRINCIPAL (Logo + frase aleatória)
-=========================================== -->
-<section id="hero" class="section">
-    <img src="hum-logo.png" class="hero-logo" alt="HUM Logo">
-    <h1 id="hero-title">HUMAN</h1>
-    <p id="mystic-line" class="mystic-text"></p>
-    <div class="scroll-down">▼</div>
-</section>
-
-<!-- ==========================================
-     HUD 365 CONSTELAÇÃO
-=========================================== -->
-<section id="hud" class="section hidden">
-    <h2 class="section-title">A tua presença</h2>
-    <div id="progress-container">
-        <div id="progress-line"></div>
+<!-- HERO -->
+<section id="hero" class="hidden">
+    <div class="hero-inner">
+        <img src="hum-logo.png" class="hero-logo">
+        <h1 id="heroTitle">HUMAN</h1>
+        <p id="heroPhrase"></p>
+        <div class="scroll-indicator">▼</div>
     </div>
 </section>
 
-<!-- ==========================================
-     APP PICKER (Escolhe destino)
-=========================================== -->
-<section id="apps" class="section hidden">
-    <h2 class="section-title">Escolhe a tua plataforma</h2>
-    <div class="app-grid">
-        <a href="https://t.me/HumanPresenceBot" class="app-btn">Telegram</a>
-        <a href="#" class="app-btn inactive">Play Store (brevemente)</a>
-        <a href="#" class="app-btn inactive">App Store (brevemente)</a>
-        <a href="#" class="app-btn">Web App</a>
+<!-- FRACTAL AVATAR -->
+<img src="assets/icons/avatar.png" id="avatar" class="hidden">
+
+<!-- RADAR -->
+<div id="radarBox" class="hidden">
+    <h2>Rede Humana Global</h2>
+    <p>Milhares de humanos presentes no tempo</p>
+</div>
+
+<!-- PLATAFORMA -->
+<section id="platformBox" class="hidden mini">
+    <h2>Escolhe a tua plataforma</h2>
+    <a class="pick-btn" href="https://t.me/HUMAN2026_bot">Telegram</a>
+    <button class="pick-btn disabled">Play Store (brevemente)</button>
+    <button class="pick-btn disabled">Apple (brevemente)</button>
+</section>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<section class="intro-banner card hidden">
+    <p>Este sistema foi criado para acompanhar o tempo humano. Não para acelerar ganhos.</p>
+</section>
+
+<section class="choose-path hidden">
+    <div class="card big">
+        <h2>Compreender</h2>
+        <p>Ler o protocolo. Entender as regras.<br>Conhecer o funcionamento.</p>
+        <a href="app/info.html" class="button">Explorar o sistema</a>
+    </div>
+
+    <div class="card big">
+        <h2>Participar</h2>
+        <p>Marcar presença. Acumular HUM.<br>Fazer parte do processo.</p>
+        <a href="app/index.html" class="button">Entrar na HUMAN</a>
     </div>
 </section>
 
-<!-- ==========================================
-     RADAR HUMANO (Visual Simples)
-=========================================== -->
-<section id="radar" class="section hidden">
-    <h2 class="section-title">Rede Humana Global</h2>
-    <canvas id="radar-canvas"></canvas>
-    <p class="radar-text">Milhares de humanos presentes no tempo.</p>
+<section class="card hidden">
+    <h2>O que é o HUMAN?</h2>
+    <p>HUM é um sistema digital que regista presença humana real ao longo do tempo.<br>
+    Não é mineração de hardware. Não é competição. Não é um jogo.</p>
 </section>
 
-<!-- ==========================================
-     AVATAR FRACTAL (no canto)
-=========================================== -->
-<div id="avatar">
-    <img src="avatar.svg" alt="Avatar Fractal">
-</div>
+<section class="card hidden">
+    <h2>Para que serve o HUM?</h2>
+    <p>HUM é um marcador digital de presença. Representa tempo humano dentro do sistema.<br>
+    Não representa ações, juros ou promessas financeiras.</p>
+</section>
 
-<!-- ==========================================
-     TOP-RIGHT LANGUAGE SWITCH
-=========================================== -->
-<div id="lang-switch">
-    <button class="lang-btn" data-lang="pt">PT</button>
-    <button class="lang-btn" data-lang="en">EN</button>
-</div>
+<section class="card hidden">
+    <h2>Como funciona</h2>
+    <p>O sistema evolui com base na presença coletiva e na maturidade do ecossistema.</p>
+    <div class="chips">
+        <span class="chip">Telegram</span>
+        <span class="chip">Presença</span>
+        <span class="chip">HUM</span>
+    </div>
+</section>
+
+<section class="card hidden">
+    <h2>Pulso do Sistema</h2>
+    <ul>
+        <li><strong>Estado</strong>: <span style="color:#79ff79">Ativo</span></li>
+        <li><strong>Fase</strong>: Génese</li>
+        <li><strong>Distribuição</strong>: Em progresso</li>
+        <li><strong>Conversão</strong>: Bloqueada</li>
+    </ul>
+</section>
+
+<section class="card hidden">
+    <h2>Oferta total</h2>
+    <p>80.000.000 HUM<br>Não podem ser criadas nem queimadas moedas.</p>
+</section>
+
+<section class="card hidden">
+    <h2>Preço do HUM</h2>
+    <p>Preço inicial: 0,05 € por HUM.<br>O preço cresce conforme a percentagem distribuída.</p>
+</section>
+
+<section class="card hidden">
+    <h2>Fases do sistema</h2>
+    <ul>
+        <li>Fase 0 — Génese: HUM dormente</li>
+        <li>Fase 1 — Ativação: levantamento limitado</li>
+        <li>Fase 2 — Circulação: conversão permitida</li>
+    </ul>
+</section>
+
+<section class="card hidden">
+    <h2>Aviso de Consciência</h2>
+    <p>HUMAN não é um instrumento financeiro tradicional. Garantia de valorização ou retorno não existe.<br>
+    A participação é voluntária.</p>
+</section>
+
+<footer class="hidden">
+    <p>HUMAN — 2026</p>
+</footer>
 
 </body>
 </html>
