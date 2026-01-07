@@ -1,91 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HUMAN Network</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HUMAN Network</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-
-<!-- Boot Screen -->
+<!-- Boot screen -->
 <div id="boot">
-  <div id="boot-logo">HUMAN</div>
-  <div id="boot-sub">Awakening...</div>
+  <h1 class="boot-title">HUMAN</h1>
+  <button id="ascend-btn">ASCENDER</button>
 </div>
 
-<!-- Portal -->
+<!-- Portal burst -->
 <div id="portal"></div>
 
-<!-- Language Flags -->
-<header>
-  <div class="lang-bar">
-    <img class="flag-option" data-lang="pt" src="assets/flags/pt.png">
-    <img class="flag-option" data-lang="en" src="assets/flags/en.png">
-    <img class="flag-option" data-lang="es" src="assets/flags/es.png">
-    <img class="flag-option" data-lang="fr" src="assets/flags/fr.png">
-    <img class="flag-option" data-lang="de" src="assets/flags/de.png">
-    <img class="flag-option" data-lang="ru" src="assets/flags/ru.png">
-    <img class="flag-option" data-lang="zh" src="assets/flags/zh.png">
-    <img class="flag-option" data-lang="ar" src="assets/flags/ar.png">
-  </div>
-</header>
-
-<!-- Fractal Background -->
-<canvas id="fractal-canvas"></canvas>
-
-<!-- Mini HUD -->
-<div id="mini-hud">
-  <span id="hud-presence"></span> | 
-  <span id="hud-moon"></span> | 
-  <span id="hud-energy"></span>
+<!-- Mini-language swap -->
+<div id="lang-toggle">
+  <span id="pt-swap">PT</span> | <span id="en-swap">EN</span>
 </div>
 
-<!-- Radar -->
-<canvas id="city-map"></canvas>
+<!-- HUD -->
+<div id="hud">
+  <span id="hud-days"></span> |
+  <span id="hud-moon"></span>
+</div>
+
+<!-- Fractal background -->
+<canvas id="fractal"></canvas>
 
 <!-- Main -->
-<section class="hero">
-    <img src="hum-logo.png" class="hero-logo" alt="HUMAN Logotipo">
-    <canvas id="avatar-canvas"></canvas>
-    <button id="export-avatar" class="save-btn">Guardar Avatar</button>
+<section id="main-content" class="hidden">
+  <img src="hum-logo.png" class="hero-logo" alt="HUMAN logo" />
+  <canvas id="avatar" width="120" height="120"></canvas>
+  <button id="save-avatar" class="btn">Guardar Avatar</button>
 
-    <h1 id="choose_how"></h1>
+  <h1 id="choose_how"></h1>
 
-    <div class="choice-container">
-      <div class="choice-card" id="explore-card">
-        <h2 id="understand"></h2>
-        <p id="read_protocol"></p>
-        <button id="explore-btn"></button>
-      </div>
-
-      <div class="choice-card" id="participate-card">
-        <h2 id="participate"></h2>
-        <p id="participate_desc"></p>
-        <button id="enter-button"></button>
-      </div>
-
-      <div class="choice-card" id="create-card">
-        <h2 id="create_title">Criar</h2>
-        <p id="create_desc">Junta-te ao movimento — arte, código, intenção.</p>
-        <button id="create-btn">Criar</button>
-      </div>
+  <div class="card-container">
+    <div class="card">
+      <h2 id="understand"></h2>
+      <p id="read_protocol"></p>
+      <button id="explore-btn" class="btn"></button>
     </div>
+
+    <div class="card">
+      <h2 id="participate"></h2>
+      <p id="participate_desc"></p>
+      <button id="app-btn" class="btn">Participar</button>
+    </div>
+
+    <div class="card">
+      <h2 id="create_title"></h2>
+      <p id="create_desc"></p>
+      <button id="explore2-btn" class="btn">Criar</button>
+    </div>
+  </div>
+
+  <button id="radar-btn" class="btn small">Ver Radar Humano</button>
 </section>
 
-<section id="explore-section" class="hidden">
-    <h2 id="explore_title"></h2>
-    <div id="info-blocks"></div>
-
-    <h2 id="faq_title" class="faq-title"></h2>
-    <div id="faq-container"></div>
-
-    <button class="back-btn" id="back"></button>
+<!-- Explore section -->
+<section id="explore" class="hidden">
+  <h2 id="explore_title"></h2>
+  <div id="info"></div>
+  <h2 id="faq_title"></h2>
+  <div id="faq"></div>
+  <button id="back" class="btn">Voltar</button>
 </section>
-
-<div id="lang-banner" class="hidden"></div>
 
 <script src="script.js"></script>
 </body>
-</html>
+    </html>
