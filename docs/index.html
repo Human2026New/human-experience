@@ -1,72 +1,84 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HUMAN Protocol</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HUMAN Protocol</title>
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-<!-- 🎵 AUDIO -->
+<!-- 🎵 MÚSICA -->
 <audio id="bgm" autoplay loop>
-  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Oddio_Overplay/Monplaisir/Land_of_Bliss/Monplaisir_-_07_-_Moon_Bshine.mp3" type="audio/mpeg">
+  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Oddio_Overplay/Monplaisir/Land_of_Bliss/Monplaisir_-_07_-_Moon_Bshine.mp3">
 </audio>
+
+<!-- 🔊 AUDIO TOGGLE -->
 <div class="audio-toggle" onclick="toggleAudio()">🔊</div>
 
-<!-- LANG -->
+<!-- 🌐 IDIOMA -->
 <div class="lang-switch">
   <button onclick="setLang('pt')">PT</button> |
   <button onclick="setLang('en')">EN</button>
 </div>
 
-<!-- HERO -->
+<!-- 🎨 TEMA -->
+<button id="themeToggle" class="theme-btn">⚡</button>
+
+<!-- 🌌 FRACTAL -->
+<canvas id="fractal"></canvas>
+
+<!-- 🌠 PARTÍCULAS -->
+<canvas id="particles"></canvas>
+
+<!-- 💸 AIRDROP -->
+<canvas id="airdrop"></canvas>
+
 <header class="hero">
-  <img src="hum-logo.png" class="logo" alt="HUM" />
+  <img src="hum-logo.png" class="logo" />
   <h1>HUMAN</h1>
   <p class="tagline"
      data-pt="Presença humana registada no tempo. Não é hardware. Não é promessa."
-     data-en="Human presence recorded through time. Not hardware. Not a promise."></p>
+     data-en="Human presence recorded over time. Not hardware. Not a promise.">
+  </p>
 </header>
 
 <main>
 
 <section class="card slide manifesto">
-  <p data-pt="Este sistema acompanha o tempo humano."
-     data-en="This system follows human time."></p>
+  <p data-pt="Este sistema foi criado para acompanhar o tempo humano. Não para acelerar ganhos."
+     data-en="This system was created to accompany human time. Not accelerate gains."></p>
 </section>
 
 <section class="card slide intent">
-  <h2 data-pt="Escolhe como queres entrar"
-      data-en="Choose your entry path"></h2>
-
+  <h2 data-pt="Escolhe como queres entrar" data-en="Choose how you want to enter"></h2>
   <div class="intent-grid">
     <div class="intent-box">
       <h3 data-pt="Compreender" data-en="Understand"></h3>
-      <p data-pt="Ler regras.<br>Conhecer o sistema."
-         data-en="Read rules.<br>Learn the system."></p>
+      <p data-pt="Ler o protocolo.<br>Entender as regras.<br>Conhecer o funcionamento."
+         data-en="Read the protocol.<br>Understand the rules.<br>Learn how it works."></p>
       <a href="#whitepaper" class="intent-btn secondary"
-         data-pt="Explorar"
-         data-en="Explore"></a>
+         data-pt="Explorar o sistema" data-en="Explore the system"></a>
     </div>
 
     <div class="intent-box active">
       <h3 data-pt="Participar" data-en="Participate"></h3>
-      <p data-pt="Marcar presença.<br>Acumular HUM."
-         data-en="Mark presence.<br>Collect HUM."></p>
+      <p data-pt="Marcar presença.<br>Acumular HUM.<br>Fazer parte do processo."
+         data-en="Mark presence.<br>Accumulate HUM.<br>Be part of the process."></p>
       <a href="https://human2026new.github.io/human-experience/app/index.html"
          class="intent-btn primary"
-         data-pt="Entrar"
-         data-en="Enter"></a>
+         data-pt="Entrar na HUMAN"
+         data-en="Enter HUMAN"></a>
     </div>
   </div>
 </section>
 
 <section class="card slide">
-  <h2 data-pt="O que é?" data-en="What is it?"></h2>
-  <p data-pt="HUM regista presença humana real."
-     data-en="HUM records real human presence."></p>
+  <h2 data-pt="O que é o HUMAN?" data-en="What is HUMAN?"></h2>
+  <p data-pt="HUMAN é um sistema digital que regista presença humana real ao longo do tempo."
+     data-en="HUMAN is a digital system that records real human presence over time."></p>
 </section>
 
 <section class="card slide flow">
@@ -78,7 +90,7 @@
   </div>
 </section>
 
-<!-- 📈 LIVE GRAPH -->
+<!-- 📈 Gráfico -->
 <section class="card slide">
   <h2 data-pt="Distribuição ao Vivo" data-en="Live Distribution"></h2>
   <canvas id="humChart" height="200"></canvas>
@@ -88,38 +100,25 @@
 <section class="card slide apps">
   <h2 data-pt="Aplicações" data-en="Apps"></h2>
   <div class="app-grid">
-    <div class="app-box">
-      <img src="https://cdn-icons-png.flaticon.com/512/888/888857.png" class="app-icon">
-      <span data-pt="Android (Em breve)" data-en="Android (Soon)"></span>
-    </div>
-    <div class="app-box">
-      <img src="https://cdn-icons-png.flaticon.com/512/831/831276.png" class="app-icon">
-      <span data-pt="iOS (Em breve)" data-en="iOS (Soon)"></span>
-    </div>
-    <div class="app-box">
-      <img src="https://cdn-icons-png.flaticon.com/512/888/888859.png" class="app-icon">
-      <span data-pt="Web App" data-en="Web App"></span>
-    </div>
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googleplay.svg">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/apple.svg">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/chrome.svg">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoftedge.svg">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/windows.svg">
+    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/telegram.svg">
   </div>
 </section>
 
-<!-- 🌱 FUTURO -->
 <section class="card slide future">
-  <h2 data-pt="Evolução" data-en="Evolution"></h2>
-  <p data-pt="Mercado só com significado humano real."
-     data-en="Markets only with real human meaning."></p>
-</section>
-
-<!-- ⚡ TERMINAL -->
-<section class="card slide">
-  <h2 data-pt="Terminal Secreto" data-en="Secret Terminal"></h2>
-  <p data-pt="Pressiona ~" data-en="Press ~"></p>
+  <h2 data-pt="Evolução futura" data-en="Future evolution"></h2>
+  <p data-pt="O HUM poderá ganhar vida no mercado quando existir presença humana suficiente."
+     data-en="HUM may enter markets when human presence is strong enough."></p>
 </section>
 
 <section class="card slide legal conscious" id="whitepaper">
   <h2 data-pt="Aviso" data-en="Notice"></h2>
-  <p data-pt="Não é instrumento financeiro. Sem garantias."
-     data-en="Not a financial instrument. No guarantees."></p>
+  <p data-pt="Sem promessas. Sem garantias. Apenas presença humana real."
+     data-en="No promises. No guarantees. Only human presence."></p>
 </section>
 
 </main>
@@ -129,58 +128,6 @@
      data-en="HUMAN — human presence over time"></p>
 </footer>
 
-<!-- TERMINAL UI -->
-<div id="terminal" class="terminal hidden">
-  <pre id="term-output"></pre>
-  <input id="term-input" type="text" autocomplete="off">
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-// 🌍 Idioma
-function setLang(l){localStorage.setItem("l",l);
-document.querySelectorAll("[data-pt]").forEach(e=>e.innerHTML=e.dataset[l]);}
-setLang(localStorage.getItem("l")||"pt");
-
-// 🎵 Música
-function toggleAudio(){const a=document.getElementById("bgm");
-a.muted=!a.muted;document.querySelector(".audio-toggle").textContent=a.muted?"🔈":"🔊";}
-
-// 📈 Gráfico ao vivo
-const ctx=document.getElementById('humChart').getContext('2d');
-let dataPoints=[5,10,15,20,30,40];
-const chart=new Chart(ctx,{type:"line",data:{labels:dataPoints.map((_,i)=>i),
-datasets:[{label:"Distribuição %",data:dataPoints,borderWidth:2}]},
-options:{animation:false,scales:{y:{min:0,max:100}}}});
-setInterval(()=>{let v=Math.random()*100;
-dataPoints.push(v); if(dataPoints.length>20)dataPoints.shift();
-chart.data.labels=dataPoints.map((_,i)=>i);
-chart.data.datasets[0].data=dataPoints; chart.update();},3000);
-
-// 💻 Terminal
-const term=document.getElementById("terminal"),out=document.getElementById("term-output"),inp=document.getElementById("term-input");
-document.addEventListener("keydown",e=>{if(e.key==="~"){term.classList.toggle("hidden");inp.focus();}});
-inp.addEventListener("keydown",e=>{if(e.key==="Enter"){let c=inp.value.trim();
-out.textContent+=`\n> ${c}`;
-if(c==="help")out.textContent+="\nhelp, supply, hum, exit";
-else if(c==="supply")out.textContent+="\nSupply: 80M HUM";
-else if(c==="hum")out.textContent+=`\nDistribuição: ${dataPoints.at(-1).toFixed(2)}%`;
-else if(c==="exit")term.classList.add("hidden");
-else out.textContent+="\nComando desconhecido";
-inp.value=""; out.scrollTop=out.scrollHeight;}});
-
-// 🔮 Cyber Mode CTRL+N
-document.addEventListener("keydown",e=>{
-if(e.ctrlKey&&e.key==="n"){document.body.classList.toggle("cyber");
-localStorage.setItem("cyber",document.body.classList.contains("cyber"));}});
-if(localStorage.getItem("cyber")==="true")document.body.classList.add("cyber");
-
-// ✨ Scroll effects
-const slides=document.querySelectorAll(".slide");
-const ob=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add("show")));
-slides.forEach(s=>ob.observe(s));
-</script>
-
+<script src="script.js"></script>
 </body>
-        </html>
+    </html>
