@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal HUMAN</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
+</head>
+
+<body class="home">
+
+<canvas id="fog"></canvas>
+<canvas id="trail"></canvas>
+<div id="background"></div>
+
+<header>
+  <div id="lang-switch">
+    <span onclick="setLang('pt')">PT</span> |
+    <span onclick="setLang('en')">EN</span>
+  </div>
+</header>
+
+<section class="hero mini-hero">
+  <h1 data-key="portal-title"></h1>
+  <p data-key="portal-desc"></p>
+</section>
+
+<main>
+
+<section class="card">
+  <h3 data-key="portal-connect"></h3>
+  <ul>
+    <li><a href="https://t.me/human_app_bot" target="_blank">Telegram Bot</a></li>
+    <li><a href="#">Play Store (em breve)</a></li>
+    <li><a href="#">Apple App (em breve)</a></li>
+    <li><a href="home.html">Web App</a></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h3 data-key="portal-future"></h3>
+  <p data-key="portal-future-text"></p>
+</section>
+
+<a href="home.html" class="gateway-btn back-btn" data-key="back-home">
+  ← Voltar
+</a>
+
+</main>
+
+<footer><p>© HUMAN 2026 — Portal Humano.</p></footer>
+
+</body>
+</html>
