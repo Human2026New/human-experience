@@ -1,72 +1,109 @@
+/* FONTS & BASE */
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
-  margin:0;color:#f9eec5;
-  font-family:sans-serif;
-  background:#000;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#f7eec5;
+  background:url("zen-bg.jpg") center/cover no-repeat fixed;
   overflow-x:hidden;
 }
 
-/* canvases */
-canvas#fog,canvas#particles{
-  position:fixed;top:0;left:0;width:100vw;height:100vh;
-  pointer-events:none;z-index:-2;
+/* SPLASH */
+body.splash{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  background:#000;
+  color:#f9e8b2;
 }
-#background{
-  background:url('zen-bg.jpg') center/cover no-repeat;
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  z-index:-3; opacity:.25;
+.splash-center{text-align:center;}
+.splash-center h1{font-size:3rem;letter-spacing:3px;margin-bottom:10px;}
+.splash-center p{opacity:.9;font-size:1rem;}
+#lang-switch-top{
+  position:fixed;top:15px;right:15px;
+  font-size:14px;
+  cursor:pointer;
 }
 
-/* HERO */
+/* HOME */
+header{
+  position:fixed;
+  top:15px;right:15px;
+  z-index:20;
+  font-size:14px;
+}
 .hero{
-  text-align:center;padding:140px 20px 80px;
-}
-#avatar{
-  width:120px;height:120px;border-radius:50%;
-  margin:0 auto 20px;background:#111a;border:2px solid #d8c57c;
-}
-#scroll-down{margin-top:30px;font-size:30px;color:#d8c57c;}
-
-/* CARD */
-.card{
-  margin:40px auto;padding:20px 25px;width:90%;
-  background:rgba(0,0,0,0.55);
-  border-radius:18px;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+  background:rgba(0,0,0,0.25);
   backdrop-filter:blur(6px);
-  font-size:17px;line-height:1.45;
 }
-footer{text-align:center;padding:40px 0;color:#ccbd6a;}
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
-html{scroll-behavior:smooth;}
-body{color:#f5e7b8;background:black;overflow-x:hidden}
+.hero h1{font-size:3rem;margin-bottom:12px;}
+.hero h2{font-size:1.2rem;max-width:300px;margin-bottom:8px;}
+.hero p{max-width:300px;font-size:1rem;opacity:.9;}
+#scroll-down{margin-top:25px;font-size:1.8rem;animation:bounce 1.5s infinite;}
 
-#lang-switch{position:fixed;top:14px;right:14px;z-index:20;font-weight:bold;}
-
-.splash .center-box{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  text-align:center;color:#ffecc3;
-}
-.splash h1{font-size:64px;text-shadow:0 0 40px #fadd8c;}
-.ascend{margin-top:20px;padding:14px 28px;border-radius:20px;background:#fadd8c;color:#000;font-size:20px;border:0;cursor:pointer}
-
-/* FOGO */
-#fog,#particles{
-  position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1;
+@keyframes bounce{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(7px);}
+  100%{transform:translateY(0);}
 }
 
-.hero{
-  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-  align-items:center;text-align:center;padding:0 20px;
+/* AVATAR */
+#avatar{
+  width:120px;height:120px;
+  border-radius:50%;
+  margin-bottom:15px;
+  border:3px solid rgba(255,220,130,0.6);
+  box-shadow:0 0 15px rgba(255,210,120,0.8);
 }
-.hero h1{font-size:60px;font-weight:800;text-shadow:0 0 30px #fadd8c;}
-.arrow{margin-top:18px;font-size:34px;animation:float 1.5s infinite;}
 
-.panel{
-  margin:40px 14px;padding:26px 20px;border-radius:18px;
-  backdrop-filter:blur(8px);background:rgba(0,0,0,.55);
-  border:1px solid rgba(255,210,140,.25);
-  opacity:0;transform:translateY(40px);transition:.8s;
+/* CONTENT */
+main{padding:20px 0;background:transparent;}
+.card{
+  width:90%;
+  margin:0 auto 35px auto;
+  padding:20px;
+  background:rgba(0,0,0,0.45);
+  border-radius:14px;
+  backdrop-filter:blur(9px);
+  line-height:1.45;
+  font-size:1rem;
+  color:#ffefc2;
 }
-.panel.show{opacity:1;transform:translateY(0)}
-.btn{display:inline-block;margin-top:12px;padding:12px 22px;background:#fadd8c;color:black;border-radius:12px;text-decoration:none}
 
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+/* BACKGROUND CANVAS */
+canvas#fog,canvas#particles{
+  position:fixed;
+  top:0;left:0;
+  width:100vw;height:100vh;
+  pointer-events:none;
+}
+#fog{z-index:-3;opacity:.35;}
+#particles{z-index:-2;opacity:.6;}
+#background{
+  position:fixed;inset:0;
+  background:url("zen-bg.jpg") center/cover no-repeat fixed;
+  z-index:-4;
+  opacity:.25;
+}
+
+/* RADAR */
+#radar{
+  width:100%;height:250px;
+  display:block;
+  margin:10px 0;
+}
+
+/* FOOTER */
+footer{
+  padding:30px 0;
+  text-align:center;
+  font-size:12px;
+  color:#d4c68f;
+  }
