@@ -1,5 +1,8 @@
-/* FONTS & BASE */
+/* ===========================
+ 🌟 BASE DO SITE
+=========================== */
 *{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;min-height:100vh;}
 body{
   font-family:Arial,Helvetica,sans-serif;
   color:#f7eec5;
@@ -7,31 +10,56 @@ body{
   overflow-x:hidden;
 }
 
-/* SPLASH */
+/* ===========================
+ 🚀 SPLASH SCREEN
+=========================== */
 body.splash{
   display:flex;
   align-items:center;
   justify-content:center;
-  height:100vh;
+  flex-direction:column;
   background:#000;
+  text-align:center;
+}
+.splash-center h1{
+  font-size:3rem;
   color:#f9e8b2;
+  letter-spacing:3px;
+  margin-bottom:10px;
 }
-.splash-center{text-align:center;}
-.splash-center h1{font-size:3rem;letter-spacing:3px;margin-bottom:10px;}
-.splash-center p{opacity:.9;font-size:1rem;}
+.splash-center p{
+  max-width:300px;
+  color:#ffe9b0;
+  font-size:1rem;
+  opacity:.9;
+}
 #lang-switch-top{
-  position:fixed;top:15px;right:15px;
-  font-size:14px;
-  cursor:pointer;
-}
-
-/* HOME */
-header{
   position:fixed;
   top:15px;right:15px;
-  z-index:20;
   font-size:14px;
+  z-index:10;
+  color:#f0d9a5;
 }
+
+/* ===========================
+ 🏠 HOME LAYOUT
+=========================== */
+body.home{
+  color:#fceec8;
+}
+
+/* NAV */
+header{
+  position:fixed;
+  top:15px;
+  right:15px;
+  z-index:50;
+  font-size:14px;
+  color:#fceec8;
+}
+#lang-switch span{cursor:pointer;}
+
+/* HERO */
 .hero{
   height:100vh;
   display:flex;
@@ -43,66 +71,113 @@ header{
   background:rgba(0,0,0,0.25);
   backdrop-filter:blur(6px);
 }
-.hero h1{font-size:3rem;margin-bottom:12px;}
-.hero h2{font-size:1.2rem;max-width:300px;margin-bottom:8px;}
-.hero p{max-width:300px;font-size:1rem;opacity:.9;}
-#scroll-down{margin-top:25px;font-size:1.8rem;animation:bounce 1.5s infinite;}
-
+.hero h1{
+  font-size:3rem;
+  color:#ffeeba;
+  margin-bottom:12px;
+}
+.hero h2{
+  font-size:1.2rem;
+  max-width:320px;
+  opacity:.9;
+  margin-bottom:6px;
+}
+.hero p{
+  max-width:330px;
+  opacity:.8;
+}
+#scroll-down{
+  margin-top:25px;
+  font-size:1.8rem;
+  animation:bounce 1.5s infinite;
+}
 @keyframes bounce{
   0%{transform:translateY(0);}
   50%{transform:translateY(7px);}
   100%{transform:translateY(0);}
 }
 
-/* AVATAR */
+/* ===========================
+ 🔮 AVATAR
+=========================== */
 #avatar{
-  width:120px;height:120px;
+  width:120px;
+  height:120px;
   border-radius:50%;
-  margin-bottom:15px;
-  border:3px solid rgba(255,220,130,0.6);
-  box-shadow:0 0 15px rgba(255,210,120,0.8);
+  margin-bottom:18px;
+  border:3px solid rgba(255,220,130,0.5);
+  box-shadow:0 0 18px rgba(255,200,100,0.8);
+  background:#0001;
 }
 
-/* CONTENT */
-main{padding:20px 0;background:transparent;}
+/* ===========================
+ 📦 SECÇÕES DE CONTEÚDO
+=========================== */
+main{padding:30px 0;}
+
 .card{
   width:90%;
   margin:0 auto 35px auto;
   padding:20px;
   background:rgba(0,0,0,0.45);
-  border-radius:14px;
-  backdrop-filter:blur(9px);
+  border-radius:16px;
+  backdrop-filter:blur(8px);
   line-height:1.45;
   font-size:1rem;
   color:#ffefc2;
 }
 
-/* BACKGROUND CANVAS */
-canvas#fog,canvas#particles{
+/* ===========================
+ 🌫 BACKGROUND CAMADAS
+=========================== */
+canvas#fog{
   position:fixed;
   top:0;left:0;
   width:100vw;height:100vh;
   pointer-events:none;
+  z-index:-3;
+  opacity:.35;
 }
-#fog{z-index:-3;opacity:.35;}
-#particles{z-index:-2;opacity:.6;}
+canvas#particles{
+  position:fixed;
+  top:0;left:0;
+  width:100vw;height:100vh;
+  pointer-events:none;
+  z-index:-2;
+  opacity:.6;
+}
 #background{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:url("zen-bg.jpg") center/cover no-repeat fixed;
   z-index:-4;
   opacity:.25;
 }
 
-/* RADAR */
+/* ===========================
+ 📡 RADAR
+=========================== */
 #radar{
-  width:100%;height:250px;
+  width:100%;
+  height:260px;
   display:block;
-  margin:10px 0;
+  margin:10px auto;
+  border-radius:10px;
 }
 
-/* FOOTER */
+/* ===========================
+ 🌙 MODO NOITE
+=========================== */
+body.night .card,
+body.night .hero{
+  background:rgba(0,0,0,0.55);
+}
+
+/* ===========================
+ 🦶 FOOTER
+=========================== */
 footer{
-  padding:30px 0;
+  padding:35px 0;
   text-align:center;
   font-size:12px;
   color:#d4c68f;
