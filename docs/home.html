@@ -10,13 +10,12 @@
 
 <body class="home">
 
-<!-- ==== FUNDO & CAMADAS ==== -->
+<!-- FUNDO -->
 <canvas id="fog"></canvas>
 <canvas id="trail"></canvas>
-<canvas id="particles"></canvas>
 <div id="background"></div>
 
-<!-- ==== TOPO ==== -->
+<!-- LÍNGUA -->
 <header>
   <div id="lang-switch">
     <span onclick="setLang('pt')">PT</span> |
@@ -24,71 +23,37 @@
   </div>
 </header>
 
-<!-- ==== HERO ==== -->
+<!-- HERO -->
 <section class="hero">
   <div class="hum-logo"></div>
   <h1>HUMAN</h1>
-  <h2 id="hero-title" data-key="what-title"></h2>
-  <p id="hero-sub" data-key="what"></p>
+  <h2 data-key="what-title"></h2>
+  <p data-key="what"></p>
   <div id="scroll-down">▼</div>
 </section>
 
-<!-- ==== MAIN ==== -->
+<!-- CONTEÚDO -->
 <main>
-
-<section class="card">
-  <h3 data-key="what-title"></h3>
-  <p data-key="what"></p>
-</section>
-
-<section class="card">
-  <h3 data-key="token-title"></h3>
-  <p data-key="token"></p>
-</section>
-
-<section class="card">
-  <h3 data-key="start-title"></h3>
-  <p data-key="start"></p>
-</section>
-
-<section class="card">
-  <h3 data-key="eco-title"></h3>
-  <p data-key="eco"></p>
-</section>
-
-<section class="card">
-  <h3 data-key="phase-title"></h3>
-  <p data-key="phase"></p>
-</section>
-
-<section class="card">
-  <h3 data-key="why-title"></h3>
-  <p data-key="why"></p>
-</section>
-
-<section class="card">
-  <h3 data-key="tasks-title"></h3>
-  <p data-key="tasks"></p>
-</section>
-
+<section class="card"><h3 data-key="what-title"></h3><p data-key="what"></p></section>
+<section class="card"><h3 data-key="token-title"></h3><p data-key="token"></p></section>
+<section class="card"><h3 data-key="start-title"></h3><p data-key="start"></p></section>
+<section class="card"><h3 data-key="eco-title"></h3><p data-key="eco"></p></section>
+<section class="card"><h3 data-key="phase-title"></h3><p data-key="phase"></p></section>
+<section class="card"><h3 data-key="why-title"></h3><p data-key="why"></p></section>
+<section class="card"><h3 data-key="tasks-title"></h3><p data-key="tasks"></p></section>
 <section class="card">
   <h3 data-key="daily-title"></h3>
   <p><strong>Presenças:</strong> <span id="days">0</span></p>
   <p><strong>Saldo:</strong> <span id="humBalance">0 HUM</span></p>
   <div id="timeline"></div>
 </section>
-
 <section class="card">
   <h3 data-key="comm-title"></h3>
   <p id="radar-info">Ligando consciência humana...</p>
-  <canvas id="radar"></canvas>
 </section>
-
 </main>
 
-<footer>
-<p>© HUMAN 2026 — Tempo é valor.</p>
-</footer>
+<footer><p>© HUMAN 2026 — Tempo é valor.</p></footer>
 
 </body>
 </html>
