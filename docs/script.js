@@ -121,3 +121,11 @@ Não procura pressa, procura presença.`,
   "origem-summary-text":"HUM is born from human time. It grows with discipline. It lives in community."
  }
 };
+
+function setLang(l){
+ localStorage.setItem("lang",l);
+ document.querySelectorAll("[data-key]").forEach(el=>{
+   el.innerHTML=content[l][el.dataset.key];
+ });
+}
+setLang(localStorage.getItem("lang")||"pt");
