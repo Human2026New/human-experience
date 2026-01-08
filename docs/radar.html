@@ -4,61 +4,110 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Radar Humano</title>
+
 <link rel="stylesheet" href="style.css">
+<script src="lang.js"></script>
+
 <style>
-body {
-  background:black;
-  overflow:hidden;
-}
-#back-btn {
-  position:fixed;
-  top:12px; left:12px;
-  z-index:2000;
-}
+  body {
+    background:black;
+    overflow:hidden;
+  }
+  #back-btn {
+    position:fixed;
+    top:12px;
+    left:12px;
+    z-index:1000;
+    padding:10px 16px;
+    border-radius:10px;
+    background:rgba(0,0,0,.6);
+    border:1px solid rgba(255,255,255,.3);
+    color:#e6c97a;
+    cursor:pointer;
+    backdrop-filter:blur(4px);
+  }
+  #map {
+    position:fixed;
+    top:0;left:0;
+    width:100vw;height:100vh;
+    z-index:1;
+  }
 </style>
 </head>
+
 <body>
 
-<button id="back-btn" class="big-btn" onclick="window.location.href='index.html'">
-  ⬅ Voltar
-</button>
+<button id="back-btn"
+  onclick="location.href='index.html'"
+  data-key="back"></button>
 
 <canvas id="map"></canvas>
 
 <script>
-const c=document.getElementById("map");
-const ctx=c.getContext("2d");
-function resize(){c.width=innerWidth;c.height=innerHeight;} resize();onresize=resize;
+// 🗺️ Radar Canvas
+const c = document.getElementById("map");
+const ctx = c.getContext("2d");
 
-let nodes=JSON.parse(localStorage.getItem("nodes")||"[]");
-if(nodes.length<60){
-  nodes.push({x:Math.random()*c.width,y:Math.random()*c.height,t:Date.now()});
-  localStorage.setItem("nodes",JSON.stringify(nodes));
+function resize(){
+  c.width = innerWidth;
+  c.height = innerHeight;
 }
-setInterval(()=>{
-  if(nodes.length>=250)return;
-  nodes.push({x:Math.random()*c.width,y:Math.random()*c.height,t:Date.now()});
-  localStorage.setItem("nodes",JSON.stringify(nodes));
-},15000);
+resize();
+addEventListener("resize", resize);
 
+// 🌱 PONTOS DA REDE
+let nodes = JSON.parse(localStorage.getItem("nodes") || "[]");
+
+// se estiver vazio, arranca com alguns pontos
+if(nodes.length < 60){
+  nodes.push({
+    x: Math.random()*c.width,
+    y: Math.random()*c.height,
+    t: Date.now()
+  });
+  localStorage.setItem("nodes", JSON.stringify(nodes));
+}
+
+// adicionar pontos gradualmente ao longo do tempo
+setInterval(()=>{
+  if(nodes.length >= 250) return;
+  nodes.push({
+    x: Math.random()*c.width,
+    y: Math.random()*c.height,
+    t: Date.now()
+  });
+  localStorage.setItem("nodes", JSON.stringify(nodes));
+}, 15000);
+
+// 🎇 DESENHAR
 function draw(){
   ctx.clearRect(0,0,c.width,c.height);
+
   nodes.forEach((n,i)=>{
+    // nó
     ctx.beginPath();
     ctx.fillStyle="rgba(255,225,150,0.9)";
     ctx.arc(n.x,n.y,2.5,0,Math.PI*2);
     ctx.fill();
+
+    // ligar aos vizinhos próximos
     for(let j=i+1;j<nodes.length;j++){
-      let m=nodes[j],dist=Math.hypot(n.x-m.x,n.y-m.y);
-      if(dist<150){
-        ctx.strokeStyle=`rgba(255,225,150,${1-dist/150})`;
-        ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);ctx.stroke();
+      let m = nodes[j],
+          dist = Math.hypot(n.x-m.x,n.y-m.y);
+      if(dist < 150){
+        ctx.strokeStyle = `rgba(255,225,150,${1-dist/150})`;
+        ctx.beginPath();
+        ctx.moveTo(n.x,n.y);
+        ctx.lineTo(m.x,m.y);
+        ctx.stroke();
       }
     }
   });
+
   requestAnimationFrame(draw);
 }
 draw();
 </script>
+
 </body>
 </html>
