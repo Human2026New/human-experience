@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HUMAN</title>
-<style>
-html,body{height:100%;margin:0;padding:0;font-family:sans-serif;}
-#test{display:flex;justify-content:center;align-items:center;height:100vh;background:black;color:white;font-size:38px;}
-</style>
+<link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
 </head>
-<body>
-<div id="test">SPLASH LOAD</div>
-<script>
-setTimeout(()=>{location.href='home.html';},1500);
-</script>
+<body class="splash">
+
+<canvas id="fog"></canvas>
+
+<div class="center-box">
+  <h1>HUMAN</h1>
+  <p id="hero-line"></p>
+  <button class="ascend" onclick="location.href='home.html'">ASCENDER</button>
+</div>
+
 </body>
 </html>
