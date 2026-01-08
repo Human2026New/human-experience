@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HUMAN Protocol</title>
+
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js" defer></script>
+</head>
+
+<body>
+
+<!-- LANG -->
+<div class="lang-switch fixed-lang">
+  <button onclick="setLang('pt')">PT</button> |
+  <button onclick="setLang('en')">EN</button>
+</div>
+
+<!-- THEME -->
+<button id="themeToggle" class="theme-btn">⚡</button>
+
+<!-- AUDIO -->
+<div class="audio-toggle" onclick="toggleAudio()">🔊</div>
+<audio id="bgm" autoplay loop muted>
+  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Oddio_Overplay/Monplaisir/Land_of_Bliss/Monplaisir_-_07_-_Moon_Bshine.mp3">
+</audio>
+
+<!-- BACKGROUND -->
+<canvas id="fractal"></canvas>
+<canvas id="particles"></canvas>
+<canvas id="airdrop"></canvas>
+
+<!-- HERO -->
+<header class="hero-intro">
+  <img src="hum-logo.png" class="logo-main" />
+  <div class="scroll-indicator">▼</div>
+</header>
+
+<!-- CONTENT -->
+<main>
+
+<section class="card slide">
+  <p data-key="manifesto.text">Presença humana registada no tempo. Não é hardware. Não é promessa.</p>
+</section>
+
+<section class="card slide">
+  <h2 data-key="intent.choose">Escolhe como queres entrar</h2>
+
+  <div class="intent-grid">
+    <div class="intent-box">
+      <h3 data-key="intent.understand">Compreender</h3>
+      <p data-key="info.explore">Ler o protocolo.<br>Entender as regras.<br>Conhecer o funcionamento.</p>
+      <a href="#whitepaper" class="intent-btn secondary" data-key="explore">Explorar o sistema</a>
+    </div>
+
+    <div class="intent-box active">
+      <h3 data-key="intent.participate">Participar</h3>
+      <p data-key="intent.join">Marcar presença.<br>Acumular HUM.<br>Fazer parte do processo.</p>
+      <a href="app/index.html" class="intent-btn primary" data-key="enter">Entrar HUMAN</a>
+    </div>
+  </div>
+</section>
+
+<section class="card slide">
+  <h2 data-key="what">O que é o HUMAN?</h2>
+  <p data-key="what.text">HUMAN é um sistema digital que regista presença humana real ao longo do tempo.</p>
+</section>
+
+<section class="card slide">
+  <h2 data-key="how">Como funciona</h2>
+  <div class="flow-steps">
+    <div class="step">Telegram</div><div class="arrow">↓</div>
+    <div class="step" data-key="presence">Presença</div><div class="arrow">↓</div>
+    <div class="step">HUM</div>
+  </div>
+</section>
+
+<section class="card slide">
+  <h2 data-key="live">Distribuição ao Vivo</h2>
+  <canvas id="humChart" height="200"></canvas>
+</section>
+
+<section class="card slide apps">
+  <h2 data-key="apps">Aplicações</h2>
+  <div class="app-grid">
+    <img class="app-icon" src="assets/icons/googleplay.svg">
+    <img class="app-icon" src="assets/icons/apple.svg">
+    <img class="app-icon" src="assets/icons/chrome.svg">
+    <img class="app-icon" src="assets/icons/edge.svg">
+    <img class="app-icon" src="assets/icons/windows.svg">
+    <img class="app-icon" src="assets/icons/telegram.svg">
+  </div>
+</section>
+
+<section class="card slide" id="whitepaper">
+  <h2 data-key="notice">Aviso</h2>
+  <p data-key="notice.text">Sem promessas. Sem garantias. Apenas presença humana real.</p>
+</section>
+
+</main>
+
+<footer>
+  <p data-key="footer">HUMAN — presença humana no tempo</p>
+</footer>
+
+</body>
+  </html>
