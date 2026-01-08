@@ -2,70 +2,89 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HUMAN — Jornada</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HUMAN 2026</title>
 <link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
 </head>
+
 <body>
 
-<!-- 🌐 IDIOMA -->
-<div class="lang-switch">
-  <button onclick="setLang('pt')">PT</button> |
-  <button onclick="setLang('en')">EN</button>
+<!-- Fundo Zen -->
+<div id="bg"></div>
+<canvas id="fog"></canvas>
+
+<!-- Selector de idioma -->
+<div id="lang-switch">
+  <span class="lang" onclick="setLang('pt')">PT</span> |
+  <span class="lang" onclick="setLang('en')">EN</span>
 </div>
 
-<!-- 🎵 MÚSICA -->
-<audio id="bgm" autoplay loop muted>
-  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Oddio_Overplay/Monplaisir/Land_of_Bliss/Monplaisir_-_07_-_Moon_Bshine.mp3">
-</audio>
+<!-- Conteúdo -->
+<div class="container">
 
-<!-- HERO -->
-<header class="hero">
-  <img src="hum-logo.png" class="logo" />
-  <h1 data-pt="HUMAN" data-en="HUMAN"></h1>
-  <p class="tagline"
-     data-pt="Caminho, disciplina e presença"
-     data-en="Path, discipline and presence">
-  </p>
-</header>
+  <!-- Frase Mística -->
+  <section class="hero">
+    <h1 id="title" data-pt="HUMAN" data-en="HUMAN">HUMAN</h1>
+    <p id="hero-line"></p>
+  </section>
 
-<!-- PAGE CONTENT -->
-<main id="page-content">
+  <!-- O QUE É -->
+  <section class="panel glass">
+    <h2 data-pt="O que é o HUMAN" data-en="What is HUMAN"></h2>
+    <p id="what"></p>
+  </section>
 
-<section class="card slide manifesto">
-  <p data-pt="Este sistema foi criado para acompanhar o tempo humano."
-     data-en="This system was created to accompany human time."></p>
-</section>
+  <!-- O que NÃO é -->
+  <section class="panel glass">
+    <h2 data-pt="O que não é" data-en="What it's not"></h2>
+    <p id="not"></p>
+  </section>
 
-<section class="card slide intent">
-  <h2 data-pt="Escolhe a tua jornada" data-en="Choose your path"></h2>
-  <div class="intent-grid">
-    <div class="intent-box">
-      <h3 data-pt="Compreender" data-en="Understand"></h3>
-      <p data-pt="Ler o protocolo.<br>Conhecer o funcionamento."
-         data-en="Read the protocol.<br>Understand the rules."></p>
-      <a href="whitepaper.pdf" class="intent-btn secondary"
-         data-pt="Explorar" data-en="Explore"></a>
-    </div>
+  <!-- Filosofia -->
+  <section class="panel glass">
+    <h2 data-pt="Filosofia" data-en="Philosophy"></h2>
+    <p id="phi"></p>
+  </section>
 
-    <div class="intent-box active">
-      <h3 data-pt="Participar" data-en="Participate"></h3>
-      <p data-pt="Marca presença.<br>Acumula HUM."
-         data-en="Mark presence.<br>Earn HUM."></p>
-      <a href="app/index.html"
-         class="intent-btn primary"
-         data-pt="Entrar" data-en="Enter"></a>
-    </div>
-  </div>
-</section>
+  <!-- Token HUM -->
+  <section class="panel glass">
+    <h2 data-pt="O Token HUM" data-en="HUM Token"></h2>
+    <p id="token"></p>
+  </section>
 
-</main>
+  <!-- Economia -->
+  <section class="panel glass">
+    <h2 data-pt="Economia HUM" data-en="HUM Economy"></h2>
+    <p id="eco"></p>
+  </section>
 
-<footer>
-  <p data-pt="HUMAN — presença humana no tempo"
-     data-en="HUMAN — human presence over time"></p>
-</footer>
+  <!-- Fases -->
+  <section class="panel glass">
+    <h2 data-pt="Fases do Sistema" data-en="System Phases"></h2>
+    <p id="phase"></p>
+  </section>
 
-<script src="script.js"></script>
+  <!-- Roadmap -->
+  <section class="panel glass">
+    <h2 data-pt="Roadmap" data-en="Roadmap"></h2>
+    <p id="road"></p>
+  </section>
+
+  <!-- Como começar -->
+  <section class="panel glass">
+    <h2 data-pt="Como começar" data-en="How to begin"></h2>
+    <p id="start"></p>
+  </section>
+
+  <!-- Comunidade -->
+  <section class="panel glass">
+    <h2 data-pt="Comunidade" data-en="Community"></h2>
+    <p id="comm"></p>
+    <a href="https://t.me/+TmAggpEST5NlZDZk" class="btn">Entrar na HUMAN</a>
+  </section>
+
+</div>
+
 </body>
-      </html>
+</html>
