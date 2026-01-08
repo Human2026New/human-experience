@@ -10,12 +10,13 @@
 
 <body class="home">
 
-<!-- ============= FUNDO VIVO ============= -->
+<!-- ==== FUNDO & CAMADAS ==== -->
 <canvas id="fog"></canvas>
 <canvas id="trail"></canvas>
+<canvas id="particles"></canvas>
 <div id="background"></div>
 
-<!-- ============= TOPO ============= -->
+<!-- ==== TOPO ==== -->
 <header>
   <div id="lang-switch">
     <span onclick="setLang('pt')">PT</span> |
@@ -23,7 +24,7 @@
   </div>
 </header>
 
-<!-- ============= HERO ============= -->
+<!-- ==== HERO ==== -->
 <section class="hero">
   <canvas id="avatar"></canvas>
   <h1>HUMAN</h1>
@@ -32,52 +33,44 @@
   <div id="scroll-down">▼</div>
 </section>
 
-<!-- ============= MAIN ============= -->
+<!-- ==== MAIN ==== -->
 <main>
 
-<!-- O QUE É -->
 <section class="card">
   <h3 data-key="what-title"></h3>
   <p data-key="what"></p>
 </section>
 
-<!-- MARCA HUM -->
 <section class="card">
   <h3 data-key="token-title"></h3>
   <p data-key="token"></p>
 </section>
 
-<!-- COMO COMEÇAR -->
 <section class="card">
   <h3 data-key="start-title"></h3>
   <p data-key="start"></p>
 </section>
 
-<!-- MATURIDADE E VALOR -->
 <section class="card">
   <h3 data-key="eco-title"></h3>
   <p data-key="eco"></p>
 </section>
 
-<!-- FASES -->
 <section class="card">
   <h3 data-key="phase-title"></h3>
   <p data-key="phase"></p>
 </section>
 
-<!-- PORQUÊ PARTICIPAR -->
 <section class="card">
   <h3 data-key="why-title"></h3>
   <p data-key="why"></p>
 </section>
 
-<!-- TAREFAS -->
 <section class="card">
   <h3 data-key="tasks-title"></h3>
   <p data-key="tasks"></p>
 </section>
 
-<!-- PRESENÇA E BONUS -->
 <section class="card">
   <h3 data-key="daily-title"></h3>
   <p><strong>Presenças:</strong> <span id="days">0</span></p>
@@ -85,7 +78,6 @@
   <div id="timeline"></div>
 </section>
 
-<!-- RADAR -->
 <section class="card">
   <h3 data-key="comm-title"></h3>
   <p id="radar-info">Ligando consciência humana...</p>
@@ -94,10 +86,9 @@
 
 </main>
 
-<!-- ============= FOOTER ============= -->
 <footer>
 <p>© HUMAN 2026 — Tempo é valor.</p>
 </footer>
 
 </body>
-  </html>
+</html>
