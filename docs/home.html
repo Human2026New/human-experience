@@ -10,10 +10,12 @@
 
 <body class="home">
 
+<!-- FUNDO ANIMADO -->
 <canvas id="fog"></canvas>
 <canvas id="trail"></canvas>
 <div id="background"></div>
 
+<!-- LÍNGUA -->
 <header>
   <div id="lang-switch">
     <span onclick="setLang('pt')">PT</span> |
@@ -21,6 +23,7 @@
   </div>
 </header>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hum-logo"></div>
   <h1>HUMAN</h1>
@@ -29,18 +32,52 @@
   <div id="scroll-down">▼</div>
 </section>
 
-<!-- BOTÕES -->
-<a href="origem.html" class="gateway-btn" data-key="origem-btn"></a>
-<a href="portal.html" class="gateway-btn" data-key="portal-btn"></a>
+<!-- BOTÕES PRINCIPAIS -->
+<a href="origem.html" class="gateway-btn" data-key="origem-btn">
+  A Origem
+</a>
 
+<a href="portal.html" class="gateway-btn" data-key="portal-btn">
+  Portal HUMANO
+</a>
+
+<!-- CONTEÚDO PRINCIPAL -->
 <main>
-<section class="card"><h3 data-key="what-title"></h3><p data-key="what"></p></section>
-<section class="card"><h3 data-key="token-title"></h3><p data-key="token"></p></section>
-<section class="card"><h3 data-key="start-title"></h3><p data-key="start"></p></section>
-<section class="card"><h3 data-key="eco-title"></h3><p data-key="eco"></p></section>
-<section class="card"><h3 data-key="phase-title"></h3><p data-key="phase"></p></section>
-<section class="card"><h3 data-key="why-title"></h3><p data-key="why"></p></section>
-<section class="card"><h3 data-key="tasks-title"></h3><p data-key="tasks"></p></section>
+
+<section class="card">
+  <h3 data-key="what-title"></h3>
+  <p data-key="what"></p>
+</section>
+
+<section class="card">
+  <h3 data-key="token-title"></h3>
+  <p data-key="token"></p>
+</section>
+
+<section class="card">
+  <h3 data-key="start-title"></h3>
+  <p data-key="start"></p>
+</section>
+
+<section class="card">
+  <h3 data-key="eco-title"></h3>
+  <p data-key="eco"></p>
+</section>
+
+<section class="card">
+  <h3 data-key="phase-title"></h3>
+  <p data-key="phase"></p>
+</section>
+
+<section class="card">
+  <h3 data-key="why-title"></h3>
+  <p data-key="why"></p>
+</section>
+
+<section class="card">
+  <h3 data-key="tasks-title"></h3>
+  <p data-key="tasks"></p>
+</section>
 
 <section class="card">
   <h3 data-key="daily-title"></h3>
@@ -53,9 +90,19 @@
   <h3 data-key="comm-title"></h3>
   <p id="radar-info">Ligando consciência humana...</p>
 </section>
+
 </main>
 
-<footer><p>© HUMAN 2026 — Tempo é valor.</p></footer>
+<footer>
+  <p>© HUMAN 2026 — Tempo é valor.</p>
+</footer>
+
+<!-- GARANTE QUE OS TEXTOS APARECEM -->
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+ setLang(localStorage.getItem("lang") || "pt");
+});
+</script>
 
 </body>
 </html>
