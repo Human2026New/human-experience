@@ -1,4 +1,4 @@
-/*******************************
+kkkk/*******************************
  🌍 BASE GLOBAL
 *******************************/
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -253,3 +253,37 @@ footer{
   .card{font-size:.95rem;}
   .hum-logo{width:140px;height:140px;}
 }
+/* ==== BOTÃO A ORIGEM ==== */
+.gateway-btn{
+  display:block;
+  width:85%;
+  margin:40px auto;
+  padding:18px 0;
+  text-align:center;
+  font-size:1.3rem;
+  font-weight:600;
+  color:#2c1c00;
+  background:linear-gradient(135deg, #ffdf85, #ffd056, #ffb83f);
+  border-radius:16px;
+  text-decoration:none;
+  letter-spacing:1px;
+  box-shadow:
+    0 0 15px rgba(255,210,120,0.6),
+    0 0 40px rgba(255,170,80,0.25);
+  animation:pulseGlow 3.5s infinite;
+}
+
+/* efeito hover */
+.gateway-btn:hover{
+  transform:scale(1.04);
+  box-shadow:
+    0 0 25px rgba(255,210,120,0.8),
+    0 0 60px rgba(255,170,80,0.4);
+}
+
+/* animação mística */
+@keyframes pulseGlow{
+  0%{box-shadow:0 0 12px rgba(255,215,120,0.4);}
+  50%{box-shadow:0 0 35px rgba(255,215,120,0.9);}
+  100%{box-shadow:0 0 12px rgba(255,215,120,0.4);}
+                               }
