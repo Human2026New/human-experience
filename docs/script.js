@@ -1,11 +1,17 @@
 /***********************
- 🌍 IDIOMA
+ 🌍 IDIOMA PT/EN
 ************************/
-function setLang(l){
-  localStorage.setItem("l",l);
-  document.querySelectorAll("[data-pt]").forEach(e=>e.innerHTML=e.dataset[l]);
+function setLang(lang){
+  if(lang !== "pt" && lang !== "en") lang = "pt"; // só aceite PT ou EN
+  localStorage.setItem("lang", lang);
+
+  document.querySelectorAll("[data-pt]").forEach(el=>{
+    el.innerHTML = el.dataset[lang];
+  });
 }
-setLang(localStorage.getItem("l")||"pt");
+
+// carregar preferência salva
+setLang(localStorage.getItem("lang") || "pt");
 
 /***********************
  🎵 AUDIO
@@ -17,7 +23,7 @@ function toggleAudio(){
 }
 
 /***********************
- ⚡ DUAL THEME (BTN)
+ ⚡ MODO CYBER
 ************************/
 const toggle=document.getElementById("themeToggle");
 toggle.onclick=()=>{
@@ -98,7 +104,7 @@ function drawDrops(){
 drawDrops();
 
 /***********************
- 🌀 FRACTAL CAÓTICO
+ 🌀 FRACTAL CHAOS
 ************************/
 const fCanvas=document.getElementById("fractal");
 const fctx=fCanvas.getContext("2d");
