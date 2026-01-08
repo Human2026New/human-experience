@@ -11,16 +11,8 @@
 
 <body>
 
-<!-- 🎵 MÚSICA -->
-<audio id="bgm" autoplay loop>
-  <source src="assets/sound/moon-bshine.mp3">
-</audio>
-
-<!-- 🔊 AUDIO -->
-<div class="audio-toggle" onclick="toggleAudio()">🔊</div>
-
-<!-- 🌐 IDIOMA -->
-<div class="lang-switch">
+<!-- 🌐 IDIOMA FIXO -->
+<div class="lang-switch fixed-lang">
   <button onclick="setLang('pt')">PT</button> |
   <button onclick="setLang('en')">EN</button>
 </div>
@@ -28,17 +20,21 @@
 <!-- 🎨 TEMA -->
 <button id="themeToggle" class="theme-btn">⚡</button>
 
+<!-- 🔊 AUDIO -->
+<div class="audio-toggle" onclick="toggleAudio()">🔊</div>
+
 <!-- CANVAS -->
 <canvas id="fractal"></canvas>
 <canvas id="particles"></canvas>
 <canvas id="airdrop"></canvas>
 
-<header class="hero">
-  <img src="hum-logo.png" class="logo" />
-  <h1>HUMAN</h1>
-  <p class="tagline" data-key="hero.tagline"></p>
+<!-- 🧘 HERO LIMPO -->
+<header class="hero-intro">
+  <img src="hum-logo.png" class="logo-main">
+  <div class="scroll-indicator">▼</div>
 </header>
 
+<!-- ✨ RESTO DA PÁGINA SÓ APARECE DEPOIS -->
 <main>
 
 <section class="card slide">
@@ -112,4 +108,4 @@
 
 <script src="script.js"></script>
 </body>
-  </html>
+</html>
