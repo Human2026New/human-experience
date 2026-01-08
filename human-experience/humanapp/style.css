@@ -1,0 +1,25 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+#app {
+  text-align: center;
+}
+
+button {
+  margin-top: 20px;
+  padding: 15px 25px;
+  font-size: 18px;
+  border: none;
+  background: #0044ff;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+}
