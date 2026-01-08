@@ -32,6 +32,8 @@ Não procura pressa, procura presença.`,
 
   "origem-btn":"A Origem",
 
+  "portal-btn":"Portal HUMANO",
+
   "origem-title":"A Origem",
   "origem-intro":"O HUM começa no momento em que regressas. Não nasce do computador — nasce de ti.",
 
@@ -50,16 +52,15 @@ Não procura pressa, procura presença.`,
   "origem-when":"Quando posso trocar HUM?",
   "origem-when-text":"Quando 20% do HUM total for criado por presença humana consciente.",
 
-  "portal-btn":"Portal HUMANO",
+  "origem-summary":"Em resumo",
+  "origem-summary-text":"HUM nasce do tempo humano. Cresce com disciplina. Vive na comunidade.",
+
   "back-home":"Voltar",
   "portal-title":"Portal HUMANO",
   "portal-desc":"Escolhe como entrar. Com download ou sem barreiras.",
   "portal-connect":"Entradas disponíveis",
   "portal-future":"Próximos passos",
-  "portal-future-text":"Convites humanos, contadores, equipas e missões estão a chegar.",
-
-  "origem-summary":"Em resumo",
-  "origem-summary-text":"HUM nasce do tempo humano. Cresce com disciplina. Vive na comunidade."
+  "portal-future-text":"Convites humanos, contadores, equipas e missões estão a chegar."
  },
 
  en:{
@@ -90,9 +91,10 @@ Não procura pressa, procura presença.`,
   "comm-title":"Human Network",
 
   "origem-btn":"The Origin",
+  "portal-btn":"HUMAN Portal",
 
   "origem-title":"The Origin",
-  "origem-intro":"HUM starts the moment you return. It isn’t mined — it’s born from you.",
+  "origem-intro":"HUM starts the moment you return. It is not mined — it is born from you.",
 
   "origem-what":"What is HUMAN",
   "origem-what-text":"HUMAN values real human time. Every return leaves a living trace.",
@@ -103,14 +105,6 @@ Não procura pressa, procura presença.`,
   "origem-growth":"Human Growth",
   "origem-growth-text":"No mining — only real presence and discipline.",
 
-  "portal-btn":"HUMAN Portal",
-  "back-home":"Back",
-  "portal-title":"HUMAN Portal",
-  "portal-desc":"Choose how to enter — no friction, no walls.",
-  "portal-connect":"Available Access",
-  "portal-future":"Coming soon",
-  "portal-future-text":"Human invites, counters, squads and quests coming next.",
-
   "origem-distribution":"Fair Distribution",
   "origem-distribution-text":"60% human growth • 39% reserved until 20% creation • 1% team.",
 
@@ -118,7 +112,14 @@ Não procura pressa, procura presença.`,
   "origem-when-text":"At 20% creation HUM opens to Ton Coin and beyond.",
 
   "origem-summary":"In summary",
-  "origem-summary-text":"HUM is born from human time. It grows with discipline. It lives in community."
+  "origem-summary-text":"HUM is born from human time. It grows with discipline. It lives in community.",
+
+  "back-home":"Back",
+  "portal-title":"HUMAN Portal",
+  "portal-desc":"Choose how to enter. With or without downloads.",
+  "portal-connect":"Available access",
+  "portal-future":"Coming soon",
+  "portal-future-text":"Invite system, counters, squads and quests coming next."
  }
 };
 
