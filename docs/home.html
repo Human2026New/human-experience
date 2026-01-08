@@ -3,80 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HUMAN 2026</title>
-
+<title>HUMAN — Jornada</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="script.js" defer></script>
 </head>
-
 <body>
 
-<!-- Idioma -->
-<div class="lang-switch fixed-lang">
+<!-- 🌐 IDIOMA -->
+<div class="lang-switch">
   <button onclick="setLang('pt')">PT</button> |
   <button onclick="setLang('en')">EN</button>
 </div>
 
-<!-- Tema -->
-<button id="themeToggle" class="theme-btn">⚡</button>
-
-<!-- Audio -->
-<div class="audio-toggle" onclick="toggleAudio()">🔊</div>
+<!-- 🎵 MÚSICA -->
 <audio id="bgm" autoplay loop muted>
   <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Oddio_Overplay/Monplaisir/Land_of_Bliss/Monplaisir_-_07_-_Moon_Bshine.mp3">
 </audio>
 
-<!-- Background -->
-<canvas id="fractal"></canvas>
-<canvas id="particles"></canvas>
-<canvas id="airdrop"></canvas>
-
-<header class="hero-intro">
-  <img src="hum-logo.png" class="logo-main">
-  <div class="scroll-indicator">▼</div>
+<!-- HERO -->
+<header class="hero">
+  <img src="hum-logo.png" class="logo" />
+  <h1 data-pt="HUMAN" data-en="HUMAN"></h1>
+  <p class="tagline"
+     data-pt="Caminho, disciplina e presença"
+     data-en="Path, discipline and presence">
+  </p>
 </header>
 
+<!-- PAGE CONTENT -->
 <main id="page-content">
 
-<section class="card slide">
-  <p data-pt="Presença humana registada no tempo. Não é hardware. Não é promessa."
-     data-en="Human presence recorded over time. Not hardware. Not a promise."></p>
+<section class="card slide manifesto">
+  <p data-pt="Este sistema foi criado para acompanhar o tempo humano."
+     data-en="This system was created to accompany human time."></p>
 </section>
 
-<section class="card slide">
-  <h2 data-pt="Escolhe como queres entrar" data-en="Choose how you want to enter"></h2>
+<section class="card slide intent">
+  <h2 data-pt="Escolhe a tua jornada" data-en="Choose your path"></h2>
   <div class="intent-grid">
     <div class="intent-box">
       <h3 data-pt="Compreender" data-en="Understand"></h3>
-      <p data-pt="Ler o protocolo.<br>Entender as regras.<br>Conhecer o funcionamento."
-         data-en="Read the protocol.<br>Understand the rules.<br>Learn how it works."></p>
-      <a class="intent-btn secondary" href="#whitepaper"
-         data-pt="Explorar o sistema" data-en="Explore the system"></a>
+      <p data-pt="Ler o protocolo.<br>Conhecer o funcionamento."
+         data-en="Read the protocol.<br>Understand the rules."></p>
+      <a href="whitepaper.pdf" class="intent-btn secondary"
+         data-pt="Explorar" data-en="Explore"></a>
     </div>
 
     <div class="intent-box active">
       <h3 data-pt="Participar" data-en="Participate"></h3>
-      <p data-pt="Marcar presença.<br>Acumular HUM.<br>Fazer parte do processo."
-         data-en="Mark presence.<br>Accumulate HUM.<br>Be part of the process."></p>
-      <a class="intent-btn primary" href="app/index.html"
-         data-pt="Entrar na HUMAN" data-en="Enter HUMAN"></a>
+      <p data-pt="Marca presença.<br>Acumula HUM."
+         data-en="Mark presence.<br>Earn HUM."></p>
+      <a href="app/index.html"
+         class="intent-btn primary"
+         data-pt="Entrar" data-en="Enter"></a>
     </div>
   </div>
 </section>
 
-<section class="card slide">
-  <h2 data-pt="Distribuição ao Vivo" data-en="Live Distribution"></h2>
-  <canvas id="humChart" height="200"></canvas>
-</section>
-
-<section class="card slide" id="whitepaper">
-  <h2 data-pt="Aviso" data-en="Notice"></h2>
-  <p data-pt="Sem promessas. Sem garantias. Apenas presença humana real."
-     data-en="No promises. No guarantees. Only real presence."></p>
-</section>
-
 </main>
 
+<footer>
+  <p data-pt="HUMAN — presença humana no tempo"
+     data-en="HUMAN — human presence over time"></p>
+</footer>
+
+<script src="script.js"></script>
 </body>
-</html>
+      </html>
