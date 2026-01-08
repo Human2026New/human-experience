@@ -1,142 +1,73 @@
-/* ===== RESET ===== */
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;min-height:100vh;}
 
-/* ===== GLOBAL ===== */
 body{
-  font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  font-family:system-ui,BlinkMacSystemFont;
   color:#f5eec8;
   overflow-x:hidden;
   scroll-behavior:smooth;
 }
 
-/* Background base img — opaco atrás das camadas */
+/* FUNDO */
 #background{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:url("zen-bg.jpg") center/cover no-repeat fixed;
-  z-index:-4;
-  opacity:.25;
+  z-index:-3;opacity:.25;
 }
 
-/* ===== SPLASH ===== */
+/* SPLASH */
 body.splash{
   display:flex;flex-direction:column;
   justify-content:center;align-items:center;
   background:#000;color:#f9e8b2;
   animation:fadeIn 1.5s;
 }
+.splash-center h1{text-shadow:0 0 20px #f0e08a;font-size:3.6rem;}
+.splash-center p{max-width:320px;font-size:1.1rem;opacity:.9;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
-/* ===== HOME ===== */
-body.home{color:#fceec8;}
+/* NAV */
+header{position:fixed;top:15px;right:15px;z-index:100;color:#ffe9b0;}
 
-/* ===== TOP NAV ===== */
-header{
-  position:fixed;top:15px;right:15px;
-  z-index:100;
-  color:#ffe9b0;
-}
-
-/* ===== HERO ===== */
+/* HERO */
 .hero{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:25px;
-  background:rgba(0,0,0,0.45);
-  backdrop-filter:blur(9px);
+  height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  background:rgba(0,0,0,0.4);backdrop-filter:blur(7px);
 }
-.hero h1{
-  font-size:3.2rem;
-  text-shadow:0 0 18px #ffde88;
-  margin:10px 0;
-}
-.hero h2{
-  max-width:330px;
-  font-size:1.3rem;
-  opacity:.95;
-}
-.hero p{
-  max-width:340px;
-  opacity:.9;
-}
+.hero h1{font-size:3.3rem;text-shadow:0 0 18px #ffd;}
+.hero h2{max-width:330px;font-size:1.25rem;opacity:.95;}
+.hero p{max-width:330px;font-size:1rem;opacity:.88;}
+#scroll-down{margin-top:22px;font-size:1.8rem;color:#ffd988;animation:bounce 1.5s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
 
-/* ===== AVATAR ===== */
-#avatar{
-  width:140px;height:140px;
-  border-radius:50%;
-  margin-bottom:20px;
-  background:#0006;
-  border:4px solid rgba(255,225,130,.8);
-  box-shadow:0 0 20px rgba(255,210,120,.4);
+/* LOGO */
+.hum-logo{
+  width:150px;height:150px;border-radius:50%;
+  background:url("hum-logo.png") center/contain no-repeat;
+  background-size:85%;
+  border:4px solid rgba(255,220,130,0.85);
+  background-color:rgba(0,0,0,0.2);
+  box-shadow:0 0 22px rgba(255,210,120,0.45),0 0 60px rgba(255,210,120,0.25);
+  margin-bottom:18px;
   animation:breathe 6s infinite;
-  z-index:10;
 }
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
 
-/* ===== CARDS ===== */
+/* CARDS */
 main{padding:32px 0;}
 .card{
-  width:90%;
-  margin:0 auto 40px auto;
-  padding:22px;
-  background:rgba(0,0,0,0.55);
-  color:#ffefc2;
-  border-radius:18px;
+  width:90%;margin:0 auto 40px auto;
+  padding:22px;background:rgba(0,0,0,0.55);
+  color:#ffefc2;border-radius:18px;
   backdrop-filter:blur(10px);
 }
-
-/* ===== TIMELINE ===== */
-#timeline{display:flex;gap:4px;margin-top:10px;flex-wrap:wrap;}
 .mark{width:7px;height:7px;border-radius:50%;background:#ffd775;}
 
-/* ===== RADAR ===== */
-#radar{
-  width:100%;
-  height:240px;
-  background:rgba(0,0,0,0.3);
-  border-radius:16px;
-  border:1px solid rgba(255,224,160,.2);
+/* CANVAS */
+#fog,#trail{
+  position:fixed;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:-2;
 }
 
-/* ===== CANVAS ===== */
-#fog,#trail,#particles{
-  position:fixed;
-  inset:0;
-  width:100vw;height:100vh;
-  pointer-events:none;
-  z-index:-3;
-}
-#trail{z-index:-2;}
-#particles{z-index:-1;}
-
-/* ===== ANIM ===== */
-@keyframes breathe{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.06);}
-}
-
-@keyframes fadeIn{
-  from{opacity:0;}to{opacity:1;}
-}
-
-/* ===== FOOTER ===== */
-footer{text-align:center;padding:40px 0;font-size:14px;color:#d2c18f;}
-/* ==== LOGO CENTRAL HUM ==== */
-.hum-logo{
-  width:160px;
-  height:160px;
-  border-radius:50%;
-  background:url("hum-logo.png") center/contain no-repeat;
-  background-size:82%;
-  background-color:rgba(0,0,0,0.25);
-  border:4px solid rgba(255,220,130,0.85);
-  box-shadow:
-    0 0 22px rgba(255,210,120,0.45),
-    0 0 60px rgba(255,210,120,0.25);
-  margin-bottom:22px;
-  animation:breathe 6s infinite;
-  z-index:20;
-                        }
+footer{text-align:center;padding:35px 0;font-size:14px;}
