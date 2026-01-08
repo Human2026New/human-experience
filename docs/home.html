@@ -3,88 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HUMAN 2026</title>
+<title>HUMAN</title>
 <link rel="stylesheet" href="style.css">
 <script defer src="script.js"></script>
 </head>
 
 <body>
 
-<!-- Fundo Zen -->
-<div id="bg"></div>
+<!-- FUNDO -->
 <canvas id="fog"></canvas>
 
-<!-- Selector de idioma -->
+<!-- IDIOMA -->
 <div id="lang-switch">
-  <span class="lang" onclick="setLang('pt')">PT</span> |
-  <span class="lang" onclick="setLang('en')">EN</span>
+  <span onclick="setLang('pt')">PT</span> |
+  <span onclick="setLang('en')">EN</span>
 </div>
 
-<!-- Conteúdo -->
-<div class="container">
+<!-- PORTAL -->
+<section class="hero full">
+  <h1>HUMAN</h1>
+  <p id="hero-line"></p>
+  <p id="value">VALOR HUM INICIAL: €0.05</p>
+  <div class="arrow">▼</div>
+</section>
 
-  <!-- Frase Mística -->
-  <section class="hero">
-    <h1 id="title" data-pt="HUMAN" data-en="HUMAN">HUMAN</h1>
-    <p id="hero-line"></p>
-  </section>
+<!-- O QUE É -->
+<section class="panel" id="sec-what">
+  <h2 data-t="what-title"></h2>
+  <p id="what"></p>
+</section>
 
-  <!-- O QUE É -->
-  <section class="panel glass">
-    <h2 data-pt="O que é o HUMAN" data-en="What is HUMAN"></h2>
-    <p id="what"></p>
-  </section>
+<!-- TOKEN HUM -->
+<section class="panel" id="sec-token">
+  <h2 data-t="token-title"></h2>
+  <p id="token"></p>
+</section>
 
-  <!-- O que NÃO é -->
-  <section class="panel glass">
-    <h2 data-pt="O que não é" data-en="What it's not"></h2>
-    <p id="not"></p>
-  </section>
+<!-- DISTRIBUIÇÃO -->
+<section class="panel" id="sec-distribution">
+  <h2>Distribuição do HUM</h2>
+  <ul>
+    <li>60% mineração humana</li>
+    <li>39% venda e liquidez</li>
+    <li>1% equipa</li>
+  </ul>
+</section>
 
-  <!-- Filosofia -->
-  <section class="panel glass">
-    <h2 data-pt="Filosofia" data-en="Philosophy"></h2>
-    <p id="phi"></p>
-  </section>
+<!-- ECONOMIA -->
+<section class="panel" id="sec-eco">
+  <h2 data-t="eco-title"></h2>
+  <p id="eco"></p>
+</section>
 
-  <!-- Token HUM -->
-  <section class="panel glass">
-    <h2 data-pt="O Token HUM" data-en="HUM Token"></h2>
-    <p id="token"></p>
-  </section>
+<!-- FASES -->
+<section class="panel" id="sec-phase">
+  <h2 data-t="phase-title"></h2>
+  <p id="phase"></p>
+</section>
 
-  <!-- Economia -->
-  <section class="panel glass">
-    <h2 data-pt="Economia HUM" data-en="HUM Economy"></h2>
-    <p id="eco"></p>
-  </section>
+<!-- APP -->
+<section class="panel" id="sec-app">
+  <h2 data-t="start-title"></h2>
+  <p id="start"></p>
+</section>
 
-  <!-- Fases -->
-  <section class="panel glass">
-    <h2 data-pt="Fases do Sistema" data-en="System Phases"></h2>
-    <p id="phase"></p>
-  </section>
+<!-- RADAR -->
+<section class="panel" id="sec-radar">
+  <h2>Radar Humano</h2>
+  <p>Visualiza a presença humana global</p>
+  <a class="btn" href="radar.html">Ver Radar</a>
+</section>
 
-  <!-- Roadmap -->
-  <section class="panel glass">
-    <h2 data-pt="Roadmap" data-en="Roadmap"></h2>
-    <p id="road"></p>
-  </section>
-
-  <!-- Como começar -->
-  <section class="panel glass">
-    <h2 data-pt="Como começar" data-en="How to begin"></h2>
-    <p id="start"></p>
-  </section>
-
-  <!-- Comunidade -->
-  <section class="panel glass">
-    <h2 data-pt="Comunidade" data-en="Community"></h2>
-    <p id="comm"></p>
-    <a href="https://t.me/+TmAggpEST5NlZDZk" class="btn">Entrar na HUMAN</a>
-  </section>
-
-</div>
+<!-- COMUNIDADE -->
+<section class="panel" id="sec-community">
+  <h2 data-t="comm-title"></h2>
+  <p id="comm"></p>
+  <a class="btn" href="https://t.me/human_app_bot">Entrar na HUMAN</a>
+</section>
 
 </body>
 </html>
