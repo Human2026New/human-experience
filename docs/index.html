@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>HUMAN — Ascender</title>
 <link rel="stylesheet" href="style.css" />
-<style>
-  body { overflow:hidden; }
-</style>
+<style>body { overflow:hidden; }</style>
 </head>
 
 <body class="splash-body">
 
+<!-- Flash -->
 <div id="flash"></div>
 
+<!-- HERO SPLASH -->
 <div class="splash">
   <h1 class="splash-title">HUMAN</h1>
   <button class="splash-btn" onclick="ascend()">ASCENDER</button>
@@ -23,7 +23,7 @@
 function ascend(){
   const flash=document.getElementById("flash");
   flash.classList.add("go");
-  setTimeout(()=>window.location.href="home.html",800);
+  setTimeout(()=>window.location.href="./home.html",800);
 }
 </script>
 
