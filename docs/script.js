@@ -49,13 +49,14 @@ Não procura pressa, procura presença.`,
 
   "origem-when":"Quando posso trocar HUM?",
   "origem-when-text":"Quando 20% do HUM total for criado por presença humana consciente.",
+
   "portal-btn":"Portal HUMANO",
-"back-home":"Voltar",
-"portal-title":"Portal HUMANO",
-"portal-desc":"Escolhe como entrar. Com download ou sem barreiras.",
-"portal-connect":"Entradas disponíveis",
-"portal-future":"Próximos passos",
-"portal-future-text":"Convites humanos, contadores, equipas e missões estão a chegar."
+  "back-home":"Voltar",
+  "portal-title":"Portal HUMANO",
+  "portal-desc":"Escolhe como entrar. Com download ou sem barreiras.",
+  "portal-connect":"Entradas disponíveis",
+  "portal-future":"Próximos passos",
+  "portal-future-text":"Convites humanos, contadores, equipas e missões estão a chegar.",
 
   "origem-summary":"Em resumo",
   "origem-summary-text":"HUM nasce do tempo humano. Cresce com disciplina. Vive na comunidade."
@@ -101,13 +102,14 @@ Não procura pressa, procura presença.`,
 
   "origem-growth":"Human Growth",
   "origem-growth-text":"No mining — only real presence and discipline.",
-   "portal-btn":"HUMAN Portal",
-"back-home":"Back",
-"portal-title":"HUMAN Portal",
-"portal-desc":"Choose how to enter — no friction, no walls.",
-"portal-connect":"Available Access",
-"portal-future":"Coming soon",
-"portal-future-text":"Human invites, counters, squads and quests coming next."
+
+  "portal-btn":"HUMAN Portal",
+  "back-home":"Back",
+  "portal-title":"HUMAN Portal",
+  "portal-desc":"Choose how to enter — no friction, no walls.",
+  "portal-connect":"Available Access",
+  "portal-future":"Coming soon",
+  "portal-future-text":"Human invites, counters, squads and quests coming next.",
 
   "origem-distribution":"Fair Distribution",
   "origem-distribution-text":"60% human growth • 39% reserved until 20% creation • 1% team.",
@@ -119,82 +121,3 @@ Não procura pressa, procura presença.`,
   "origem-summary-text":"HUM is born from human time. It grows with discipline. It lives in community."
  }
 };
-
-function setLang(l){
- localStorage.setItem("lang",l);
- document.querySelectorAll("[data-key]").forEach(el=>{
-   el.innerHTML=content[l][el.dataset.key];
- });
-}
-setLang(localStorage.getItem("lang")||"pt");
-
-/**************************
- 📅 PRESENÇA & HUM
-**************************/
-let days=+localStorage.getItem("hum_days")||0;
-const last=localStorage.getItem("hum_last");
-const today=new Date().toDateString();
-
-if(last!==today){
- days++;
- localStorage.setItem("hum_days",days);
- localStorage.setItem("hum_last",today);
-
- let hum=+localStorage.getItem("hum_balance")||0;
- hum+=0.01;
- localStorage.setItem("hum_balance",hum);
-}
-
-document.getElementById("days").textContent=days;
-document.getElementById("humBalance").textContent=
- (+localStorage.getItem("hum_balance")||0).toFixed(3)+" HUM";
-
-const tl=document.getElementById("timeline");
-if(tl){
- tl.innerHTML="";
- for(let i=0;i<days;i++){
-  let dot=document.createElement("span");
-  dot.className="mark";
-  tl.appendChild(dot);
- }
-}
-
-/**************************
- 🌫 NÉVOA & TRAIL
-**************************/
-const fogCanvas=document.getElementById("fog");
-const fogCtx=fogCanvas.getContext("2d");
-
-function sizeFog(){fogCanvas.width=innerWidth;fogCanvas.height=innerHeight;}
-sizeFog();addEventListener("resize",sizeFog);
-
-function loopFog(){
- fogCtx.clearRect(0,0,innerWidth,innerHeight);
- fogCtx.fillStyle="rgba(255,215,120,0.05)";
- fogCtx.beginPath();
- fogCtx.arc(innerWidth/2,innerHeight/2,200,0,Math.PI*2);
- fogCtx.fill();
- requestAnimationFrame(loopFog);
-}
-loopFog();
-
-const trail=[];
-const tctx=document.getElementById("trail").getContext("2d");
-function sizeTrail(){tctx.canvas.width=innerWidth;tctx.canvas.height=innerHeight;}
-sizeTrail();addEventListener("resize",sizeTrail);
-
-window.addEventListener("mousemove",e=>{
- trail.push({x:e.clientX,y:e.clientY,a:1});
- if(trail.length>60)trail.shift();
-});
-
-function drawTrail(){
- tctx.clearRect(0,0,innerWidth,innerHeight);
- trail.forEach(p=>{
-  tctx.fillStyle=`rgba(255,220,150,${p.a})`;
-  tctx.beginPath();tctx.arc(p.x,p.y,6*p.a,0,Math.PI*2);tctx.fill();
-  p.a-=0.03;
- });
- requestAnimationFrame(drawTrail);
-}
-drawTrail();
