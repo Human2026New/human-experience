@@ -3,52 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HUMAN — Presença Humana</title>
+<title>HUMAN — Presença Humana no Tempo</title>
 <link rel="stylesheet" href="style.css">
 <script defer src="script.js"></script>
 </head>
 <body>
 
+<!-- FUNDO VIVO -->
 <canvas id="fog"></canvas>
+<canvas id="particles"></canvas>
 
+<!-- IDIOMA -->
 <div id="lang-switch">
   <span onclick="setLang('pt')">PT</span> |
   <span onclick="setLang('en')">EN</span>
 </div>
 
+<!-- HERO -->
 <section class="hero">
   <h1>HUMAN</h1>
-  <p id="value">VALOR HUM: €0.05 (referência interna)</p>
+  <p id="tagline"></p>
   <div class="arrow">▼</div>
 </section>
 
-<section class="panel"><h2 data-t="what-title"></h2><p id="what"></p></section>
-
-<section class="panel"><h2 data-t="token-title"></h2><p id="token"></p></section>
-
+<!-- O QUE É O HUMAN -->
 <section class="panel">
-<h2>Distribuição</h2>
-<ul>
-<li>60% mineração humana</li>
-<li>39% venda + liquidez controlada</li>
-<li>1% equipa HUMAN</li>
-</ul>
+  <h2 data-t="what-title"></h2>
+  <p id="what"></p>
 </section>
 
-<section class="panel"><h2 data-t="eco-title"></h2><p id="eco"></p></section>
-
-<section class="panel"><h2 data-t="phase-title"></h2><p id="phase"></p></section>
-
-<section class="panel"><h2 data-t="start-title"></h2><p id="start"></p></section>
-
+<!-- TOKEN HUM -->
 <section class="panel">
-<h2>Radar Humano</h2>
-<p>Ver presença global</p>
-<a class="btn" href="radar.html">Abrir Radar</a>
+  <h2 data-t="token-title"></h2>
+  <p id="token"></p>
 </section>
 
-<section class="panel"><h2 data-t="comm-title"></h2><p id="comm"></p>
-<a class="btn" href="https://t.me/human_app_bot">Entrar na HUMAN</a>
+<!-- DISTRIBUIÇÃO -->
+<section class="panel">
+  <h2>Distribuição Oficial HUM</h2>
+  <ul>
+    <li>60% mineração humana (app, web, telegram)</li>
+    <li>39% venda e liquidez controlada</li>
+    <li>1% equipa HUMAN</li>
+  </ul>
+</section>
+
+<!-- ECONOMIA -->
+<section class="panel">
+  <h2 data-t="eco-title"></h2>
+  <p id="eco"></p>
+</section>
+
+<!-- FASES -->
+<section class="panel">
+  <h2 data-t="phase-title"></h2>
+  <p id="phase"></p>
+</section>
+
+<!-- PRESENÇA & AVATAR -->
+<section class="panel">
+  <h2>PRESENÇA HUMANA</h2>
+  <p>Visitas marcadas neste dispositivo:</p>
+  <p id="days"></p>
+
+  <p>Avatar único gerado:</p>
+  <canvas id="avatar" width="80" height="80"></canvas>
+
+  <p style="margin-top:8px;font-size:14px;opacity:0.8;">
+    (identidade local — nunca enviada)
+  </p>
+</section>
+
+<!-- APP -->
+<section class="panel">
+  <h2 data-t="start-title"></h2>
+  <p id="start"></p>
+  <a class="btn" href="https://t.me/human_app_bot">Entrar no Telegram</a>
+</section>
+
+<!-- RADAR -->
+<section class="panel">
+  <h2>Radar Humano</h2>
+  <p>Visualiza o mundo acender</p>
+  <a class="btn" href="radar.html">Abrir Radar</a>
+</section>
+
+<!-- COMUNIDADE -->
+<section class="panel">
+  <h2 data-t="comm-title"></h2>
+  <p id="comm"></p>
+  <a class="btn" href="https://t.me/human_app_bot">Juntar-se à HUMAN</a>
 </section>
 
 </body>
