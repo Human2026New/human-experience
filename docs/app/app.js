@@ -1,63 +1,53 @@
 /* =========================
-   HUMAN — app.js
+   HUMAN — APP.JS (BILINGUE JSON)
    ========================= */
 
 const STORAGE_KEY = "human_app_state_v1";
+const LANG_KEY    = "lang";
+let LANG = "pt";
+let LANG_DATA = {};
 
-/* ---------- TELEGRAM SAFE ---------- */
-if (window.Telegram && Telegram.WebApp) {
-  Telegram.WebApp.ready();
+async function init() {
+  LANG = localStorage.getItem(LANG_KEY) || "pt";
+  const res = await fetch("../lang.json");
+  LANG_DATA = await res.json();
+
+  loadState();
+  updateUI();
+  tick();
+}
+init();
+
+let state = { hum: 0, percent: 0, phase: 0 };
+
+function loadState(){
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if(saved) state = { ...state, ...JSON.parse(saved) };
 }
 
-/* ---------- STATE ---------- */
-let state = {
-  hum: 0,
-  percent: 0,
-  phase: 0
-};
-
-/* ---------- ELEMENTS ---------- */
-const humValue = document.getElementById("humValue");
+const humValue    = document.getElementById("humValue");
 const percentText = document.getElementById("percentText");
-const phaseText = document.getElementById("phaseText");
+const phaseText   = document.getElementById("phaseText");
 
-/* ---------- LOAD ---------- */
-const saved = localStorage.getItem(STORAGE_KEY);
-if (saved) state = { ...state, ...JSON.parse(saved) };
-
-/* ---------- UI ---------- */
 function updateUI() {
+  const langPack = LANG_DATA[LANG] || LANG_DATA["pt"];
+
   humValue.textContent = state.hum.toFixed(5) + " HUM";
-  percentText.textContent = state.percent.toFixed(2) + "% minerado";
+  percentText.textContent = state.percent.toFixed(2) + " " + langPack["app.percent"];
 
   phaseText.textContent =
     state.phase === 0
-      ? "Fase 0 — Génese\nHUM dormente"
+      ? langPack["app.phase0"]
       : state.phase === 1
-      ? "Fase 1 — Ativação"
-      : "Fase 2 — Circulação";
+      ? langPack["app.phase1"]
+      : langPack["app.phase2"];
 }
 
-/* ---------- PRESENÇA (visual) ---------- */
-setInterval(() => {
-  state.hum += 0.00002;
-  state.percent += 0.00001;
-  updateUI();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}, 1000);
-
-/* ---------- MODAIS ---------- */
-document.querySelectorAll("[data-open]").forEach(btn => {
-  btn.onclick = () => {
-    document.getElementById(btn.dataset.open).classList.remove("hidden");
-  };
-});
-
-document.querySelectorAll(".close").forEach(btn => {
-  btn.onclick = () => {
-    btn.closest(".space").classList.add("hidden");
-  };
-});
-
-/* ---------- INIT ---------- */
-updateUI();
+function tick(){
+  setInterval(() => {
+    state.hum += 0.00002;
+    state.percent += 0.00001;
+    updateUI();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }, 1000);
+}
