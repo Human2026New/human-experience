@@ -2,84 +2,54 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HUMAN</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HUMAN — Presença Humana</title>
 <link rel="stylesheet" href="style.css">
 <script defer src="script.js"></script>
 </head>
-
 <body>
 
-<!-- FUNDO -->
 <canvas id="fog"></canvas>
 
-<!-- IDIOMA -->
 <div id="lang-switch">
   <span onclick="setLang('pt')">PT</span> |
   <span onclick="setLang('en')">EN</span>
 </div>
 
-<!-- PORTAL -->
-<section class="hero full">
+<section class="hero">
   <h1>HUMAN</h1>
-  <p id="hero-line"></p>
-  <p id="value">VALOR HUM INICIAL: €0.05</p>
+  <p id="value">VALOR HUM: €0.05 (referência interna)</p>
   <div class="arrow">▼</div>
 </section>
 
-<!-- O QUE É -->
-<section class="panel" id="sec-what">
-  <h2 data-t="what-title"></h2>
-  <p id="what"></p>
+<section class="panel"><h2 data-t="what-title"></h2><p id="what"></p></section>
+
+<section class="panel"><h2 data-t="token-title"></h2><p id="token"></p></section>
+
+<section class="panel">
+<h2>Distribuição</h2>
+<ul>
+<li>60% mineração humana</li>
+<li>39% venda + liquidez controlada</li>
+<li>1% equipa HUMAN</li>
+</ul>
 </section>
 
-<!-- TOKEN HUM -->
-<section class="panel" id="sec-token">
-  <h2 data-t="token-title"></h2>
-  <p id="token"></p>
+<section class="panel"><h2 data-t="eco-title"></h2><p id="eco"></p></section>
+
+<section class="panel"><h2 data-t="phase-title"></h2><p id="phase"></p></section>
+
+<section class="panel"><h2 data-t="start-title"></h2><p id="start"></p></section>
+
+<section class="panel">
+<h2>Radar Humano</h2>
+<p>Ver presença global</p>
+<a class="btn" href="radar.html">Abrir Radar</a>
 </section>
 
-<!-- DISTRIBUIÇÃO -->
-<section class="panel" id="sec-distribution">
-  <h2>Distribuição do HUM</h2>
-  <ul>
-    <li>60% mineração humana</li>
-    <li>39% venda e liquidez</li>
-    <li>1% equipa</li>
-  </ul>
-</section>
-
-<!-- ECONOMIA -->
-<section class="panel" id="sec-eco">
-  <h2 data-t="eco-title"></h2>
-  <p id="eco"></p>
-</section>
-
-<!-- FASES -->
-<section class="panel" id="sec-phase">
-  <h2 data-t="phase-title"></h2>
-  <p id="phase"></p>
-</section>
-
-<!-- APP -->
-<section class="panel" id="sec-app">
-  <h2 data-t="start-title"></h2>
-  <p id="start"></p>
-</section>
-
-<!-- RADAR -->
-<section class="panel" id="sec-radar">
-  <h2>Radar Humano</h2>
-  <p>Visualiza a presença humana global</p>
-  <a class="btn" href="radar.html">Ver Radar</a>
-</section>
-
-<!-- COMUNIDADE -->
-<section class="panel" id="sec-community">
-  <h2 data-t="comm-title"></h2>
-  <p id="comm"></p>
-  <a class="btn" href="https://t.me/human_app_bot">Entrar na HUMAN</a>
+<section class="panel"><h2 data-t="comm-title"></h2><p id="comm"></p>
+<a class="btn" href="https://t.me/human_app_bot">Entrar na HUMAN</a>
 </section>
 
 </body>
-</html>
+  </html>
