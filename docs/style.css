@@ -1,4 +1,7 @@
-/* 🌑 SPLASH SCREEN */
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
+html,body{height:100%;overflow-x:hidden;color:#f6e7b6;}
+
+/* 🌀 SPLASH */
 body.splash{
   display:flex;
   justify-content:center;
@@ -6,24 +9,19 @@ body.splash{
   background:url('zen-bg.jpg') center/cover no-repeat fixed;
   height:100vh;
   overflow:hidden;
-  color:#f6e7b6;
 }
 
-#splash-center{
-  text-align:center;
-  animation:fadeIn 2s ease forwards;
-}
-
+#splash-center{text-align:center;animation:fadeIn 2s;}
 #splash-title{
-  font-size:50px;
-  font-weight:800;
-  margin-bottom:10px;
-  text-shadow:0 0 30px #f5d77d;
+  font-size:52px;
+  font-weight:900;
+  text-shadow:0 0 40px #f5d77d;
 }
+#frase{margin-top:8px;font-size:16px;opacity:.9;}
 
 #ascender{
-  margin-top:20px;
-  padding:14px 26px;
+  margin-top:24px;
+  padding:12px 28px;
   border-radius:14px;
   border:none;
   cursor:pointer;
@@ -33,22 +31,14 @@ body.splash{
   font-size:18px;
 }
 
-@keyframes fadeOut{
-  to{opacity:0;transform:scale(1.2);}
-}
+@keyframes fadeOut{to{opacity:0;transform:scale(1.2);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
-@keyframes fadeIn{
-  from{opacity:0;}
-  to{opacity:1;}
-}
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
-html,body{height:100%;overflow-x:hidden;color:#f6e7b6;}
-
+/* 🧿 HOME */
 body{
   background:url('zen-bg.jpg') center/cover no-repeat fixed;
 }
 
-/* Parallax + Névoa */
 #bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-3;}
 #fog{
   position:fixed;
@@ -56,18 +46,15 @@ body{
   width:100vw;height:100vh;
   z-index:-1;
   pointer-events:none;
-  opacity:.38;
+  opacity:.35;
 }
 
-/* Language */
 #lang-switch{
   position:fixed;
-  top:12px;right:12px;
-  font-weight:bold;
-  font-size:14px;
+  top:14px;right:14px;
+  font-weight:bold;font-size:14px;
 }
 
-/* Content */
 .container{
   padding:80px 20px;
   display:flex;
@@ -86,22 +73,12 @@ body{
   background:rgba(0,0,0,.45);
   border:1px solid rgba(255,215,150,.25);
 }
-
-h2{
-  font-size:22px;
-  margin-bottom:8px;
-  color:#fadd9a;
-}
-
+h2{color:#ffdfa3;font-size:22px;margin-bottom:8px;}
 p{font-size:16px;line-height:1.5;}
 
 .btn{
-  margin-top:10px;
-  display:inline-block;
-  padding:12px 20px;
-  border-radius:12px;
-  background:#f5d77d;
-  color:black;
-  font-weight:bold;
+  margin-top:12px;display:inline-block;
+  padding:12px 20px;border-radius:10px;
+  background:#f5d77d;color:black;font-weight:bold;
   text-decoration:none;
-   }
+  }
