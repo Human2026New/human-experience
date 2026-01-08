@@ -1,248 +1,126 @@
-/*******************************
- 🌍 BASE GLOBAL
-*******************************/
+/* ===== RESET ===== */
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;min-height:100vh;}
+
+/* ===== GLOBAL ===== */
 body{
   font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
   color:#f5eec8;
-  background:url("zen-bg.jpg") center/cover no-repeat fixed;
   overflow-x:hidden;
   scroll-behavior:smooth;
 }
 
-/*******************************
- 🚀 SPLASH SCREEN
-*******************************/
-body.splash{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  background:#000;
-  color:#f9e8b2;
-  text-align:center;
-  animation:fadeIn 1.5s ease-out;
-}
-.splash-center h1{
-  font-size:3.6rem;
-  letter-spacing:5px;
-  margin-bottom:12px;
-  text-shadow:0 0 20px #e4c97c;
-}
-.splash-center p{
-  max-width:320px;
-  opacity:.9;
-  font-size:1.1rem;
-}
-#lang-switch-top{
-  position:fixed;
-  top:18px;right:18px;
-  font-size:15px;
-  cursor:pointer;
-  color:#e9d89b;
-}
-
-/*******************************
- ✨ ANIM EXTRA
-*******************************/
-@keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
-@keyframes breathe{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.05);}
-}
-
-/*******************************
- 🏠 HOME LAYOUT
-*******************************/
-body.home{
-  color:#fceec8;
-  backdrop-filter:blur(2px);
-}
-
-/* NAV */
-header{
-  position:fixed;
-  top:15px;
-  right:15px;
-  z-index:60;
-  font-size:15px;
-  display:flex;
-  gap:6px;
-  color:#ffebbc;
-}
-#lang-switch span{
-  cursor:pointer;
-  font-weight:600;
-  padding:2px 4px;
-}
-#lang-switch span:hover{
-  color:#fff6d1;
-  text-shadow:0 0 7px #ffd778;
-}
-
-/*******************************
- 🌌 HERO
-*******************************/
-.hero{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:20px;
-  background:rgba(0,0,0,0.25);
-  backdrop-filter:blur(7px);
-  animation:fadeIn 1.5s ease-out;
-}
-.hero h1{
-  font-size:3.3rem;
-  letter-spacing:4px;
-  margin-bottom:14px;
-  text-shadow:0 0 16px #f1d97d;
-}
-.hero h2{
-  font-size:1.2rem;
-  opacity:.95;
-  margin-bottom:6px;
-  max-width:320px;
-}
-.hero p{
-  max-width:330px;
-  opacity:.85;
-  font-size:1rem;
-}
-#scroll-down{
-  margin-top:28px;
-  font-size:1.8rem;
-  animation:bounce 1.5s infinite;
-  color:#f3d98c;
-}
-@keyframes bounce{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(8px);}
-  100%{transform:translateY(0);}
-}
-
-/*******************************
- 🌀 AVATAR HUMANO
-*******************************/
-#avatar{
-  width:140px;height:140px;
-  border-radius:50%;
-  margin-bottom:20px;
-  border:3px solid rgba(255,220,130,0.7);
-  box-shadow:
-    0 0 15px rgba(255,210,120,0.6),
-    0 0 40px rgba(255,210,120,0.25);
-  animation:breathe 6s infinite;
-  background:#0003;
-}
-
-/*******************************
- 📦 CARTÕES DE CONTEÚDO
-*******************************/
-main{padding:30px 0;}
-
-.card{
-  width:90%;
-  margin:0 auto 38px auto;
-  padding:22px 20px;
-  background:rgba(0,0,0,0.45);
-  border-radius:18px;
-  backdrop-filter:blur(9px);
-  line-height:1.55;
-  font-size:1.08rem;
-  color:#ffefc2;
-  border:1px solid rgba(255,224,150,0.15);
-  box-shadow:
-    0 0 8px rgba(255,235,170,0.12),
-    inset 0 0 8px rgba(255,225,140,0.1);
-  animation:fadeIn 0.8s ease-out;
-}
-
-/*******************************
- 🌫 CAMADAS DE FUNDO
-*******************************/
-canvas#fog,canvas#particles,canvas#trail{
-  position:fixed;
-  top:0;left:0;
-  width:100vw;height:100vh;
-  pointer-events:none;
-}
-#fog{z-index:-3;opacity:.35;}
-#particles{z-index:-2;opacity:.6;}
-#trail{z-index:-1;}
+/* Background base img — opaco atrás das camadas */
 #background{
   position:fixed;
   inset:0;
   background:url("zen-bg.jpg") center/cover no-repeat fixed;
   z-index:-4;
-  opacity:.22;
+  opacity:.25;
 }
 
-/*******************************
- 📡 RADAR HUMANO
-*******************************/
-#radar{
-  width:100%;
-  height:260px;
-  background:rgba(0,0,0,0.25);
-  border-radius:14px;
-  border:1px solid rgba(255,225,165,.15);
-  box-shadow:0 0 15px rgba(255,210,130,0.15);
-  margin-top:12px;
+/* ===== SPLASH ===== */
+body.splash{
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  background:#000;color:#f9e8b2;
+  animation:fadeIn 1.5s;
 }
 
-/*******************************
- ✨ LINHA DO TEMPO (PRESENÇA)
-*******************************/
-#timeline{
+/* ===== HOME ===== */
+body.home{color:#fceec8;}
+
+/* ===== TOP NAV ===== */
+header{
+  position:fixed;top:15px;right:15px;
+  z-index:100;
+  color:#ffe9b0;
+}
+
+/* ===== HERO ===== */
+.hero{
+  height:100vh;
   display:flex;
-  flex-wrap:wrap;
-  gap:4px;
-  margin-top:10px;
-}
-.mark{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#ffd68a;
-  opacity:.7;
-}
-
-/*******************************
- 🌙 MODO NOTURNO AUTOMÁTICO
-*******************************/
-body.night{
-  color:#cfc6a0;
-}
-body.night .hero,
-body.night .card{
-  background:rgba(0,0,0,0.60);
-}
-body.night #background{
-  opacity:.18;
-}
-
-/*******************************
- 🦶 FOOTER
-*******************************/
-footer{
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   text-align:center;
-  padding:38px 0;
-  font-size:13px;
-  color:#d4c68f;
+  padding:25px;
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(9px);
+}
+.hero h1{
+  font-size:3.2rem;
+  text-shadow:0 0 18px #ffde88;
+  margin:10px 0;
+}
+.hero h2{
+  max-width:330px;
+  font-size:1.3rem;
+  opacity:.95;
+}
+.hero p{
+  max-width:340px;
   opacity:.9;
 }
 
-/*******************************
- 📱 RESPONSIVE
-*******************************/
-@media(max-width:480px){
-  .hero h1{font-size:2.6rem;}
-  .hero h2{font-size:1rem;}
-  .card{font-size:.95rem;}
-  #avatar{width:110px;height:110px;}
+/* ===== AVATAR ===== */
+#avatar{
+  width:140px;height:140px;
+  border-radius:50%;
+  margin-bottom:20px;
+  background:#0006;
+  border:4px solid rgba(255,225,130,.8);
+  box-shadow:0 0 20px rgba(255,210,120,.4);
+  animation:breathe 6s infinite;
+  z-index:10;
 }
+
+/* ===== CARDS ===== */
+main{padding:32px 0;}
+.card{
+  width:90%;
+  margin:0 auto 40px auto;
+  padding:22px;
+  background:rgba(0,0,0,0.55);
+  color:#ffefc2;
+  border-radius:18px;
+  backdrop-filter:blur(10px);
+}
+
+/* ===== TIMELINE ===== */
+#timeline{display:flex;gap:4px;margin-top:10px;flex-wrap:wrap;}
+.mark{width:7px;height:7px;border-radius:50%;background:#ffd775;}
+
+/* ===== RADAR ===== */
+#radar{
+  width:100%;
+  height:240px;
+  background:rgba(0,0,0,0.3);
+  border-radius:16px;
+  border:1px solid rgba(255,224,160,.2);
+}
+
+/* ===== CANVAS ===== */
+#fog,#trail,#particles{
+  position:fixed;
+  inset:0;
+  width:100vw;height:100vh;
+  pointer-events:none;
+  z-index:-3;
+}
+#trail{z-index:-2;}
+#particles{z-index:-1;}
+
+/* ===== ANIM ===== */
+@keyframes breathe{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.06);}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;}to{opacity:1;}
+}
+
+/* ===== FOOTER ===== */
+footer{text-align:center;padding:40px 0;font-size:14px;color:#d2c18f;}
