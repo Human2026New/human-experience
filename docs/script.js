@@ -75,3 +75,5 @@ function setLang(l){
  Object.keys(content[l]).forEach(k=>{let el=document.getElementById(k);if(el)el.innerText=content[l][k];});
 }
 setLang("pt");
+content.pt["why-title"]="Porque Participar?";
+content.pt["tasks-title"]="Tarefas HUMAN";
