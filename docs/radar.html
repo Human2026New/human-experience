@@ -1,47 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Radar Humano</title>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Radar HUM</title>
 <link rel="stylesheet" href="style.css">
-<style>
-canvas{background:black;}
-.back{position:fixed;top:10px;left:10px;z-index:20;}
-</style>
+<style>canvas{background:black} .back{position:fixed;top:10px;left:10px;z-index:20;}</style>
 </head>
 <body>
 <button class="back btn" onclick="location.href='home.html'">⬅ Voltar</button>
 <canvas id="map"></canvas>
 <script>
 const c=document.getElementById("map"),x=c.getContext("2d");
-function r(){c.width=innerWidth;c.height=innerHeight;} r();onresize=r;
-let nodes=JSON.parse(localStorage.getItem("hum_nodes")||"[]");
-if(nodes.length<80){
- nodes.push({x:Math.random()*c.width,y:Math.random()*c.height});
- localStorage.setItem("hum_nodes",JSON.stringify(nodes));
-}
-setInterval(()=>{
- if(nodes.length>=250)return;
- nodes.push({x:Math.random()*c.width,y:Math.random()*c.height});
- localStorage.setItem("hum_nodes",JSON.stringify(nodes));
-},15000);
+function r(){c.width=innerWidth;c.height=innerHeight;}r();onresize=r;
+let nodes=[];
+async function load(){try{
+ let j=await fetch("radar.json");nodes=await j.json();}catch{}}
+setInterval(load,15000);load();
 function d(){
  x.clearRect(0,0,c.width,c.height);
- nodes.forEach((n,i)=>{
-   x.fillStyle="rgba(255,220,140,.9)";
-   x.beginPath();x.arc(n.x,n.y,2.4,0,Math.PI*2);x.fill();
-   for(let j=i+1;j<nodes.length;j++){
-     let m=nodes[j],dist=Math.hypot(n.x-m.x,n.y-m.y);
-     if(dist<150){
-       x.strokeStyle=`rgba(255,220,140,${1-dist/150})`;
-       x.beginPath();x.moveTo(n.x,n.y);x.lineTo(m.x,m.y);x.stroke();
-     }
-   }
- });
- requestAnimationFrame(d);
-}
-d();
+ nodes.forEach((n,i)=>{x.fillStyle="rgba(255,220,140,.9)";x.beginPath();x.arc(n.x*c.width,n.y*c.height,2.5,0,Math.PI*2);x.fill();});
+ requestAnimationFrame(d);} d();
 </script>
-</body>
-</html>
+</body></html>
