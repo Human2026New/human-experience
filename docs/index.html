@@ -3,27 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HUMAN</title>
+<title>HUMAN — Ascender</title>
 <link rel="stylesheet" href="style.css">
-<script defer src="script.js"></script>
+<script defer>
+document.addEventListener("DOMContentLoaded",()=>{
+  setTimeout(()=>{
+    window.location.href="home.html";
+  },2500);
+});
+</script>
 </head>
+
 <body class="splash">
-
-<div id="splash">
-  <p id="frase"></p>
+<div class="splash-center">
   <h1>HUMAN</h1>
-  <button id="enter-btn">ASCENDER</button>
+  <p id="frase"></p>
+</div>
 
-  <div id="lang-switch">
-    <span data-lang="pt">PT</span> | <span data-lang="en">EN</span>
-  </div>
+<div id="lang-switch-top">
+  <span data-lang="pt">PT</span> | <span data-lang="en">EN</span>
 </div>
 
 <script>
-document.getElementById('enter-btn').onclick = () => {
-  window.location.href = "home.html";
-}
+const frases=[
+"O tempo é a única energia verdadeira.",
+"Cada regresso ilumina o caminho.",
+"A disciplina transforma presença em valor.",
+"Nada é mais raro do que tempo consciente.",
+"O HUM nasce de ti.",
+"A tua marca no tempo é única.",
+"Humanos constroem redes, máquinas repetem ciclos.",
+"Não corras — regressa.",
+"O futuro pertence aos que voltam.",
+"HUM mede presença, não poder.",
+"Participar é criar realidade.",
+"O mundo digital precisa de humanidade.",
+"A tua atenção tem valor.",
+"A persistência supera a pressa.",
+"Presença é prova.",
+"Sê a tua própria rede.",
+"HUMAN é tempo vivo.",
+"Quem volta, cresce.",
+"Regressa e acende o HUM.",
+"Tu és a origem."
+];
+document.getElementById("frase").innerText =
+  frases[Math.floor(Math.random()*frases.length)];
 </script>
-
 </body>
 </html>
