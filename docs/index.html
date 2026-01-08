@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HUMAN — Ascender</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  body { overflow:hidden; }
+</style>
+</head>
+
+<body class="splash-body">
+
+<div id="flash"></div>
+
+<div class="splash">
+  <h1 class="splash-title">HUMAN</h1>
+  <button class="splash-btn" onclick="ascend()">ASCENDER</button>
+</div>
+
+<script>
+function ascend(){
+  const flash=document.getElementById("flash");
+  flash.classList.add("go");
+  setTimeout(()=>window.location.href="home.html",800);
+}
+</script>
+
+</body>
+</html>
