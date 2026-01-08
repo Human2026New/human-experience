@@ -2,21 +2,28 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HUMAN</title>
 <link rel="stylesheet" href="style.css">
 <script defer src="script.js"></script>
 </head>
 <body class="splash">
 
-<canvas id="fog"></canvas>
-<canvas id="particles"></canvas>
-
-<div class="center-box">
+<div id="splash">
+  <p id="frase"></p>
   <h1>HUMAN</h1>
-  <p id="hero-line"></p>
-  <button class="ascend" onclick="location.href='home.html'">ASCENDER</button>
+  <button id="enter-btn">ASCENDER</button>
+
+  <div id="lang-switch">
+    <span data-lang="pt">PT</span> | <span data-lang="en">EN</span>
+  </div>
 </div>
+
+<script>
+document.getElementById('enter-btn').onclick = () => {
+  window.location.href = "home.html";
+}
+</script>
 
 </body>
 </html>
