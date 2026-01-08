@@ -1,78 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HUMAN 2026</title>
-<link rel="stylesheet" href="style.css">
-<script defer src="script.js"></script>
+<title>HUMAN</title>
+<style>
+html,body{height:100%;margin:0;padding:0;font-family:sans-serif;}
+#test{display:flex;justify-content:center;align-items:center;height:100vh;background:black;color:white;font-size:38px;}
+</style>
 </head>
-
 <body>
-
-<!-- CAMADAS -->
-<div id="bg"></div>
-<canvas id="fog"></canvas>
-
-<!-- IDIOMA -->
-<div id="lang-switch">
-  <span onclick="setLang('pt')">PT</span> |
-  <span onclick="setLang('en')">EN</span>
-</div>
-
-<div class="container">
-
-  <section class="hero">
-    <h1 id="title">HUMAN</h1>
-    <p id="hero-line"></p>
-  </section>
-
-  <section class="panel glass">
-    <h2 data-t="what-title"></h2>
-    <p id="what"></p>
-  </section>
-
-  <section class="panel glass">
-    <h2 data-t="not-title"></h2>
-    <p id="not"></p>
-  </section>
-
-  <section class="panel glass">
-    <h2 data-t="phi-title"></h2>
-    <p id="phi"></p>
-  </section>
-
-  <section class="panel glass">
-    <h2 data-t="token-title"></h2>
-    <p id="token"></p>
-  </section>
-
-  <section class="panel glass">
-    <h2 data-t="eco-title"></h2>
-    <p id="eco"></p>
-  </section>
-
-  <section class="panel glass">
-    <h2 data-t="phase-title"></h2>
-    <p id="phase"></p>
-  </section>
-
-  <section class="panel glass">
-    <h2 data-t="road-title"></h2>
-    <p id="road"></p>
-  </section>
-
-  <section class="panel glass">
-    <h2 data-t="start-title"></h2>
-    <p id="start"></p>
-  </section>
-
-  <section class="panel glass">
-    <h2 data-t="comm-title"></h2>
-    <p id="comm"></p>
-    <a href="https://t.me/human_app_bot" class="btn">Entrar</a>
-  </section>
-
-</div>
+<div id="test">SPLASH LOAD</div>
+<script>
+setTimeout(()=>{location.href='home.html';},1500);
+</script>
 </body>
 </html>
