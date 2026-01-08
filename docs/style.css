@@ -1,5 +1,5 @@
 /* =========================
-   🎨 HUMAN VISUAL THEME
+   🌌 FUNDO ZEN VIVO
    ========================= */
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -8,8 +8,7 @@ body{
   font-family:system-ui,sans-serif;
   color:#f9f6df;
   background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
-    url("zen-bg.jpg") center/cover fixed;
+    url("zen-bg.jpg") center/cover fixed no-repeat;
   overflow-x:hidden;
 }
 
@@ -22,78 +21,95 @@ body{
   background:none;border:none;color:#ffe39c;cursor:pointer;
 }
 
-/* HERO */
+/* SPLASH */
+.splash-body{
+  background:#000;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:#e6d6a1;
+}
+.splash-lang{color:#ffe39c;}
+.splash{opacity:0;animation:fadeIn 1.2s ease forwards;text-align:center;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.splash-title{
+  font-size:3.5rem;
+  font-weight:800;
+  color:#ffe8b9;
+  text-shadow:0 0 40px rgba(255,215,120,1);
+  margin-bottom:18px;
+}
+.splash-btn{
+  background:#ffe39c;color:#000;
+  padding:14px 32px;font-size:1.3rem;font-weight:700;
+  border:none;border-radius:16px;
+  cursor:pointer;
+  box-shadow:0 0 30px rgba(255,215,120,.8);
+}
+
+/* EXPLOSÃO */
+#flash{
+  position:fixed;inset:0;
+  background:radial-gradient(circle,#ffe498 0%,#ffd24b 40%,#000 90%);
+  opacity:0;pointer-events:none;transition:.35s;
+  z-index:9999;
+}
+#flash.go{opacity:1;}
+
+/* HOME */
 .hero{
-  min-height:100vh;display:flex;flex-direction:column;
-  justify-content:center;align-items:center;text-align:center;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
 }
 .logo{
-  width:160px;margin-bottom:24px;
-  filter:drop-shadow(0 0 20px rgba(255,200,80,.8));
+  width:150px;margin-bottom:24px;
+  filter:drop-shadow(0 0 24px rgba(255,220,100,1));
 }
 h1{
-  font-size:3rem;
-  letter-spacing:4px;
-  color:#ffe8b9;
-  text-shadow:0 0 20px rgba(255,215,120,1);
+  font-size:2.8rem;
+  color:#ffeecb;
+  text-shadow:0 0 25px rgba(255,215,100,1);
 }
 .tagline{
   font-size:1.1rem;
   margin-top:6px;
   color:#f3eac7;
-  text-shadow:0 0 10px rgba(250,220,130,.7);
 }
 
 /* MAIN */
 main{
   max-width:960px;margin:auto;padding:40px 20px;
-  opacity:0;transition:.8s ease;
+  opacity:0;transition:.8s;
 }
 main.show{opacity:1;}
 
 /* CARDS */
 .card{
-  background:rgba(0,0,0,.55);
+  background:rgba(0,0,0,.35);
   border-radius:22px;padding:36px;margin-bottom:40px;
   backdrop-filter:blur(6px);
-  border:1px solid rgba(255,215,120,.25);
+  border:1px solid rgba(255,215,120,.35);
 }
-.card h2{color:#fce7b3;}
-.card p{color:#eee7c5;}
+.card h2{color:#ffeec3;}
+.card p{color:#fff7d9;}
 
-/* INTENT GRID */
+/* GRID */
 .intent-grid{
   display:grid;gap:26px;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 }
-.intent-box{
-  padding:28px;border-radius:24px;
-  background:rgba(0,0,0,.45);
-  text-align:center;
-}
+.intent-box{padding:28px;border-radius:22px;text-align:center;background:rgba(0,0,0,.4);}
 .intent-box.active{
-  border:1px solid rgba(255,200,120,.6);
+  border:1px solid rgba(255,200,120,.7);
   box-shadow:0 0 25px rgba(255,200,120,.4);
 }
 .intent-btn{
-  display:inline-block;margin-top:14px;
-  padding:12px 26px;border-radius:30px;text-decoration:none;
-  font-weight:700;
+  display:inline-block;margin-top:14px;padding:12px 26px;
+  border-radius:30px;text-decoration:none;font-weight:700;
 }
-.intent-btn.primary{
-  background:#ffd889;color:#000;
-  box-shadow:0 0 18px rgba(255,215,120,.6);
-}
-.intent-btn.secondary{
-  border:1px solid #ffd889;color:#ffd889;
-}
-
-/* SLIDE APPEAR */
-.slide{opacity:0;transform:translateY(30px);transition:.8s;}
-.slide.show{opacity:1;transform:translateY(0);}
-
-/* FOOTER */
-footer{
-  padding:30px;text-align:center;
-  color:#d2c79c;font-size:.85rem;
-       }
+.intent-btn.primary{background:#ffd889;color:#000;}
+.intent-btn.secondary{border:1px solid #ffd889;color:#ffd889;}
