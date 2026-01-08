@@ -1,4 +1,23 @@
 /***************
+ SPLASH → HOME
+***************/
+const frasesSplash=[
+"O tempo é a única energia que ninguém fabrica.",
+"Cada presença é um passo no eterno agora.",
+"A constância supera a intensidade.",
+"Presença cria realidade.",
+"Tu és o próprio protocolo."
+];
+if(document.body.classList.contains("splash")){
+  document.getElementById("frase").innerText =
+    frasesSplash[Math.floor(Math.random()*frasesSplash.length)];
+
+  document.getElementById("ascender").onclick=()=>{
+    document.body.style.animation="fadeOut 1s forwards";
+    setTimeout(()=>{window.location.href="home.html";},800);
+  };
+}
+/***************
  FRASES ROTATIVAS
 ****************/
 const frases=[
