@@ -1,51 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HUMAN — Ascender</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HUMAN</title>
 <link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
 </head>
 
-<body class="splash-body">
+<body class="splash">
 
-<div id="flash"></div>
-
-<!-- Idioma -->
-<div class="lang-switch splash-lang">
-  <button onclick="setSplashLang('pt')">PT</button> |
-  <button onclick="setSplashLang('en')">EN</button>
+<div id="splash-center">
+  <h1 id="splash-title">HUMAN</h1>
+  <p id="frase"></p>
+  <button id="ascender">ASCENDER</button>
 </div>
 
-<div class="splash">
-  <h1 class="splash-title"
-      data-pt="HUMAN"
-      data-en="HUMAN"></h1>
-
-  <button class="splash-btn"
-          id="ascenderBtn"
-          data-pt="ASCENDER"
-          data-en="ASCEND"></button>
-</div>
-
-<script>
-/******** LANG ********/
-function setSplashLang(l){
-  localStorage.setItem("splashLang",l);
-  document.querySelectorAll("[data-pt]").forEach(el=>{
-    el.innerHTML = el.getAttribute(`data-${l}`);
-  });
-}
-setSplashLang(localStorage.getItem("splashLang")||"pt");
-
-/******** ASCENDER ********/
-document.getElementById('ascenderBtn').onclick = ()=>{
-  document.getElementById('flash').classList.add('go');
-  localStorage.setItem("playMusic","yes");
-  setTimeout(()=>location.href='home.html',800);
-};
-</script>
-
-<script src="script.js"></script>
 </body>
 </html>
