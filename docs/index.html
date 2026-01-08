@@ -6,16 +6,17 @@
 <title>HUMAN Protocol</title>
 <link rel="stylesheet" href="style.css" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="lang.js"></script>
 </head>
 
 <body>
 
 <!-- 🎵 MÚSICA -->
 <audio id="bgm" autoplay loop>
-  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Oddio_Overplay/Monplaisir/Land_of_Bliss/Monplaisir_-_07_-_Moon_Bshine.mp3">
+  <source src="assets/sound/moon-bshine.mp3">
 </audio>
 
-<!-- 🔊 AUDIO TOGGLE -->
+<!-- 🔊 AUDIO -->
 <div class="audio-toggle" onclick="toggleAudio()">🔊</div>
 
 <!-- 🌐 IDIOMA -->
@@ -27,107 +28,88 @@
 <!-- 🎨 TEMA -->
 <button id="themeToggle" class="theme-btn">⚡</button>
 
-<!-- 🌌 FRACTAL -->
+<!-- CANVAS -->
 <canvas id="fractal"></canvas>
-
-<!-- 🌠 PARTÍCULAS -->
 <canvas id="particles"></canvas>
-
-<!-- 💸 AIRDROP -->
 <canvas id="airdrop"></canvas>
 
 <header class="hero">
   <img src="hum-logo.png" class="logo" />
   <h1>HUMAN</h1>
-  <p class="tagline"
-     data-pt="Presença humana registada no tempo. Não é hardware. Não é promessa."
-     data-en="Human presence recorded over time. Not hardware. Not a promise.">
-  </p>
+  <p class="tagline" data-key="hero.tagline"></p>
 </header>
 
 <main>
 
-<section class="card slide manifesto">
-  <p data-pt="Este sistema foi criado para acompanhar o tempo humano. Não para acelerar ganhos."
-     data-en="This system was created to accompany human time. Not accelerate gains."></p>
+<section class="card slide">
+  <p data-key="manifesto.text"></p>
 </section>
 
-<section class="card slide intent">
-  <h2 data-pt="Escolhe como queres entrar" data-en="Choose how you want to enter"></h2>
+<section class="card slide">
+  <h2 data-key="intent.choose"></h2>
+
   <div class="intent-grid">
     <div class="intent-box">
-      <h3 data-pt="Compreender" data-en="Understand"></h3>
-      <p data-pt="Ler o protocolo.<br>Entender as regras.<br>Conhecer o funcionamento."
-         data-en="Read the protocol.<br>Understand the rules.<br>Learn how it works."></p>
-      <a href="#whitepaper" class="intent-btn secondary"
-         data-pt="Explorar o sistema" data-en="Explore the system"></a>
+      <h3 data-key="intent.understand"></h3>
+      <p data-key="info.explore"></p>
+      <a href="#whitepaper" class="intent-btn secondary" data-key="explore"></a>
     </div>
 
     <div class="intent-box active">
-      <h3 data-pt="Participar" data-en="Participate"></h3>
-      <p data-pt="Marcar presença.<br>Acumular HUM.<br>Fazer parte do processo."
-         data-en="Mark presence.<br>Accumulate HUM.<br>Be part of the process."></p>
-      <a href="https://human2026new.github.io/human-experience/app/index.html"
-         class="intent-btn primary"
-         data-pt="Entrar na HUMAN"
-         data-en="Enter HUMAN"></a>
+      <h3 data-key="intent.participate"></h3>
+      <p data-key="intent.join"></p>
+      <a href="app/index.html" class="intent-btn primary" data-key="enter"></a>
     </div>
   </div>
 </section>
 
 <section class="card slide">
-  <h2 data-pt="O que é o HUMAN?" data-en="What is HUMAN?"></h2>
-  <p data-pt="HUMAN é um sistema digital que regista presença humana real ao longo do tempo."
-     data-en="HUMAN is a digital system that records real human presence over time."></p>
+  <h2 data-key="what"></h2>
+  <p data-key="what.text"></p>
 </section>
 
-<section class="card slide flow">
-  <h2 data-pt="Como funciona" data-en="How it works"></h2>
+<section class="card slide">
+  <h2 data-key="how"></h2>
   <div class="flow-steps">
     <div class="step">Telegram</div><div class="arrow">↓</div>
-    <div class="step" data-pt="Presença" data-en="Presence"></div><div class="arrow">↓</div>
+    <div class="step" data-key="presence"></div><div class="arrow">↓</div>
     <div class="step">HUM</div>
   </div>
 </section>
 
-<!-- 📈 Gráfico -->
 <section class="card slide">
-  <h2 data-pt="Distribuição ao Vivo" data-en="Live Distribution"></h2>
+  <h2 data-key="live"></h2>
   <canvas id="humChart" height="200"></canvas>
 </section>
 
-<!-- 📱 APPS -->
 <section class="card slide apps">
-  <h2 data-pt="Aplicações" data-en="Apps"></h2>
+  <h2 data-key="apps"></h2>
   <div class="app-grid">
-    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googleplay.svg">
-    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/apple.svg">
-    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/chrome.svg">
-    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoftedge.svg">
-    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/windows.svg">
-    <img class="app-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/telegram.svg">
+    <img class="app-icon" src="assets/icons/googleplay.svg">
+    <img class="app-icon" src="assets/icons/apple.svg">
+    <img class="app-icon" src="assets/icons/chrome.svg">
+    <img class="app-icon" src="assets/icons/edge.svg">
+    <img class="app-icon" src="assets/icons/windows.svg">
+    <img class="app-icon" src="assets/icons/telegram.svg">
   </div>
 </section>
 
-<section class="card slide future">
-  <h2 data-pt="Evolução futura" data-en="Future evolution"></h2>
-  <p data-pt="O HUM poderá ganhar vida no mercado quando existir presença humana suficiente."
-     data-en="HUM may enter markets when human presence is strong enough."></p>
+<section class="card slide">
+  <h2 data-key="future"></h2>
+  <p data-key="future.text"></p>
 </section>
 
-<section class="card slide legal conscious" id="whitepaper">
-  <h2 data-pt="Aviso" data-en="Notice"></h2>
-  <p data-pt="Sem promessas. Sem garantias. Apenas presença humana real."
-     data-en="No promises. No guarantees. Only human presence."></p>
+<section class="card slide" id="whitepaper">
+  <h2 data-key="notice"></h2>
+  <p data-key="notice.text"></p>
 </section>
 
 </main>
 
 <footer>
-  <p data-pt="HUMAN — presença humana no tempo"
-     data-en="HUMAN — human presence over time"></p>
+  <p data-key="footer"></p>
 </footer>
 
 <script src="script.js"></script>
 </body>
-</html>
+  </html>
