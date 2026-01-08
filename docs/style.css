@@ -1,3 +1,67 @@
+/* =========================
+   🌟 SPLASH — ASCENDER
+   ========================= */
+
+.splash-body {
+  background:
+    linear-gradient(rgba(0,0,0,.85),rgba(0,0,0,.9)),
+    url("zen-bg.jpg") center/cover fixed;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  text-align:center;
+  color:#e6d6a1;
+  font-family:system-ui,sans-serif;
+}
+
+.splash {
+  z-index:10;
+}
+
+.splash-title {
+  font-size:3.2rem;
+  letter-spacing:4px;
+  font-weight:800;
+  margin-bottom:30px;
+  text-shadow:0 0 12px rgba(255,215,100,.9);
+  animation:pulse 3s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%,100% { text-shadow:0 0 6px rgba(255,215,100,.5); }
+  50%     { text-shadow:0 0 30px rgba(255,215,100,1); }
+}
+
+.splash-btn {
+  background:#f9e6b2;
+  color:#000;
+  padding:14px 30px;
+  font-size:1.2rem;
+  font-weight:700;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  box-shadow:0 0 25px rgba(255,215,100,.6);
+  transition:.2s;
+}
+.splash-btn:active {
+  transform:scale(.96);
+}
+
+/* Explosão */
+#flash {
+  position:fixed;
+  inset:0;
+  background:white;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .4s ease;
+  z-index:9999;
+}
+#flash.go {
+  opacity:1;
+}
 /* GLOBAL */
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
