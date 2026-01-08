@@ -10,50 +10,94 @@
 
 <body class="home">
 
-<!-- BACKGROUND CAMADAS -->
+<!-- ============= FUNDO VIVO ============= -->
 <canvas id="fog"></canvas>
-<canvas id="particles"></canvas>
+<canvas id="trail"></canvas>
 <div id="background"></div>
 
-<!-- NAV -->
+<!-- ============= TOPO ============= -->
 <header>
   <div id="lang-switch">
-    <span data-lang="pt">PT</span> | <span data-lang="en">EN</span>
+    <span onclick="setLang('pt')">PT</span> |
+    <span onclick="setLang('en')">EN</span>
   </div>
 </header>
 
-<!-- HERO -->
+<!-- ============= HERO ============= -->
 <section class="hero">
-  <div id="avatar"></div>
+  <canvas id="avatar"></canvas>
   <h1>HUMAN</h1>
-  <h2 id="hero-title"></h2>
-  <p id="hero-sub"></p>
+  <h2 id="hero-title" data-key="what-title"></h2>
+  <p id="hero-sub" data-key="what"></p>
   <div id="scroll-down">▼</div>
 </section>
 
-<!-- MAIN CONTENT -->
+<!-- ============= MAIN ============= -->
 <main>
 
-<section id="o-que" class="card"></section>
-
-<section id="token" class="card"></section>
-
-<section id="dist" class="card"></section>
-
-<section id="fases" class="card"></section>
-
-<section id="tasks" class="card"></section>
-
+<!-- O QUE É -->
 <section class="card">
-<h3>🌍 Radar Humano</h3>
-<canvas id="radar"></canvas>
-<p id="radar-info">Ligando consciência humana...</p>
+  <h3 data-key="what-title"></h3>
+  <p data-key="what"></p>
 </section>
 
+<!-- MARCA HUM -->
+<section class="card">
+  <h3 data-key="token-title"></h3>
+  <p data-key="token"></p>
+</section>
+
+<!-- COMO COMEÇAR -->
+<section class="card">
+  <h3 data-key="start-title"></h3>
+  <p data-key="start"></p>
+</section>
+
+<!-- MATURIDADE E VALOR -->
+<section class="card">
+  <h3 data-key="eco-title"></h3>
+  <p data-key="eco"></p>
+</section>
+
+<!-- FASES -->
+<section class="card">
+  <h3 data-key="phase-title"></h3>
+  <p data-key="phase"></p>
+</section>
+
+<!-- PORQUÊ PARTICIPAR -->
+<section class="card">
+  <h3 data-key="why-title"></h3>
+  <p data-key="why"></p>
+</section>
+
+<!-- TAREFAS -->
+<section class="card">
+  <h3 data-key="tasks-title"></h3>
+  <p data-key="tasks"></p>
+</section>
+
+<!-- PRESENÇA E BONUS -->
+<section class="card">
+  <h3 data-key="daily-title"></h3>
+  <p><strong>Presenças:</strong> <span id="days">0</span></p>
+  <p><strong>Saldo:</strong> <span id="humBalance">0 HUM</span></p>
+  <div id="timeline"></div>
+</section>
+
+<!-- RADAR -->
+<section class="card">
+  <h3 data-key="comm-title"></h3>
+  <p id="radar-info">Ligando consciência humana...</p>
+  <canvas id="radar"></canvas>
+</section>
+
+</main>
+
+<!-- ============= FOOTER ============= -->
 <footer>
 <p>© HUMAN 2026 — Tempo é valor.</p>
 </footer>
 
-</main>
 </body>
   </html>
