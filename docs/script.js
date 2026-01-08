@@ -49,6 +49,13 @@ Não procura pressa, procura presença.`,
 
   "origem-when":"Quando posso trocar HUM?",
   "origem-when-text":"Quando 20% do HUM total for criado por presença humana consciente.",
+  "portal-btn":"Portal HUMANO",
+"back-home":"Voltar",
+"portal-title":"Portal HUMANO",
+"portal-desc":"Escolhe como entrar. Com download ou sem barreiras.",
+"portal-connect":"Entradas disponíveis",
+"portal-future":"Próximos passos",
+"portal-future-text":"Convites humanos, contadores, equipas e missões estão a chegar."
 
   "origem-summary":"Em resumo",
   "origem-summary-text":"HUM nasce do tempo humano. Cresce com disciplina. Vive na comunidade."
@@ -94,6 +101,13 @@ Não procura pressa, procura presença.`,
 
   "origem-growth":"Human Growth",
   "origem-growth-text":"No mining — only real presence and discipline.",
+   "portal-btn":"HUMAN Portal",
+"back-home":"Back",
+"portal-title":"HUMAN Portal",
+"portal-desc":"Choose how to enter — no friction, no walls.",
+"portal-connect":"Available Access",
+"portal-future":"Coming soon",
+"portal-future-text":"Human invites, counters, squads and quests coming next."
 
   "origem-distribution":"Fair Distribution",
   "origem-distribution-text":"60% human growth • 39% reserved until 20% creation • 1% team.",
