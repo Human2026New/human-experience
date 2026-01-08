@@ -2,113 +2,135 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HUMAN — Presença Humana no Tempo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HUMAN 2026</title>
 <link rel="stylesheet" href="style.css">
 <script defer src="script.js"></script>
 </head>
-<body>
 
-<!-- FUNDO VIVO -->
+<body class="home">
+
+<!-- BACKGROUND -->
 <canvas id="fog"></canvas>
 <canvas id="particles"></canvas>
+<div id="background"></div>
 
-<!-- IDIOMA -->
-<div id="lang-switch">
-  <span onclick="setLang('pt')">PT</span> |
-  <span onclick="setLang('en')">EN</span>
-</div>
+<!-- NAV -->
+<header>
+  <h1>HUMAN</h1>
+  <div id="lang-switch">
+    <span data-lang="pt">PT</span> | <span data-lang="en">EN</span>
+  </div>
+</header>
 
 <!-- HERO -->
 <section class="hero">
-  <h1>HUMAN</h1>
-  <p id="tagline"></p>
-  <div class="arrow">▼</div>
-</section>
-
-<!-- O QUE É O HUMAN -->
-<section class="panel">
-  <h2 data-t="what-title"></h2>
-  <p id="what"></p>
-</section>
-
-<!-- TOKEN HUM -->
-<section class="panel">
-  <h2 data-t="token-title"></h2>
-  <p id="token"></p>
-</section>
-
-<!-- DISTRIBUIÇÃO -->
-<section class="panel">
-  <h2>Distribuição Oficial HUM</h2>
-  <ul>
-    <li>60% mineração humana (app, web, telegram)</li>
-    <li>39% venda e liquidez controlada</li>
-    <li>1% equipa HUMAN</li>
-  </ul>
-</section>
-
-<!-- ECONOMIA -->
-<section class="panel">
-  <h2 data-t="eco-title"></h2>
-  <p id="eco"></p>
-</section>
-
-<!-- FASES -->
-<section class="panel">
-  <h2 data-t="phase-title"></h2>
-  <p id="phase"></p>
-</section>
-
-<!-- PRESENÇA & AVATAR -->
-<section class="panel">
-  <h2>PRESENÇA HUMANA</h2>
-  <p>Visitas marcadas neste dispositivo:</p>
-  <p id="days"></p>
-
-  <p>Avatar único gerado:</p>
-  <canvas id="avatar" width="80" height="80"></canvas>
-
-  <p style="margin-top:8px;font-size:14px;opacity:0.8;">
-    (identidade local — nunca enviada)
+  <div id="avatar"></div>
+  <h2 id="hero-title"
+      data-pt="Presença humana registada no tempo."
+      data-en="Human presence recorded through time.">
+  </h2>
+  <p id="hero-sub"
+     data-pt="Não é hardware. Não é aposta. É continuidade."
+     data-en="Not hardware. Not speculation. Just continuity.">
   </p>
+  <div id="scroll-down">▼</div>
 </section>
 
-<!-- APP -->
-<section class="panel">
-  <h2 data-t="start-title"></h2>
-  <p id="start"></p>
-  <a class="btn" href="https://t.me/human_app_bot">Entrar no Telegram</a>
+
+<main>
+
+<!-- WHAT IS HUMAN -->
+<section id="o-que"
+class="card"
+data-pt="
+HUMAN é um sistema digital que regista presença humana real ao longo do tempo.
+Não mede máquinas — mede gente.
+Cada vez que regressas, deixas um rasto que fortalece o ecossistema."
+data-en="
+HUMAN is a digital system that records real human presence over time.
+It does not measure machines — it measures people.
+Every return leaves a trace that strengthens the ecosystem.">
 </section>
 
-  <section class="panel">
-  <h2>Porque Participar?</h2>
-  <p id="why">
-    HUMAN não é um jogo de sorte, é um caminho de regresso ao tempo humano.
-    Participar significa:
-    <br>✔ Voltar a ti próprio
-    <br>✔ Criar disciplina e constância
-    <br>✔ Tornar-te parte de uma rede silenciosa que cresce todos os dias
-    <br>✔ Acumular HUM como testemunho da tua presença
-    <br><br>
-    Há projetos que te pedem dinheiro.
-    O HUMAN pede tempo — e devolve significado.
-  </p>
-  </section>
+<!-- TOKEN -->
+<section id="token"
+class="card"
+data-pt="
+HUM representa tempo humano acumulado.
+Oferta máxima: 80.000.000 HUM
+Sem mineração energética.
+Não é promessa de retorno financeiro."
+data-en="
+HUM represents accumulated human time.
+Maximum supply: 80,000,000 HUM
+No energy mining.
+No financial return promised.">
+</section>
+
+<!-- DISTRIBUTION -->
+<section id="dist"
+class="card"
+data-pt="
+Distribuição:
+49% mineração humana
+50% circulação e mercado futuro
+1% equipa (apenas para custos)
+Troca HUM ↔ TON abre quando 20% for distribuído."
+data-en="
+Distribution:
+49% human mining
+50% future circulation + markets
+1% team (expenses only)
+HUM ↔ TON unlocks after 20% is distributed.">
+</section>
+
+<!-- PHASES -->
+<section id="fases"
+class="card"
+data-pt="
+Fases:
+Génese — presença só interna
+Ativação — troca limitada
+Circulação — trocas abertas
+Autonomia — rede guiada por humanos"
+data-en="
+Phases:
+Genesis — internal presence only
+Activation — limited exchange
+Circulation — open transfers
+Autonomy — human-governed network">
+</section>
+
+<!-- TASKS -->
+<section id="tasks"
+class="card"
+data-pt="
+Tarefas HUMAN:
+Presença diária (+0.01 HUM bónus se abrires o site)
+Partilha consciente
+Conversas humanas
+Apoiar outros no processo"
+data-en="
+HUMAN Tasks:
+Daily presence (+0.01 HUM bonus when opening the site)
+Meaningful sharing
+Human conversations
+Support each other">
+</section>
 
 <!-- RADAR -->
-<section class="panel">
-  <h2>Radar Humano</h2>
-  <p>Visualiza o mundo acender</p>
-  <a class="btn" href="radar.html">Abrir Radar</a>
+<section class="card">
+<h3>🌍 Radar Humano (simulado)</h3>
+<canvas id="radar"></canvas>
 </section>
 
-<!-- COMUNIDADE -->
-<section class="panel">
-  <h2 data-t="comm-title"></h2>
-  <p id="comm"></p>
-  <a class="btn" href="https://t.me/human_app_bot">Juntar-se à HUMAN</a>
-</section>
+<!-- FOOTER -->
+<footer>
+<p>© HUMAN 2026 — Tempo é valor.</p>
+</footer>
+
+</main>
 
 </body>
-  </html>
+    </html>
