@@ -31,8 +31,8 @@ Não procura pressa, procura presença.`,
   "comm-title":"Rede Humana",
 
   "origem-btn":"A Origem",
-
   "portal-btn":"Portal HUMANO",
+  "back-home":"Voltar",
 
   "origem-title":"A Origem",
   "origem-intro":"O HUM começa no momento em que regressas. Não nasce do computador — nasce de ti.",
@@ -55,7 +55,6 @@ Não procura pressa, procura presença.`,
   "origem-summary":"Em resumo",
   "origem-summary-text":"HUM nasce do tempo humano. Cresce com disciplina. Vive na comunidade.",
 
-  "back-home":"Voltar",
   "portal-title":"Portal HUMANO",
   "portal-desc":"Escolhe como entrar. Com download ou sem barreiras.",
   "portal-connect":"Entradas disponíveis",
@@ -92,9 +91,10 @@ Não procura pressa, procura presença.`,
 
   "origem-btn":"The Origin",
   "portal-btn":"HUMAN Portal",
+  "back-home":"Back",
 
   "origem-title":"The Origin",
-  "origem-intro":"HUM starts the moment you return. It is not mined — it is born from you.",
+  "origem-intro":"HUM starts the moment you return. It isn’t mined — it’s born from you.",
 
   "origem-what":"What is HUMAN",
   "origem-what-text":"HUMAN values real human time. Every return leaves a living trace.",
@@ -114,15 +114,15 @@ Não procura pressa, procura presença.`,
   "origem-summary":"In summary",
   "origem-summary-text":"HUM is born from human time. It grows with discipline. It lives in community.",
 
-  "back-home":"Back",
   "portal-title":"HUMAN Portal",
-  "portal-desc":"Choose how to enter. With or without downloads.",
-  "portal-connect":"Available access",
+  "portal-desc":"Choose how to enter — no friction, no walls.",
+  "portal-connect":"Available Access",
   "portal-future":"Coming soon",
-  "portal-future-text":"Invite system, counters, squads and quests coming next."
+  "portal-future-text":"Human invites, counters, squads and quests coming next."
  }
 };
 
+/*************** APPLY LANGUAGE ***************/
 function setLang(l){
  localStorage.setItem("lang",l);
  document.querySelectorAll("[data-key]").forEach(el=>{
