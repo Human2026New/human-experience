@@ -124,3 +124,19 @@ main{padding:32px 0;}
 
 /* ===== FOOTER ===== */
 footer{text-align:center;padding:40px 0;font-size:14px;color:#d2c18f;}
+/* ==== LOGO CENTRAL HUM ==== */
+.hum-logo{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  background:url("hum-logo.png") center/contain no-repeat;
+  background-size:82%;
+  background-color:rgba(0,0,0,0.25);
+  border:4px solid rgba(255,220,130,0.85);
+  box-shadow:
+    0 0 22px rgba(255,210,120,0.45),
+    0 0 60px rgba(255,210,120,0.25);
+  margin-bottom:22px;
+  animation:breathe 6s infinite;
+  z-index:20;
+                        }
